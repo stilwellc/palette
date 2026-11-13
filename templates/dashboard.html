@@ -1,0 +1,218 @@
+<!doctype html>
+<!-- Dashboard / app UI. One <div class="screen"> per view; set the size in BOTH body style (--w/--h)
+     and @page. Opened in a browser it is live: KPI tiles switch the chart, marks show tooltips.
+     Printed or rendered, it shows the default state. Screen 1 = overview, screen 2 = queue + drawer.
+     ALL NUMBERS ARE SAMPLE DATA: replace every one from a real source before shipping. -->
+<html><head><meta charset="utf-8"><title>Dashboard</title>
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="stylesheet" href="../assets/ui.css">
+<style>@page{size:1440px 1060px;margin:0}</style>
+<script src="../assets/charts.js"></script>
+<script src="../assets/check.js"></script>
+</head>
+<body class="dash" style="--w:1440px;--h:1060px">
+
+<!-- icons: 24px outline paths, stroke inherits currentColor -->
+<svg width="0" height="0" style="position:absolute">
+  <symbol id="i-home" viewBox="0 0 24 24"><path d="M4 11l8-6 8 6v8a1 1 0 0 1-1 1h-4v-6H9v6H5a1 1 0 0 1-1-1z"/></symbol>
+  <symbol id="i-chart" viewBox="0 0 24 24"><path d="M4 19h16M7 16V9m5 7V5m5 11v-4"/></symbol>
+  <symbol id="i-inbox" viewBox="0 0 24 24"><path d="M4 13l2-7h12l2 7v5H4zM4 13h5l1 2h4l1-2h5"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M12 3l7 3v5c0 4.5-3 8-7 10-4-2-7-5.5-7-10V6zM9 12l2 2 4-4"/></symbol>
+  <symbol id="i-ticket" viewBox="0 0 24 24"><path d="M4 8V6h16v2a2 2 0 0 0 0 4v2a2 2 0 0 0 0 4v0H4v-4a2 2 0 0 0 0-4z"/></symbol>
+  <symbol id="i-pr" viewBox="0 0 24 24"><circle cx="6" cy="6" r="2"/><circle cx="6" cy="18" r="2"/><circle cx="18" cy="18" r="2"/><path d="M6 8v8m12 0V9a3 3 0 0 0-3-3h-4"/></symbol>
+  <symbol id="i-box" viewBox="0 0 24 24"><path d="M4 7l8-4 8 4v10l-8 4-8-4zM4 7l8 4 8-4M12 11v10"/></symbol>
+  <symbol id="i-scan" viewBox="0 0 24 24"><path d="M4 8V5h3M17 5h3v3M20 16v3h-3M7 19H4v-3M4 12h16"/></symbol>
+  <symbol id="i-key" viewBox="0 0 24 24"><circle cx="8" cy="15" r="4"/><path d="M11 12l8-8m-3 3l2 2"/></symbol>
+  <symbol id="i-gear" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 3v3m0 12v3M3 12h3m12 0h3M5.6 5.6l2.1 2.1m8.6 8.6l2.1 2.1M5.6 18.4l2.1-2.1m8.6-8.6l2.1-2.1"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6"/><path d="M20 20l-4.5-4.5"/></symbol>
+  <symbol id="i-down" viewBox="0 0 24 24"><path d="M12 4v11m-5-5l5 5 5-5M5 20h14"/></symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M7 17L17 7M9 7h8v8"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+  <symbol id="i-chev" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5"/></symbol>
+</svg>
+
+<!-- ============ screen 1: overview ============ -->
+<div class="screen">
+  <nav class="side">
+    <div class="brand"><i></i>Acme Application Security</div>
+    <div class="switch">Vuln management <small>▾</small></div>
+    <a class="on"><svg><use href="#i-home"/></svg>Overview</a>
+    <a><svg><use href="#i-chart"/></svg>Insights</a>
+    <div class="grp">Triage</div>
+    <a><svg><use href="#i-inbox"/></svg>Queue<span class="ct">38</span></a>
+    <a><svg><use href="#i-check"/></svg>Deep verify<span class="ct">7</span></a>
+    <div class="grp">Remediation</div>
+    <a><svg><use href="#i-ticket"/></svg>Tickets</a>
+    <a><svg><use href="#i-box"/></svg>SCA fixes</a>
+    <a><svg><use href="#i-pr"/></svg>Fix PRs</a>
+    <div class="grp">Tools</div>
+    <a><svg><use href="#i-scan"/></svg>SAST</a>
+    <a><svg><use href="#i-key"/></svg>Secrets scan</a>
+    <div class="bottom"><a><svg><use href="#i-gear"/></svg>Settings</a></div>
+  </nav>
+
+  <main class="main">
+    <div class="top">
+      <div class="crumb">Vuln management <span>›</span> <b>Overview</b></div>
+      <div class="search"><svg width="15" height="15" style="stroke:currentColor;fill:none;stroke-width:1.8"><use href="#i-search"/></svg>Search findings, repos, tickets<kbd>⌘K</kbd></div>
+      <a class="btn ghost sm">Docs</a>
+      <div class="avatar">JD</div>
+    </div>
+
+    <div class="body">
+      <div class="phead">
+        <div><span class="eyebrow">Data as of Nov 12, 2026 · sample data</span>
+          <h1>297 open. <em>52 past SLA.</em></h1></div>
+        <div class="acts"><a class="btn ghost"><svg><use href="#i-down"/></svg>Export</a><a class="btn ink">Open triage queue</a></div>
+      </div>
+
+      <div class="tabs"><a class="on">Overview</a><a>Backlog<span class="ct">297</span></a><a>SLA<span class="ct">52</span></a><a>Teams</a><a>Tools</a></div>
+
+      <div class="filters">
+        <span class="chip"><span>Views <svg><use href="#i-chev"/></svg></span></span>
+        <span class="sep"></span>
+        <span class="chip"><span class="k">Date range</span><span>Last 13 weeks <svg><use href="#i-chev"/></svg></span></span>
+        <span class="chip"><span class="k">Team</span><span>All <svg><use href="#i-chev"/></svg></span></span>
+        <span class="chip on"><span class="k"><svg><use href="#i-x"/></svg>Tool</span><span>SAST, SCA</span></span>
+        <span class="chip add"><span><svg><use href="#i-plus"/></svg>Group by</span></span>
+      </div>
+
+      <div class="tray">
+        <div class="card" style="padding:0">
+          <div class="kpis" id="k" style="--cols:5">
+            <button class="on" data-k="open"><span>Open findings</span><b>297</b><em>+63 in 13 weeks</em></button>
+            <button data-k="sev"><span>Critical and High open</span><b class="high">127</b><em>7 Critical</em></button>
+            <button data-k="sla"><span>Past SLA</span><b>52</b><em>of 127 ticketed</em></button>
+            <button data-k="age"><span>Median age, High</span><b>49<small>days</small></b><em>SLA is 14 days</em></button>
+            <button data-k="fixed"><span>Fixed, last 30 days</span><b>42</b><em>31 in one sweep</em></button>
+          </div>
+          <div class="plot" style="position:relative">
+            <div id="p" style="height:250px"></div>
+            <div class="anom" style="right:150px;top:96px">
+              <div class="micro"><span class="sev high" style="font-size:11px">Up 29</span></div>
+              <h4>Highs jumped on Sep 21</h4>
+              <p>One new SAST rule matched 25 call sites in the same service.</p>
+              <a class="btn sm">Open those 25 findings</a>
+            </div>
+            <div class="pft" style="display:flex;justify-content:space-between;align-items:center;margin-top:12px">
+              <div style="display:flex;gap:8px;align-items:center"><span class="seg"><a class="on">Linear</a><a>Log</a></span><a class="btn icon sm ghost" title="Export CSV"><svg><use href="#i-down"/></svg></a></div>
+              <a class="btn sm ghost">Findings in this range <svg><use href="#i-arrow"/></svg></a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid" style="--grid:1.05fr 1fr 1fr">
+        <div class="panel">
+          <div class="phd"><div><h3>Open by repository</h3><p>Top 6 of 74, filled by worst open severity</p></div></div>
+          <div class="rank">
+            <div><div class="bar"><i class="high" style="width:100%"></i><span>profile-api</span></div><em>38</em></div>
+            <div><div class="bar"><i class="high" style="width:74%"></i><span>auth-service</span></div><em>28</em></div>
+            <div><div class="bar"><i class="crit" style="width:55%"></i><span>payments-gateway</span></div><em>21</em></div>
+            <div><div class="bar"><i class="med" style="width:47%"></i><span>web-forum</span></div><em>18</em></div>
+            <div><div class="bar"><i class="med" style="width:37%"></i><span>search-api</span></div><em>14</em></div>
+            <div><div class="bar"><i class="low" style="width:26%"></i><span>admin-portal</span></div><em>10</em></div>
+          </div>
+        </div>
+        <div class="panel">
+          <div class="phd"><div><h3>Fixed within SLA</h3><p>Ticketed findings closed in Q3, by severity</p></div></div>
+          <div id="t"></div>
+          <div class="callout high" style="margin-top:14px"><p>69 Highs missed the 14-day clock.</p><small>Median miss 35 days. Most sat waiting for an owner.</small></div>
+          <p class="method" style="margin-top:12px"><b>Method.</b> Clock starts when a finding is confirmed. Critical 7 days, High 14. n = 7 Critical, 118 High.</p>
+        </div>
+        <div class="panel">
+          <div class="phd"><div><h3>Open Highs by team</h3><p>Weekly, same scale, dot is this week</p></div></div>
+          <div id="m"></div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- ============ screen 2: queue + detail drawer ============ -->
+<div class="screen">
+  <nav class="side">
+    <div class="brand"><i></i>Acme Application Security</div>
+    <div class="switch">Vuln management <small>▾</small></div>
+    <a><svg><use href="#i-home"/></svg>Overview</a>
+    <a><svg><use href="#i-chart"/></svg>Insights</a>
+    <div class="grp">Triage</div>
+    <a class="on"><svg><use href="#i-inbox"/></svg>Queue<span class="ct">38</span></a>
+    <a><svg><use href="#i-check"/></svg>Deep verify<span class="ct">7</span></a>
+    <div class="grp">Remediation</div>
+    <a><svg><use href="#i-ticket"/></svg>Tickets</a>
+    <a><svg><use href="#i-box"/></svg>SCA fixes</a>
+    <a><svg><use href="#i-pr"/></svg>Fix PRs</a>
+    <div class="bottom"><a><svg><use href="#i-gear"/></svg>Settings</a></div>
+  </nav>
+  <main class="main">
+    <div class="top"><div class="crumb">Vuln management <span>›</span> Triage <span>›</span> <b>Queue</b></div>
+      <div class="search"><svg width="15" height="15" style="stroke:currentColor;fill:none;stroke-width:1.8"><use href="#i-search"/></svg>Search findings, repos, tickets<kbd>⌘K</kbd></div><div class="avatar">JD</div></div>
+    <div class="body">
+      <div class="phead"><div><span class="eyebrow">Unreviewed and AI-triaged · sample data</span><h1>38 to triage. <em>3 look High.</em></h1></div>
+        <div class="acts"><span class="seg"><a class="on">List</a><a>By repo</a><a>By rule</a></span></div></div>
+      <div class="filters">
+        <span class="chip"><span class="k">State</span><span>Unreviewed, AI-triaged</span></span>
+        <span class="chip"><span class="k">Tool</span><span>All</span></span>
+        <span class="chip on"><span class="k"><svg><use href="#i-x"/></svg>Severity</span><span>High, Critical</span></span>
+      </div>
+      <div class="panel" style="padding:12px 18px 6px;margin-right:400px">
+        <div class="rows" style="--rowgrid:86px 1fr 110px 64px">
+          <div class="rhead"><span>Severity</span><span>Finding</span><span>State</span><span style="text-align:right">Age</span></div>
+          <div class="row sel"><span class="sev high">High</span><div style="min-width:0"><div class="t">User id from the path reaches a query with no owner check</div><div class="s">profile-api · <code>src/routes/goals.ts:88</code> · SAST</div></div><span class="spill">AI-triaged</span><span class="age over">19 d</span></div>
+          <div class="row"><span class="sev high">High</span><div style="min-width:0"><div class="t">Session cookie set without HttpOnly</div><div class="s">web-forum · <code>app/session.js:21</code> · SAST</div></div><span class="spill">Unreviewed</span><span class="age">6 d</span></div>
+          <div class="row"><span class="sev crit">Critical</span><div style="min-width:0"><div class="t">Live cloud key committed in a deploy script</div><div class="s">notifications-worker · <code>deploy/push.sh:12</code> · Secrets scan, verified</div></div><span class="spill">Unreviewed</span><span class="age">1 d</span></div>
+          <div class="row"><span class="sev med">Medium</span><div style="min-width:0"><div class="t">Open redirect through the next parameter</div><div class="s">auth-service · <code>auth/callback.py:140</code> · SAST</div></div><span class="spill">AI-triaged</span><span class="age">11 d</span></div>
+          <div class="row"><span class="sev med">Medium</span><div style="min-width:0"><div class="t">Unbounded page size on a list endpoint</div><div class="s">search-api · <code>api/search.go:57</code> · Pen test</div></div><span class="spill">Unreviewed</span><span class="age">4 d</span></div>
+          <div class="row"><span class="sev low">Low</span><div style="min-width:0"><div class="t">Verbose stack trace in an error response</div><div class="s">payments-gateway · <code>handlers/err.ts:9</code> · SAST</div></div><span class="spill">Unreviewed</span><span class="age">2 d</span></div>
+          <div class="row"><span class="sev fixed high">High</span><div style="min-width:0"><div class="t">SSRF through an image proxy URL</div><div class="s">mobile-bff · <code>proxy/fetch.ts:33</code> · Pen test</div></div><span class="spill">Fixed</span><span class="age">—</span></div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <aside class="drawer">
+    <div class="dh"><div><span class="sev high">High</span><h2 style="margin-top:9px">User id from the path reaches a query with no owner check</h2><p>profile-api · opened Oct 24, 2026</p></div>
+      <a class="btn icon sm ghost"><svg><use href="#i-x"/></svg></a></div>
+    <div class="db">
+      <div class="sec"><div class="micro">Source to sink</div>
+        <div class="trace">
+          <div><i>86</i>router.get('/goals/:userId', auth, async (req, res) =&gt; {</div>
+          <div><i>87</i>  const { userId } = req.params;</div>
+          <div class="hit"><i>88</i>  const goals = await db.goals.find({ userId });</div>
+          <div><i>89</i>  res.json(goals);</div>
+        </div></div>
+      <div class="sec"><div class="micro">Reachability</div><p>Public route behind login only. <small>(any signed-in user)</small></p></div>
+      <div class="sec"><div class="micro">Owner</div><p>Accounts <small>(CODEOWNERS)</small></p></div>
+      <div class="sec"><div class="micro">SLA</div><p>Past SLA by 5 days. <small>(High, 14 days from Oct 24)</small></p></div>
+      <div class="sec"><div class="micro">History</div>
+        <ul class="tl"><li>Found by SAST<small>Oct 24 09:12</small></li><li>AI triage: true positive<small>Oct 24 09:40</small></li><li class="now">Waiting for analyst<small>now</small></li></ul></div>
+    </div>
+    <div class="df"><a class="btn ink">Confirm and open ticket</a><a class="btn ghost">Open in repo <svg><use href="#i-arrow"/></svg></a></div>
+  </aside>
+</div>
+
+<script>
+const wk = ['Aug 17','Aug 24','Aug 31','Sep 7','Sep 14','Sep 21','Sep 28','Oct 5','Oct 12','Oct 19','Oct 26','Nov 2','Nov 9'];
+const H = [84,88,90,91,95,124,121,122,124,122,125,126,120], C = [5,5,6,6,6,7,7,7,7,7,7,7,7];
+const M = [90,93,97,98,101,105,107,109,110,111,112,113,112], Lw = [55,56,57,58,58,58,58,58,58,58,59,58,58];
+const open = H.map((h, i) => h + C[i] + M[i] + Lw[i]);
+AS.kpiSelect('#k', '#p', {
+  open: el => AS.area(el, {W: 1060, H: 250, x: wk, series: [{name: 'Open', values: open}], ticks: 3, mark: {i: 5, label: 'New rule'}}),
+  sev:  el => AS.area(el, {W: 1060, H: 250, x: wk, stack: true, series: [{name: 'Critical', color: 'critical', values: C}, {name: 'High', color: 'high', values: H}]}),
+  sla:  el => AS.area(el, {W: 1060, H: 250, x: wk, series: [{name: 'Past SLA', values: [28,30,32,34,36,37,39,42,44,46,49,51,52]}]}),
+  age:  el => AS.area(el, {W: 1060, H: 250, x: wk, series: [{name: 'Median age, High (days)', color: 'high', values: [38,39,41,42,44,37,39,41,43,45,46,48,49]}]}),
+  fixed: el => AS.compare(el, {W: 1060, H: 250, cats: wk, values: [1,2,2,0,26,3,1,0,2,4,3,31,4], hi: 11, color: '#1c1917', name: 'Fixed'})
+});
+AS.track('#t', {W: 400, rowH: 50, labelW: 74, numW: 70, numSize: 22, rows: [
+  {label: 'Critical', value: 5, of: 7, color: 'critical', display: '5/7'},
+  {label: 'High', value: 49, of: 118, color: 'high', display: '42%'}
+]});
+AS.multiples('#m', {cols: 2, pw: 175, ph: 92, shared: true, panels: [
+  {label: 'Accounts', values: [28,29,31,31,33,51,50,49,49,48,49,50,48], color: 'high'},
+  {label: 'Platform', values: [24,25,25,26,27,33,33,34,34,33,35,35,34], color: 'high'},
+  {label: 'Payments', values: [18,19,19,19,20,22,21,22,23,23,23,23,22], color: 'high'},
+  {label: 'Growth', values: [14,15,15,15,15,18,17,17,18,18,18,18,16], color: 'high'}]});
+</script>
+</body></html>

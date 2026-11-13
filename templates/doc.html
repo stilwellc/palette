@@ -1,0 +1,114 @@
+<!doctype html>
+<!-- Letter-size report. One <section class="page"> per sheet; content must fit (render.sh checks).
+     Page 1 = cover (hero, KPI strip, dot figure, summary cards). Later pages = part band or chapter
+     head, then figure cards, stat cards, lessons. Page 3 = a brief: crumbs, meta, summary, stat cards,
+     numbered figure, comparison table, callout, footnotes. Sample data: fictional. -->
+<html><head><meta charset="utf-8"><title>Report</title>
+<link rel="stylesheet" href="../assets/style.css">
+<style>@page{size:8.5in 11in;margin:0}</style>
+<script src="../assets/charts.js"></script>
+<script src="../assets/check.js"></script>
+</head>
+<body class="doc">
+
+<section class="page">
+  <div class="orb o1"></div><div class="orb o2"></div>
+  <div class="mast"><span class="mark"><i></i>Acme Application Security</span><span>Quarter in review</span><span class="pill">Data as of Sep 30, 2026</span></div>
+  <div class="rel" style="margin-top:22px"><span class="tag">Q3 2026</span></div>
+  <h1 class="h-hero rel" style="font-size:66px">265 found. 79 fixed.<br><em>296 still open.</em></h1>
+  <p class="lede rel">What we found, what we fixed, and where the backlog is heading.</p>
+  <div class="tiles rel" style="--cols:3">
+    <div><b>72%</b><span>of ticketed findings fixed by day 90</span><small>High and Critical get tickets</small></div>
+    <div><b>64d</b><span>median to fix a High</span><small>SLA is 21 days</small></div>
+    <div><b>44%</b><span>of all risk is authorization</span><small>49% of Q3 intake</small></div>
+  </div>
+  <div class="chead rel"><span>Every verified finding, one dot</span><span>379 findings, 8 themes</span></div>
+  <div id="d1" class="rel"></div>
+  <div class="key rel" style="margin-top:0"><span><i class="sw-crit"></i>Critical</span><span><i class="sw-high"></i>High</span><span><i class="sw-med"></i>Medium</span><span><i class="sw-low"></i>Low</span><span><i class="ring"></i>ring: fixed</span></div>
+  <span class="rule-lab rel" style="margin-top:8px">In one minute</span>
+  <div class="sums rel" style="--cols:3">
+    <div class="sum"><div class="n">01</div><h4>The quarter</h4><p>The open backlog grew from 110 on July 1 to 296. <span class="ref">Fig. 2.5</span></p></div>
+    <div class="sum"><div class="n">02</div><h4>The policy</h4><p>72% of ticketed findings are fixed by day 90. <span class="ref">Fig. 2.3</span></p></div>
+    <div class="sum"><div class="n">03</div><h4>The bug</h4><p>Authorization is 37% of every verified finding. <span class="ref">Fig. 3.1</span></p></div>
+  </div>
+  <div class="foot"><span>Acme Application Security</span><span>1</span></div>
+</section>
+
+<section class="page">
+  <div class="part"><div class="eyebrow wine">Part I</div><h2 class="h-part">The quarter</h2>
+    <p>Every report that came in between July 1 and September 30, and when things happened.</p></div>
+  <div class="chap"><div class="eyebrow">Chapter 01</div><h2 class="h-sec">Where we started</h2></div>
+  <div class="card"><div class="kick"><span class="fig">Fig. 1.1</span>Open findings by age</div>
+    <h3>The oldest findings are the Lows, which wait behind the serious work</h3>
+    <p class="sub">Every open finding by age, stacked by severity.</p>
+    <div id="d2"></div>
+    <p class="note">Median open age: <b>High</b> 48 days, <b>Medium</b> 61, <b>Low</b> 104.</p></div>
+  <div class="stats" style="--cols:4">
+    <div><b>640</b><span>repos in the code owners registry</span></div>
+    <div><b>120</b><span>scanned by SAST every week</span></div>
+    <div><b>9</b><span>reviewed monthly by manual testing</span></div>
+    <div><b>74</b><span>repos with a verified finding</span></div>
+  </div>
+  <div class="card"><div class="kick"><span class="fig">Fig. 1.2</span>Log scale</div>
+    <h3>Most secrets had been in Git for years before anyone found them</h3>
+    <div id="d3"></div></div>
+  <div class="foot"><span>Acme Application Security</span><span>2</span></div>
+</section>
+
+<section class="page">
+  <span class="crumbs">Reports <span>/</span> <b>Remediation brief</b></span>
+  <h2 class="h-sec" style="font-size:34px;letter-spacing:-.04em">Highs close in 13 days. <em>July took 38.</em></h2>
+  <div class="meta"><div><small>Prepared by</small><span>Application Security</span></div><div><small>Period</small><span>Jul 1 to Sep 30, 2026</span></div><div><small>Data as of</small><span>Sep 30, 2026</span></div><div><small>Scope</small><span>212 repos, 4 scanners</span></div></div>
+  <div class="drule"></div>
+  <div class="summary" style="border:0;padding:0"><h2>Summary</h2><ul>
+    <li><b>Median time to fix a High fell from 38 to 13 days</b> between July and September (n = 34).<sup class="fn">1</sup></li>
+    <li>Five of seven Criticals closed inside the 5-day clock. The two misses waited on a vendor patch.</li></ul></div>
+  <div class="statgrid" style="--cols:3">
+    <div class="statcard high"><span class="micro">Median fix, High</span><b>13<small>days</small></b><p>Down from 38 in July</p>
+      <div class="ba"><span>Jul</span><i style="width:100%"></i><em>38</em><span>Sep</span><i class="high" style="width:34%"></i><em>13</em></div>
+      <span class="win">n = 34 Highs fixed in Q3</span></div>
+    <div class="statcard"><span class="micro">Criticals fixed in SLA</span><b>5<small>of 7</small></b><p>Two waited on a vendor patch</p><span class="win">Clock: 5 days from confirmation</span></div>
+    <div class="statcard"><span class="micro">Fix PRs merged</span><b>27</b><p>Merged by the owning teams</p><span class="win">Jul 1 to Sep 30</span></div>
+  </div>
+  <div class="figure"><div class="micro">Figure 3</div>
+    <h3>September closed more Highs than <em>July and August together.</em></h3>
+    <div id="d4"></div>
+    <p class="caption"><b>Figure 3.</b> Highs fixed per month, Q2 and Q3 2026. Only the month that makes the point is in colour.</p></div>
+  <table class="cmp">
+    <tr><th>Scanner</th><th>Findings confirmed</th><th>Median fix</th><th>Fixed in SLA</th></tr>
+    <tr><td>SAST<small>weekly, 120 repos</small></td><td>17</td><td class="best">3 d</td><td class="best">84%</td></tr>
+    <tr><td>SCA<small>reachable only</small></td><td class="best">38</td><td>16 d<small>waits on upstream</small></td><td>58%</td></tr>
+    <tr><td>Secrets scan<small>verified only</small></td><td>24</td><td>5 d</td><td>76%</td></tr>
+  </table>
+  <div class="callout high"><div class="micro">Ask</div><p>Assign owners to the two payments-gateway Highs this sprint.</p><small>Both are past SLA by 6 days. Fix PRs are open and passing CI.</small></div>
+  <ol class="fns"><li>Findings export: severity High, resolved in the quarter. The clock starts when a finding is confirmed, not when the scanner first saw it.</li></ol>
+  <div class="foot"><span>Acme Application Security</span><span>3</span></div>
+</section>
+
+<script>
+const mk = (n, mix, fixedShare) => Array.from({length: n}, (_, i) => {
+  const r = (i * 37 % 100) / 100; let acc = 0, sev = 'low';
+  for (const [k, p] of Object.entries(mix)) { acc += p; if (r < acc) { sev = k; break; } }
+  return {sev, fixed: (i * 53 % 100) / 100 < fixedShare};
+});
+AS.dots('#d1', {W: 690, H: 170, r: 2.6, groups: [
+  {label: 'Authorization', items: mk(140, {critical: .02, high: .42, medium: .46}, .22)},
+  {label: 'Secrets', items: mk(58, {high: .65, medium: .15}, .32)},
+  {label: 'Injection', items: mk(43, {critical: .04, high: .48, medium: .33}, .18)},
+  {label: 'Web & session', items: mk(51, {high: .18, medium: .55}, .17)},
+  {label: 'Transport', items: mk(31, {high: .12, medium: .28}, .16)},
+  {label: 'Mobile', items: mk(27, {medium: .12}, .07)},
+  {label: 'Availability', items: mk(17, {}, .06)},
+  {label: 'Exposure', items: mk(12, {high: .25, medium: .25}, .17)}]});
+AS.bars('#d2', {W: 640, H: 190, cats: ['<2w', '2w–1m', '1–2m', '2–3m', '3–4m'], xLabel: 'age of the open finding', series: [
+  {name: 'Low', color: 'low', values: [4, 6, 3, 7, 73]},
+  {name: 'Medium', color: 'medium', values: [19, 8, 47, 18, 35]},
+  {name: 'High', color: 'high', values: [10, 16, 22, 25, 2]},
+  {name: 'Critical', color: 'critical', values: [0, 1, 0, 0, 0]}]});
+AS.strip('#d3', {W: 640, H: 140, r: 4, log: true, min: 1, max: 4500, color: 'high',
+  values: [1,1,1,1,2,25,55,80,140,300,410,590,760,880,990,1090,1150,1240,1330,1420,1510,1580,1650,1760,1900,2050,2200,2400,2650,3700,4100],
+  ticks: [{v:1,label:'1 day'},{v:7,label:'1 week'},{v:30,label:'1 month'},{v:365,label:'1 year'},{v:1095,label:'3 years'},{v:3650,label:'10 years'}],
+  median: {v: 1090, label: 'median 3 years in Git before we found it'}});
+AS.compare('#d4', {W: 690, H: 100, ticks: 2, cats: ['Apr','May','Jun','Jul','Aug','Sep'], values: [2,1,4,7,9,18], hi: 5, color: 'high', name: 'Highs fixed'});
+</script>
+</body></html>

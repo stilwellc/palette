@@ -1,0 +1,26 @@
+<!doctype html>
+<!-- One standalone chart graphic (social card, Slack image, slide insert). Set the canvas size in
+     BOTH body style (--w/--h) and @page. Sample data: fictional. -->
+<html><head><meta charset="utf-8"><title>Graphic</title>
+<link rel="stylesheet" href="../assets/style.css">
+<style>@page{size:1600px 1000px;margin:0}</style>
+<script src="../assets/charts.js"></script>
+<script src="../assets/check.js"></script>
+</head>
+<body class="graphic" style="--w:1600px;--h:1000px">
+<div class="orb o1"></div><div class="orb o2"></div>
+<div class="canvas">
+  <div class="mast"><span class="mark"><i></i>Acme Application Security</span><span class="pill">Data as of Sep 30, 2026</span></div>
+  <h1 class="h-hero rel" style="font-size:92px;margin-top:18px">265 opened. 79 fixed.<br><em>Fixes come in sweeps.</em></h1>
+  <div class="chead rel" style="margin-top:20px"><span>Findings opened (up) and fixed (down) each week, Q3 2026</span><span>49 of 79 fixes landed in two sweeps</span></div>
+  <div id="c" class="rel" style="flex:1;min-height:0"></div>
+  <div class="key rel"><span><i style="background:#1c1917"></i>opened</span><span><i style="background:#b9b1a4"></i>fixed</span><em>One bar is one week, Monday to Sunday, UTC.</em></div>
+</div>
+<script>
+AS.diverging('#c', {W: 1456, H: 470,
+  cats: ['Jun 29','Jul 6','Jul 13','Jul 20','Jul 27','Aug 3','Aug 10','Aug 17','Aug 24','Aug 31','Sep 7','Sep 14','Sep 21','Sep 28'],
+  up:   [0,0,19,44,21,57,11,16,20,12,15,22,28,0],
+  down: [0,2,5,8,4,7,3,1,0,0,26,0,0,23],
+  notes: {10: 'Sweep', 13: 'Sweep'}});
+</script>
+</body></html>

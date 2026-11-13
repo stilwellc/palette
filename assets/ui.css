@@ -1,0 +1,189 @@
+/* AppSec house style: dashboards and app UI. Load AFTER style.css.
+   Format: <body class="dash" style="--w:1440px;--h:1400px"> with one <div class="screen"> per view.
+   Rules carried over from the house style: cream paper, ink greys, colour means severity only.
+   Rules added for UI: the chrome is monochrome; depth comes from hairline rings (--ring/--lift), not
+   borders or big shadows; shadows only on floating things (tooltip, popover, drawer); every control
+   is a pill; status is a word in a neutral pill, never a colour; severity is the one coloured mark. */
+
+body.dash{width:var(--w,1440px)}
+body.dash .screen{position:relative;width:var(--w,1440px);height:var(--h,1000px);overflow:hidden;break-after:page;
+  display:grid;grid-template-columns:var(--side,248px) 1fr;background:var(--paper)}
+body.dash .screen:last-child{break-after:auto}
+body.dash .screen.bare{grid-template-columns:1fr}
+
+/* ---------- sidebar ---------- */
+.side{border-right:1px solid var(--line);padding:16px 12px;display:flex;flex-direction:column;gap:4px;background:var(--paper)}
+.side .brand{display:flex;align-items:center;gap:10px;font:600 14px/1 var(--f-sans);padding:6px 8px 14px;letter-spacing:-.01em}
+.side .brand i{width:9px;height:9px;border-radius:50%;background:var(--ink)}
+.switch{display:flex;align-items:center;justify-content:space-between;height:38px;padding:0 12px;border-radius:12px;
+  background:var(--paper-2);box-shadow:var(--lift);font:500 13.5px/1 var(--f-sans);margin-bottom:12px}
+.switch small{color:var(--ink-3);font-size:11px}
+.side .grp{font:500 12px/1 var(--f-sans);color:var(--ink-3);padding:14px 10px 6px}
+.side a{display:flex;align-items:center;gap:11px;height:34px;padding:0 10px;border-radius:9px;color:var(--ink-2);
+  font:450 13.5px/1 var(--f-sans);text-decoration:none;letter-spacing:-.008em}
+.side a svg{width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:1.6;flex:none}
+.side a.on{background:var(--n6);color:var(--ink);font-weight:500}
+.side a .ct{margin-left:auto;font:500 11px var(--f-mono);color:var(--ink-3)}
+.side .bottom{margin-top:auto;border-top:1px solid var(--line);padding-top:10px}
+
+/* ---------- main column, top bar, page header ---------- */
+.main{display:flex;flex-direction:column;min-width:0;overflow:hidden}
+.top{height:54px;flex:none;display:flex;align-items:center;gap:14px;padding:0 28px;border-bottom:1px solid var(--line)}
+.crumb{font:500 13px/1 var(--f-sans);color:var(--ink-3);display:flex;gap:8px;align-items:center}
+.crumb b{color:var(--ink);font-weight:500}
+.search{margin-left:auto;display:flex;align-items:center;gap:8px;height:32px;width:300px;padding:0 10px 0 12px;border-radius:999px;
+  box-shadow:var(--ring);background:var(--paper-2);font-size:13px;color:var(--ink-3)}
+.search kbd,kbd{margin-left:auto;font:500 10.5px/1 var(--f-mono);color:var(--ink-3);background:var(--n6);border-radius:5px;padding:4px 5px}
+.avatar{width:30px;height:30px;border-radius:50%;background:var(--n5);display:grid;place-items:center;font:600 11px var(--f-sans);color:var(--ink-2)}
+.body{flex:1;min-height:0;padding:26px 32px 28px;display:flex;flex-direction:column;gap:18px;overflow:hidden}
+.body>*{flex-shrink:0}
+.phead{display:flex;align-items:flex-end;justify-content:space-between;gap:20px}
+.phead .eyebrow{display:block;margin-bottom:8px}
+.phead h1{font:600 32px/1.05 var(--f-sans);letter-spacing:-.035em}
+.phead h1 em{font-style:normal;color:var(--ink-soft)}
+.phead .acts{display:flex;gap:8px}
+
+/* underline tabs */
+.tabs{display:flex;gap:26px;border-bottom:1px solid var(--line-2);font:500 14px/1 var(--f-sans)}
+.tabs a{color:var(--ink-3);padding:0 0 12px;text-decoration:none;position:relative}
+.tabs a.on{color:var(--ink)}
+.tabs a.on::after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:2px;background:var(--ink);border-radius:2px}
+.tabs a .ct{font:500 11px var(--f-mono);color:var(--ink-3);margin-left:6px}
+
+/* segmented control with a sliding paper thumb */
+.seg{display:inline-flex;padding:3px;border-radius:999px;background:var(--n6);box-shadow:inset 0 0 0 .5px rgba(28,25,23,.08);font:500 12.5px/1 var(--f-sans)}
+.seg a{padding:7px 13px;border-radius:999px;color:var(--ink-3);text-decoration:none}
+.seg a.on{background:var(--paper-2);color:var(--ink);box-shadow:var(--lift)}
+
+/* filter bar: "label | value" chips; an applied filter inverts to ink */
+.filters{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.chip{display:inline-flex;align-items:center;height:32px;border-radius:999px;background:var(--paper-2);box-shadow:var(--ring);
+  font:500 13px/1 var(--f-sans);color:var(--ink);white-space:nowrap;overflow:hidden}
+.chip>span{padding:0 12px;display:flex;align-items:center;gap:6px;height:100%}
+.chip>span+span{box-shadow:-.5px 0 0 rgba(28,25,23,.16)}
+.chip .k{color:var(--ink-3)}
+.chip.on{background:var(--ink);color:var(--paper-2);box-shadow:none}
+.chip.on .k{color:var(--n4)} .chip.on>span+span{box-shadow:-.5px 0 0 rgba(251,248,241,.25)}
+.chip.add{background:transparent;box-shadow:inset 0 0 0 1px var(--line-2);color:var(--ink-3)}
+.chip svg{width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:2}
+.filters .sep{width:1px;height:20px;background:var(--line-2);margin:0 4px}
+
+/* ---------- surfaces ---------- */
+/* card in a tray: the house figure card sitting in a slightly darker rounded tray */
+.tray{background:var(--tray);border-radius:24px;padding:6px}
+.tray>.card,.panel{background:var(--paper-2);border:0;box-shadow:var(--ring);border-radius:19px}
+.panel{padding:20px 22px}
+.panel h3,.tray>.card h3{font:600 15px/1.3 var(--f-sans);letter-spacing:-.015em;margin:0}
+.panel .phd{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:14px}
+.panel .phd p{font-size:12.5px;color:var(--ink-3);margin-top:3px}
+.panel .pft{display:flex;justify-content:space-between;align-items:center;margin-top:14px}
+.grid{display:grid;grid-template-columns:var(--grid,1fr 1fr);gap:16px;min-height:0}
+
+/* KPI strip that is also the chart selector: selected tile is paper with an ink underline */
+.kpis{display:grid;grid-template-columns:repeat(var(--cols,5),1fr);border-radius:19px 19px 0 0;overflow:hidden;border-bottom:1px solid var(--line)}
+.kpis>button{all:unset;cursor:pointer;padding:16px 20px 15px;background:var(--n6);position:relative;transition:background .2s var(--ease)}
+.kpis>button+button{box-shadow:-.5px 0 0 rgba(28,25,23,.10)}
+.kpis>button span{display:block;font:500 12.5px/1.2 var(--f-sans);color:var(--ink-3)}
+.kpis>button b{display:block;font:500 26px/1 var(--f-sans);letter-spacing:-.03em;margin-top:9px;color:var(--ink-2);font-variant-numeric:tabular-nums}
+.kpis>button b small{font-size:13px;font-weight:500;color:var(--ink-3);letter-spacing:0;margin-left:3px}
+.kpis>button b.crit{color:var(--crit)}.kpis>button b.high{color:var(--high)}
+.kpis>button em{display:block;font:400 11.5px var(--f-sans);font-style:normal;color:var(--ink-3);margin-top:6px}
+.kpis>button.on{background:var(--paper-2)}
+.kpis>button.on b:not(.crit):not(.high){color:var(--ink)}
+.kpis>button.on::after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:2px;background:var(--ink)}
+.kpis+.plot{padding:18px 22px 16px}
+
+/* ---------- lists: two-line rows, dotted dividers, neutral status pill, severity mark ---------- */
+.rows{display:flex;flex-direction:column}
+.row{display:grid;grid-template-columns:var(--rowgrid,92px 1fr auto auto);gap:16px;align-items:center;padding:11px 4px;position:relative}
+.row+.row{background:var(--dots);background-position:0 0;background-size:6px 3px;background-repeat:repeat-x}
+.row .t{font:500 14px/1.3 var(--f-sans);color:var(--ink);letter-spacing:-.01em;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.row .s{font-size:12.5px;color:var(--ink-3);margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.row .s code,.mono{font:400 11.5px var(--f-mono)}
+.row .age{font:500 12px var(--f-mono);color:var(--ink-3);text-align:right}
+.row .age.over{color:var(--ink);font-weight:600}
+.row.sel{background:var(--n6)!important;border-radius:10px}
+.rows.dense .row{padding:7px 4px}
+.rows .rhead{display:grid;grid-template-columns:var(--rowgrid,92px 1fr auto auto);gap:16px;padding:0 4px 8px;border-bottom:1px solid var(--line-2)}
+.rows .rhead span{font:500 11.5px var(--f-sans);color:var(--ink-3)}
+
+/* ranked bars with the label inside (top N) */
+.rank{display:flex;flex-direction:column;gap:6px}
+.rank>div{display:grid;grid-template-columns:1fr 54px;gap:12px;align-items:center}
+.rank .bar{position:relative;height:34px;border-radius:9px;overflow:hidden}
+.rank .bar i{position:absolute;left:0;top:0;bottom:0;border-radius:9px;background:var(--n6)}
+.rank .bar i.crit{background:rgba(74,44,23,.16);box-shadow:inset 3px 0 0 var(--crit)}
+.rank .bar i.high{background:rgba(114,47,55,.14);box-shadow:inset 3px 0 0 var(--high)}
+.rank .bar i.med{background:rgba(138,93,24,.14);box-shadow:inset 3px 0 0 var(--med)}
+.rank .bar i.low{background:rgba(0,66,37,.12);box-shadow:inset 3px 0 0 var(--low)}
+.rank .bar span{position:relative;display:flex;align-items:center;height:100%;padding:0 12px;font:500 13px/1 var(--f-sans);gap:8px}
+.rank .bar span small{font:400 11.5px var(--f-mono);color:var(--ink-3)}
+.rank em{font:500 13px var(--f-mono);font-style:normal;color:var(--ink-2);text-align:right}
+
+/* ---------- detail drawer ---------- */
+.drawer{position:absolute;top:0;right:0;bottom:0;width:var(--dw,400px);background:var(--paper-2);box-shadow:var(--pop);
+  display:flex;flex-direction:column;z-index:5}
+.drawer .dh{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;padding:20px 22px 16px;border-bottom:1px solid var(--line)}
+.drawer .dh h2{font:600 18px/1.25 var(--f-sans);letter-spacing:-.02em}
+.drawer .dh p{font-size:12.5px;color:var(--ink-3);margin-top:5px}
+.drawer .db{flex:1;overflow:hidden;padding:4px 22px}
+.drawer .sec{padding:14px 0;background:var(--dots);background-size:6px 3px;background-repeat:repeat-x;background-position:0 100%}
+.drawer .sec:last-child{background:none}
+.drawer .sec .micro{margin-bottom:7px}
+.drawer .sec p{font-size:13.5px;line-height:1.45;color:var(--ink)}
+.drawer .sec p small{color:var(--ink-3);font-size:12.5px}
+.drawer .df{padding:14px 22px 18px;display:grid;gap:8px;border-top:1px solid var(--line)}
+.drawer .df .btn{justify-content:center;width:100%}
+.scrim{position:absolute;inset:0;background:rgba(245,240,230,.55);z-index:4}
+
+/* code trace: matched line inverted to ink (the "current word" highlight) */
+.trace{font:400 11.5px/1.75 var(--f-mono);color:var(--ink-2);background:var(--paper);border-radius:10px;padding:8px 0;box-shadow:var(--ring)}
+.trace div{display:grid;grid-template-columns:38px 1fr;padding:0 12px 0 0;white-space:pre;overflow:hidden}
+.trace div i{font-style:normal;color:var(--n4);text-align:right;padding-right:12px}
+.trace div.hit{background:var(--ink);color:var(--paper-2)} .trace div.hit i{color:var(--n4)}
+
+/* timeline (history in a drawer or page) */
+.tl{list-style:none;position:relative;padding-left:18px}
+.tl::before{content:"";position:absolute;left:4px;top:6px;bottom:6px;width:1px;background:var(--line-2)}
+.tl li{position:relative;font-size:13px;color:var(--ink);padding:3px 0 9px}
+.tl li::before{content:"";position:absolute;left:-17px;top:8px;width:7px;height:7px;border-radius:50%;background:var(--paper-2);box-shadow:inset 0 0 0 1.5px var(--ink-3)}
+.tl li.now::before{background:var(--ink);box-shadow:none}
+.tl li small{display:block;color:var(--ink-3);font-size:11.5px;font-family:var(--f-mono)}
+
+/* ---------- floating: tooltip, anomaly card ---------- */
+.tip{position:absolute;pointer-events:none;background:var(--paper-2);box-shadow:var(--pop);border-radius:12px;padding:9px 12px 10px;
+  font-size:12.5px;min-width:150px;z-index:20;transition:opacity .12s;left:0;top:0;visibility:hidden}
+.tip.show{visibility:visible}
+.tip .th{font:500 11.5px var(--f-mono);color:var(--ink-3);padding-bottom:6px;margin-bottom:6px;border-bottom:1px solid var(--line)}
+.tip .tr{display:flex;align-items:center;gap:8px;padding:2px 0}
+.tip .tr i{width:8px;height:8px;border-radius:50%;flex:none}
+.tip .tr b{margin-left:auto;font:500 12px var(--f-mono);padding-left:14px}
+.anom{position:absolute;width:250px;background:var(--paper-2);box-shadow:var(--pop);border-radius:14px;padding:14px 16px;z-index:6}
+.anom .micro{display:flex;gap:6px;align-items:center}
+.anom h4{font:600 14.5px/1.3 var(--f-sans);letter-spacing:-.015em;margin:7px 0 4px}
+.anom p{font-size:12.5px;color:var(--ink-3);line-height:1.4}
+.anom .btn{width:100%;justify-content:center;margin-top:12px;background:var(--n6);box-shadow:none}
+
+/* ---------- forms ---------- */
+.field{display:grid;gap:6px}
+.field label{font:500 13px/1 var(--f-sans);color:var(--ink);display:flex;justify-content:space-between}
+.field label small{color:var(--ink-3);font-weight:400}
+.input{height:40px;border-radius:12px;background:var(--paper-2);box-shadow:var(--ring);padding:0 13px;display:flex;align-items:center;font-size:13.5px;color:var(--ink)}
+.input.ph{color:var(--ink-3)}
+.input.area{height:auto;min-height:92px;align-items:flex-start;padding:11px 13px;line-height:1.5;flex-direction:column}
+.input.area .foot{margin-top:auto;padding-top:8px;font-size:12px;color:var(--ink-3)}
+.check{display:flex;gap:10px;align-items:flex-start;font-size:13.5px}
+.check i{width:18px;height:18px;border-radius:5px;background:var(--n6);flex:none;margin-top:1px;display:grid;place-items:center}
+.check.on i{background:var(--ink)} .check.on i::after{content:"";width:8px;height:4px;border:1.8px solid var(--paper-2);border-top:0;border-right:0;transform:rotate(-45deg) translate(1px,-1px)}
+.check small{display:block;color:var(--ink-3);font-size:12px;margin-top:2px}
+.toggle{width:32px;height:19px;border-radius:999px;background:var(--n5);position:relative;flex:none}
+.toggle::after{content:"";position:absolute;left:2px;top:2px;width:15px;height:15px;border-radius:50%;background:var(--paper-2);box-shadow:0 1px 2px rgba(28,25,23,.2)}
+.toggle.on{background:var(--ink)} .toggle.on::after{left:15px}
+
+/* ---------- empty state ---------- */
+.empty{display:grid;place-items:center;text-align:center;padding:36px 20px;color:var(--ink-3);font-size:13px}
+.empty b{display:block;color:var(--ink);font:600 15px var(--f-sans);margin-bottom:4px}
+
+/* print: keep floating shadows small so Chrome doesn't rasterise them into boxes */
+@media print{.drawer,.anom{box-shadow:0 0 0 .5px rgba(28,25,23,.2)}.tip{display:none!important}}
+@media print{.seg a.on,.switch,.statcard{box-shadow:0 0 0 .5px rgba(28,25,23,.16)}}

@@ -1,0 +1,105 @@
+<!doctype html>
+<!-- 16:9 deck. One <section class="slide"> per slide, 1600x900 CSS px, printed at 13.333x7.5in.
+     Layouts shown: cover, KPI + two figures, one big figure, one number (headline left, stat card
+     right), takeaways with an ask band. Sample data: fictional. -->
+<html><head><meta charset="utf-8"><title>Slides</title>
+<link rel="stylesheet" href="../assets/style.css">
+<style>@page{size:1600px 900px;margin:0}</style>
+<script src="../assets/charts.js"></script>
+<script src="../assets/check.js"></script>
+</head>
+<body class="slides">
+
+<!-- 1. cover -->
+<section class="slide">
+  <div class="orb o1"></div><div class="orb o2"></div><div class="orb o3"></div>
+  <div class="mast"><span class="mark"><i></i>Acme Application Security</span><span>Quarter in review</span><span class="pill">Data as of Sep 30, 2026</span></div>
+  <div class="rel" style="margin-top:70px"><span class="tag">Q3 2026</span></div>
+  <h1 class="h-hero rel" style="margin-top:6px">263 found. 79 fixed.<br><em>297 still open.</em></h1>
+  <p class="lede rel">What we found, what we fixed, and where the backlog is heading.</p>
+  <div class="foot rel"><span>AppSec</span><span>1</span></div>
+</section>
+
+<!-- 2. headline + KPI strip + one figure -->
+<section class="slide">
+  <span class="eyebrow">Part I</span>
+  <h2 class="h-slide">Intake doubled. <em>The mix turned serious.</em></h2>
+  <div class="tiles" style="--cols:4">
+    <div><b>72%</b><span>of ticketed findings fixed by day 90</span><small>High and Critical get tickets</small></div>
+    <div><b>64d</b><span>median to fix a High</span><small>SLA is 30 days</small></div>
+    <div><b>39%</b><span>of all risk is authorization</span><small>49% of Q3 intake</small></div>
+    <div><b>640</b><span>repos in CODEOWNERS</span><small>120 scanned every week</small></div>
+  </div>
+  <div class="cols" style="--grid:1.2fr 1fr">
+    <div class="card"><div class="kick"><span class="fig">Fig. 1</span>Q2 start to Q3 end</div>
+      <h3>Fixes went from 7 to 79</h3><div id="s2a" style="flex:1;min-height:0"></div></div>
+    <div class="card"><div class="kick"><span class="fig">Fig. 2</span>Share of findings opened</div>
+      <h3>High was 7% of Q2 and 46% of Q3</h3><div id="s2b" style="flex:1;min-height:0"></div>
+      <div class="key"><span><i class="sw-crit"></i>Critical</span><span><i class="sw-high"></i>High</span><span><i class="sw-med"></i>Medium</span><span><i class="sw-low"></i>Low</span></div></div>
+  </div>
+  <div class="foot"><span>Colour means severity everywhere, and nothing else.</span><span>2</span></div>
+</section>
+
+<!-- 3. one big figure -->
+<section class="slide">
+  <span class="eyebrow">Part I</span>
+  <h2 class="h-slide">837 reports in. <em>244 confirmed.</em></h2>
+  <div class="card" style="flex:1;display:flex;flex-direction:column">
+    <div class="kick"><span class="fig">Fig. 3</span>Cohort flow, everything first reported in Q3</div>
+    <div id="s3" style="flex:1;min-height:0;margin-top:14px"></div>
+  </div>
+  <div class="foot"><span>Ribbon width is the number of findings.</span><span>3</span></div>
+</section>
+
+<!-- 4. one number, left headline + right stat card in a tray -->
+<section class="slide">
+  <div class="cols" style="--grid:1fr 1.05fr;gap:56px;align-items:stretch">
+    <div style="display:flex;flex-direction:column">
+      <span class="eyebrow">Part II</span>
+      <h2 class="h-slide" style="margin-top:14px">Highs close faster. <em>10&nbsp;days, down from 37.</em></h2>
+      <p class="lede" style="margin-top:22px">The change came after tickets started carrying a fix PR. Owners merge a tested diff instead of starting from a finding.</p>
+      <p class="method" style="margin-top:auto"><b>Method.</b> Median days from opened to resolved, effective severity High, Jul 1 to Sep 30 2026. n = 34. Findings reopened after a fix are counted from the reopen.</p>
+    </div>
+    <div class="tray" style="display:flex"><div class="statcard high" style="flex:1;padding:44px 48px 40px;box-shadow:var(--ring)">
+      <span class="micro" style="font-size:13px">Median time to fix, High</span>
+      <b style="font-size:230px;margin-top:26px">10<small>days</small></b>
+      <p style="font-size:22px;margin-top:20px">Down from 37 days in July</p>
+      <div class="ba" style="font-size:15px;margin-top:auto;gap:18px 18px"><span>July</span><i style="height:22px;width:100%"></i><em style="font-size:15px">37 d</em><span>September</span><i class="high" style="height:22px;width:27%"></i><em style="font-size:15px">10 d</em></div>
+      <span class="win" style="font-size:14px;margin-top:0;padding-top:22px">One bar per month. Same scale.</span></div></div>
+  </div>
+  <div class="foot"><span>Colour means severity everywhere, and nothing else.</span><span>4</span></div>
+</section>
+
+<!-- 5. takeaways -->
+<section class="slide">
+  <span class="rule-lab">In one minute</span>
+  <h2 class="h-slide" style="font-size:60px">Three things the quarter <em>says.</em></h2>
+  <div class="sums grow" style="--cols:3;margin-top:24px">
+    <div class="sum"><div class="n">01</div><h4>The backlog</h4><p>Open findings grew from 113 to 297. September fixed 46, more than July and August combined.</p></div>
+    <div class="sum"><div class="n">02</div><h4>The policy</h4><p>High and Critical get tickets, and 72% of ticketed findings are fixed by day 90.</p></div>
+    <div class="sum"><div class="n">03</div><h4>The bug</h4><p>Authorization is 35% of every verified finding and 49% of Q3 intake.</p></div>
+  </div>
+  <div class="ask" style="margin-top:auto"><p>Three Highs need owners this sprint. <em>All have a passing fix PR.</em></p>
+    <div class="acts"><a class="btn ink">Open in tracker</a><a class="btn ghost">View tickets</a></div></div>
+  <div class="foot" style="margin-top:0"><span>AppSec</span><span>5</span></div>
+</section>
+
+<script>
+AS.lines('#s2a', {W: 760, H: 380, x: ['Q2 (June start)', 'Q3'], grid: false, verticals: true, series: [
+  {name: 'open at quarter end', values: [113, 297]},
+  {name: 'opened', values: [121, 263], dash: 'dash'},
+  {name: 'fixed', values: [7, 79], dash: 'dot'}]});
+AS.bars('#s2b', {W: 600, H: 380, cats: ['Q2', 'Q3'], segLabels: true, noGrid: true, totals: false, series: [
+  {name: 'Low', color: 'low', values: [74, 25]},
+  {name: 'Medium', color: 'medium', values: [37, 108]},
+  {name: 'High', color: 'high', values: [9, 121]},
+  {name: 'Critical', color: 'critical', values: [1, 9]}]});
+AS.flow('#s3', {W: 1400, H: 520, nodes: {
+    left: [{id:'sa',label:'SAST'},{id:'pt',label:'Pen test'},{id:'sc',label:'SCA'},{id:'se',label:'Secrets scan'},{id:'mt',label:'Manual testing'},{id:'cl',label:'Cloud scan'},{id:'bb',label:'Bug bounty'}],
+    right: [{id:'fp',label:'Ruled out as noise',color:'#b9b1a4'},{id:'op',label:'Verified, still open'},{id:'fx',label:'Verified and fixed',color:'#8c8478'},{id:'tr',label:'Awaiting triage',color:'#d9d2c5'}]},
+  links: [{s:'sa',t:'fp',v:591},{s:'sa',t:'op',v:18,dark:true},{s:'sa',t:'fx',v:6},
+          {s:'pt',t:'op',v:38,dark:true},{s:'pt',t:'fx',v:22},{s:'sc',t:'op',v:43,dark:true},{s:'sc',t:'fx',v:9},
+          {s:'se',t:'op',v:26,dark:true},{s:'se',t:'fx',v:19},{s:'mt',t:'op',v:24,dark:true},{s:'mt',t:'fx',v:13},
+          {s:'cl',t:'op',v:13,dark:true},{s:'cl',t:'fx',v:9},{s:'bb',t:'op',v:3,dark:true},{s:'bb',t:'fx',v:1},{s:'bb',t:'tr',v:2}]});
+</script>
+</body></html>

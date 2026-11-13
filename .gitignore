@@ -1,0 +1,12 @@
+# private layer: branded templates, notes, research. Never pushed.
+local/
+
+# built on first run by scripts/render.sh
+scripts/pdf2png
+
+# render output
+*.pdf
+*.png
+!docs/*.png
+
+.DS_Store
