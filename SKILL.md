@@ -43,7 +43,7 @@ assets/check.js     layout check (overflow, chart over note, unknown icon, signa
 assets/fonts/       Inter, Geist Mono (embedded, works offline)
 templates/          severity: graphic, slides, doc, dashboard
                     signal: brief, deck, whitepaper, landing, mobile, social, brand, charts (catalogue),
-                    invoice, certificate, badge, thumbnail, email-header, poster
+                    invoice, certificate, badge, thumbnail, email-header, print-poster
                     animation: pitch, chart-reveal
 examples/           finished pieces for range: poster, menu, résumé, investor update, talk, spec sheet,
                     year recap. Look at one when a job has no template (do not copy its content)
@@ -77,7 +77,7 @@ local/              private, gitignored: NOTES.md, branded templates, research (
 | event badges, name tags | doc wide | `templates/badge.html` | four 4x3in badges per sheet, crop marks |
 | video thumbnail | named pages | `templates/thumbnail.html` | 1280x720, three compositions |
 | email or newsletter header, signature | named pages | `templates/email-header.html` | 1200x400, 1200x300, 600x200 |
-| print poster, sign | named pages | `templates/poster.html` | A3 portrait, A4 landscape |
+| print poster, sign | named pages | `templates/print-poster.html` | A3 portrait, A4 landscape |
 | animated chart for a post or slide | animation | `templates/chart-reveal.html` | 1200x675; `AS.reveal` from `assets/motion.js`; export with `scripts/animate.sh` |
 | short animation, README or launch GIF | animation | `templates/pitch.html` | 1200x675, drawn per instant from `#t=`; export with `scripts/animate.sh` |
 | "which chart?" | n/a | `templates/charts.html` | catalogue with one working call per newer helper |

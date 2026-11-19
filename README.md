@@ -98,7 +98,7 @@ Twenty starting points. The skill copies one, replaces the sample words and numb
 | badge | [`badge.html`](templates/badge.html) | four badges per sheet | event badges and name tags |
 | thumbnail | [`thumbnail.html`](templates/thumbnail.html) | 1280×720 | video thumbnails |
 | email | [`email-header.html`](templates/email-header.html) | 1200×400, 1200×300, 600×200 | newsletter headers, banners, signatures |
-| poster | [`poster.html`](templates/poster.html) | A3, A4 | print posters and signs |
+| poster | [`print-poster.html`](templates/print-poster.html) | A3, A4 | print posters and signs |
 | pitch | [`pitch.html`](templates/pitch.html) | 1200×675 animation | README and launch GIFs, exported with `scripts/animate.sh` |
 | chart reveal | [`chart-reveal.html`](templates/chart-reveal.html) | 1200×675 animation | an animated chart for a post or slide |
 | charts | [`charts.html`](templates/charts.html) | 1600×1000 | a catalogue with one working call per newer chart |
