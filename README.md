@@ -8,6 +8,33 @@ Cream paper, Inter, big two-tone headlines, charts in ink greys, and almost no c
 signal mark per page, or the four severity colours when the work is about risk. It started as a
 security team's report style and now covers general design work.
 
+## Showcase
+
+Seven pieces made with the skill, each for a different invented brand with its own signal colour.
+The sources are in [`examples/`](examples/); every name and number in them is made up.
+
+| Conference talk | Hardware spec sheet |
+|---|---|
+| [![Talk title slide](docs/showcase/talk-01.png)](examples/talk.html) | [![Spec sheet](docs/showcase/spec-sheet.png)](examples/spec-sheet.html) |
+
+| Event poster | Restaurant menu | Résumé |
+|---|---|---|
+| [![Poster](docs/showcase/poster.png)](examples/poster.html) | [![Menu](docs/showcase/menu.png)](examples/menu.html) | [![Résumé](docs/showcase/resume.png)](examples/resume.html) |
+
+| Investor update | Year in review, square | Year in review, story |
+|---|---|---|
+| [![Investor update](docs/showcase/investor-update.png)](examples/investor-update.html) | [![Recap square](docs/showcase/year-recap-01.png)](examples/year-recap.html) | [![Recap story](docs/showcase/year-recap-02.png)](examples/year-recap.html) |
+
+| One number | One chart | Four principles |
+|---|---|---|
+| [![Talk number](docs/showcase/talk-02.png)](examples/talk.html) | [![Talk chart](docs/showcase/talk-03.png)](examples/talk.html) | [![Talk principles](docs/showcase/talk-04.png)](examples/talk.html) |
+
+Render any of them yourself: `scripts/render.sh examples/poster.html out/`.
+
+## Templates
+
+The starting points the skill copies from:
+
 ![Summary slide](docs/deck.png)
 
 | Deck | Charts | Brand sheet |
@@ -174,7 +201,8 @@ assets/charts.js      chart helpers (AS.*)
 assets/icons.js       icons and brand marks
 assets/check.js       layout check, result on <body data-check>
 assets/fonts/         Inter and Geist Mono (OFL), embedded so renders work offline
-templates/            eleven working examples, fictional data
+templates/            eleven starting points, fictional data
+examples/             seven finished pieces made with the skill (the showcase above)
 reference/            style guide, brand layer, layouts, UI patterns
 scripts/new.sh        start a piece from a template
 scripts/render.sh     HTML to PDF to PNG, plus the layout check

@@ -1,0 +1,338 @@
+<!doctype html>
+<!-- Showcase: a hardware spec sheet on one 1600x1000 canvas.
+     Everything here is invented for the example: the maker (Orrin), the product (Nocturne N–1),
+     every specification, the firmware history and the panel layout. The line drawing is original,
+     built from rectangles, circles and lines in one ink at two stroke weights (1.5 and 0.6).
+     Signal colour is used once: the peak cell of the input meter. -->
+<html><head><meta charset="utf-8"><title>Spec sheet</title>
+<link rel="stylesheet" href="../assets/style.css">
+<style>@page{size:1600px 1000px;margin:0}
+body.graphic .canvas{padding:36px 48px 28px;gap:12px}
+/* the sheet: one ink outline, hairline dividers, no cards */
+.sheet{flex:1 1 auto;min-height:0;display:grid;grid-template-columns:424px 1fr 352px;grid-template-rows:auto 1fr auto;
+  border-radius:10px;box-shadow:inset 0 0 0 1px var(--ink)}
+.sheet>*{min-width:0;min-height:0}
+.hd{grid-column:1/-1;display:flex;align-items:center;gap:20px;padding:15px 28px;border-bottom:1px solid var(--line-2)}
+.hd .mid{margin:0 auto 0 8px;padding-left:20px;border-left:1px solid var(--line-2);font-size:13px;color:var(--ink-3)}
+.hd .code{font-size:13px}
+.cellp{padding:24px 28px;display:flex;flex-direction:column}
+.cellp+.cellp{border-left:1px solid var(--line-2)}
+.ch2{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.ch2>span:last-child:not(.legend4){font:400 11px/1 var(--f-mono);color:var(--ink-3)}
+/* signal is spent on the meter peak only: versions stay ink */
+.code sup{color:var(--ink-3)} .plate .ph em{color:var(--ink-2)} .vers em{color:var(--ink);font-weight:500}
+/* left: name, headline, specs, plate */
+.name{display:flex;align-items:baseline;gap:12px;font:600 19px/1 var(--f-sans);letter-spacing:-.02em}
+.name .code{font-size:19px}
+.hl{font:600 58px/.96 var(--f-sans);letter-spacing:-.047em;margin-top:18px}
+.hl em{font-style:normal;color:var(--ink-soft)}
+.dek{font-size:16px;line-height:1.45;color:var(--ink-2);margin-top:16px;max-width:350px}
+.spec{margin-top:22px}
+.spec>div{padding:13px 0 14px}
+.spec b{font-size:19px} .spec span{font-size:13.5px}
+.plate{margin-top:auto;align-self:stretch}
+/* centre: the drawing */
+.draw{position:relative;width:680px;height:560px;margin:auto}
+.draw svg{position:absolute;inset:0;width:680px;height:560px;overflow:visible}
+.draw svg *{fill:none;stroke:var(--ink);stroke-linecap:round;vector-effect:non-scaling-stroke}
+.draw .o{stroke-width:1.5} .draw .h{stroke-width:.6} .draw svg .d{fill:var(--ink);stroke:none} .draw svg .p{fill:var(--paper)}
+.draw svg text{fill:var(--ink-3);stroke:none;font:400 11px var(--f-mono)}
+.draw .keyg{position:absolute;--d:28px;margin:-14px 0 0 -14px;background:var(--paper)}
+.keys{display:grid;grid-template-columns:repeat(5,1fr);gap:16px;border-top:1px solid var(--line-2);padding-top:16px}
+.keys>div{display:grid;grid-template-columns:auto 1fr;gap:3px 10px;align-items:start;align-content:start}
+.keys .keyg{--d:26px;grid-row:span 2;align-self:start}
+.keys b{font:600 13.5px/1.2 var(--f-sans);letter-spacing:-.012em} .keys span:not(.keyg){font-size:13px;line-height:1.25;color:var(--ink-3)}
+/* right: readouts */
+.ro{padding:0;display:grid;grid-template-rows:auto auto auto auto 1fr}
+.ro>div{padding:18px 26px 16px}
+.ro>div+div{border-top:1px solid var(--line-2)}
+.ro h4{font:600 16px/1.25 var(--f-sans);letter-spacing:-.018em;margin:9px 0 10px}
+.ro .cap{font-size:13px;line-height:1.4;color:var(--ink-3);margin-top:8px}
+.mx{display:flex;align-items:flex-end;gap:18px}
+.mx p{font-size:13px;line-height:1.4;color:var(--ink-3)} .mx p b{display:block;font:600 16px/1.25 var(--f-sans);letter-spacing:-.018em;color:var(--ink)}
+.ro .vers>div{padding:8px 0} .ro .vers>div:last-child{border-bottom:0}
+.ro .vers .nt{font:400 13px/1 var(--f-sans);color:var(--ink-2)} .ro .vers b{width:26px}
+/* foot: the I/O row */
+.io{grid-column:1/-1;display:grid;grid-template-columns:368px 1fr;gap:56px;align-items:center;padding:16px 28px 17px;border-top:1px solid var(--line-2)}
+.io h4{font:600 16px/1.25 var(--f-sans);letter-spacing:-.018em;margin-top:7px}
+.io .ports{display:flex;gap:6px;width:100%}
+.io .ports i{flex:1;height:8px;border-radius:2px} .io .ports i.g2{background:var(--n3)}
+.io .pl{display:grid;grid-template-columns:repeat(10,1fr);gap:6px;margin-top:9px;font:400 11px/1.35 var(--f-mono);color:var(--ink-3)}
+.io .pl b{display:block;font:600 13px/1.3 var(--f-sans);letter-spacing:-.01em;color:var(--ink)}
+.fine{display:flex;justify-content:space-between;font-size:13px;line-height:1;color:var(--ink-3);padding:0 2px}
+</style>
+<script src="../assets/charts.js"></script>
+<script src="../assets/icons.js"></script>
+<script src="../assets/check.js"></script>
+</head>
+<body class="graphic" style="--w:1600px;--h:1000px">
+<div class="canvas">
+  <div class="sheet">
+
+    <div class="hd">
+      <span class="lockup" style="--m:30px"><i class="mk" data-m="stack"></i><span class="nm">orrin<small>Sound works</small></span></span>
+      <span class="mid">Specification sheet</span>
+      <span class="code">N–1<sup>1.4</sup></span>
+      <span class="tagx line">Rev C</span>
+      <span class="tagx">Sheet 1 of 1</span>
+    </div>
+
+    <div class="cellp">
+      <div class="name">Nocturne <span class="code">N–1<sup>1.4</sup></span></div>
+      <h1 class="hl">Four inputs.<br><em>No menus.</em></h1>
+      <p class="dek">A desktop field recorder with one control for every job. Set a level, press record, walk away.</p>
+      <div class="spec">
+        <div><b>4 inputs at 32-bit float</b><span>Two mic preamps, two line inputs</span></div>
+        <div><b>About 360 hours per 1 TB card</b><span>Four tracks at 48 kHz, 32-bit float</span></div>
+        <div><b>−129 dBu input noise</b><span>A-weighted, 150 ohm source, full gain</span></div>
+        <div><b>248 × 164 × 42 mm</b><span>1.1 kg, milled aluminium shell</span></div>
+      </div>
+      <div class="plate"><div class="ph"><b>N–1</b><em>v1.4</em></div><span>desktop field recorder, first generation</span>
+        <div class="pc"><span><b>built</b>2026-10</span><span><b>serial</b>or-000412</span><span><b>power</b><span style="text-transform:none">9 V, 1.2 A</span></span></div></div>
+    </div>
+
+    <div class="cellp">
+      <div class="ch2"><span class="micro">Front panel, side and rear</span><span>dimensions in mm</span></div>
+      <div class="draw">
+<svg viewBox="0 0 680 560" aria-label="Line drawing of the Nocturne N–1 front panel and side">
+<line class="h" x1="90" y1="22" x2="312" y2="22"/>
+<line class="h" x1="368" y1="22" x2="590" y2="22"/>
+<line class="h" x1="90" y1="14" x2="90" y2="36"/>
+<line class="h" x1="590" y1="14" x2="590" y2="36"/>
+<text x="340" y="26" text-anchor="middle">248</text>
+<rect class="o" x="90" y="44" width="500" height="330" rx="14"/>
+<circle class="h" cx="105" cy="59" r="4"/>
+<line class="h" x1="102.4" y1="59" x2="107.6" y2="59"/>
+<circle class="h" cx="575" cy="59" r="4"/>
+<line class="h" x1="572.4" y1="59" x2="577.6" y2="59"/>
+<circle class="h" cx="105" cy="359" r="4"/>
+<line class="h" x1="102.4" y1="359" x2="107.6" y2="359"/>
+<circle class="h" cx="575" cy="359" r="4"/>
+<line class="h" x1="572.4" y1="359" x2="577.6" y2="359"/>
+<rect class="o" x="118" y="72" width="196" height="96" rx="5"/>
+<circle class="h" cx="146" cy="90" r="2.5"/>
+<rect class="h" x="156" y="86" width="144" height="8" rx="1"/>
+<line class="o" x1="158" y1="90" x2="252" y2="90"/>
+<circle class="h" cx="146" cy="110" r="2.5"/>
+<rect class="h" x="156" y="106" width="144" height="8" rx="1"/>
+<line class="o" x1="158" y1="110" x2="238" y2="110"/>
+<circle class="h" cx="146" cy="130" r="2.5"/>
+<rect class="h" x="156" y="126" width="144" height="8" rx="1"/>
+<line class="o" x1="158" y1="130" x2="284" y2="130"/>
+<circle class="h" cx="146" cy="150" r="2.5"/>
+<rect class="h" x="156" y="146" width="144" height="8" rx="1"/>
+<line class="o" x1="158" y1="150" x2="214" y2="150"/>
+<circle class="o" cx="404" cy="120" r="40"/>
+<circle class="h" cx="404" cy="120" r="30"/>
+<line class="o" x1="397.572" y1="112.34" x2="384.716" y2="97.0187"/>
+<line class="h" x1="371.5" y1="152.5" x2="367.2" y2="156.8"/>
+<line class="h" x1="360.3" y1="134.2" x2="354.5" y2="136.1"/>
+<line class="h" x1="358.6" y1="112.8" x2="352.6" y2="111.9"/>
+<line class="h" x1="366.8" y1="93" x2="361.9" y2="89.4"/>
+<line class="h" x1="383.1" y1="79" x2="380.4" y2="73.7"/>
+<line class="h" x1="404" y1="74" x2="404" y2="68"/>
+<line class="h" x1="424.9" y1="79" x2="427.6" y2="73.7"/>
+<line class="h" x1="441.2" y1="93" x2="446.1" y2="89.4"/>
+<line class="h" x1="449.4" y1="112.8" x2="455.4" y2="111.9"/>
+<line class="h" x1="447.7" y1="134.2" x2="453.5" y2="136.1"/>
+<line class="h" x1="436.5" y1="152.5" x2="440.8" y2="156.8"/>
+<circle class="o" cx="514" cy="120" r="40"/>
+<circle class="h" cx="514" cy="120" r="30"/>
+<line class="o" x1="518.226" y1="110.937" x2="526.679" y2="92.8108"/>
+<line class="h" x1="481.5" y1="152.5" x2="477.2" y2="156.8"/>
+<line class="h" x1="470.3" y1="134.2" x2="464.5" y2="136.1"/>
+<line class="h" x1="468.6" y1="112.8" x2="462.6" y2="111.9"/>
+<line class="h" x1="476.8" y1="93" x2="471.9" y2="89.4"/>
+<line class="h" x1="493.1" y1="79" x2="490.4" y2="73.7"/>
+<line class="h" x1="514" y1="74" x2="514" y2="68"/>
+<line class="h" x1="534.9" y1="79" x2="537.6" y2="73.7"/>
+<line class="h" x1="551.2" y1="93" x2="556.1" y2="89.4"/>
+<line class="h" x1="559.4" y1="112.8" x2="565.4" y2="111.9"/>
+<line class="h" x1="557.7" y1="134.2" x2="563.5" y2="136.1"/>
+<line class="h" x1="546.5" y1="152.5" x2="550.8" y2="156.8"/>
+<rect class="o" x="118" y="200" width="46" height="46" rx="5"/>
+<circle class="h" cx="141" cy="211" r="3"/>
+<rect class="o" x="176" y="200" width="46" height="46" rx="5"/>
+<circle class="h" cx="199" cy="211" r="3"/>
+<rect class="o" x="234" y="200" width="46" height="46" rx="5"/>
+<circle class="h" cx="257" cy="211" r="3"/>
+<rect class="o" x="292" y="200" width="46" height="46" rx="5"/>
+<circle class="h" cx="315" cy="211" r="3"/>
+<rect class="o" x="350" y="200" width="46" height="46" rx="5"/>
+<circle class="h" cx="373" cy="211" r="3"/>
+<rect class="o" x="408" y="200" width="46" height="46" rx="5"/>
+<circle class="h" cx="431" cy="211" r="3"/>
+<rect class="o" x="466" y="200" width="46" height="46" rx="5"/>
+<circle class="h" cx="489" cy="211" r="3"/>
+<rect class="o" x="524" y="200" width="46" height="46" rx="5"/>
+<circle class="h" cx="547" cy="211" r="3"/>
+<rect class="o" x="118" y="258" width="46" height="46" rx="5"/>
+<circle class="h" cx="141" cy="269" r="3"/>
+<rect class="o" x="176" y="258" width="46" height="46" rx="5"/>
+<circle class="h" cx="199" cy="269" r="3"/>
+<rect class="o" x="234" y="258" width="46" height="46" rx="5"/>
+<circle class="h" cx="257" cy="269" r="3"/>
+<rect class="o" x="292" y="258" width="46" height="46" rx="5"/>
+<circle class="h" cx="315" cy="269" r="3"/>
+<rect class="o" x="350" y="258" width="46" height="46" rx="5"/>
+<circle class="h" cx="373" cy="269" r="3"/>
+<rect class="o" x="408" y="258" width="46" height="46" rx="5"/>
+<circle class="h" cx="431" cy="269" r="3"/>
+<rect class="o" x="466" y="258" width="46" height="46" rx="5"/>
+<circle class="h" cx="489" cy="269" r="3"/>
+<rect class="o" x="524" y="258" width="46" height="46" rx="5"/>
+<circle class="h" cx="547" cy="269" r="3"/>
+<circle class="o" cx="131" cy="340" r="13"/>
+<circle class="o" cx="169" cy="340" r="13"/>
+<circle class="o" cx="207" cy="340" r="13"/>
+<circle class="h" cx="131" cy="340" r="6"/>
+<circle class="h" cx="254" cy="334.5" r="2"/>
+<circle class="h" cx="265" cy="334.5" r="2"/>
+<circle class="h" cx="276" cy="334.5" r="2"/>
+<circle class="h" cx="287" cy="334.5" r="2"/>
+<circle class="h" cx="298" cy="334.5" r="2"/>
+<circle class="h" cx="254" cy="345.5" r="2"/>
+<circle class="h" cx="265" cy="345.5" r="2"/>
+<circle class="h" cx="276" cy="345.5" r="2"/>
+<circle class="h" cx="287" cy="345.5" r="2"/>
+<circle class="h" cx="298" cy="345.5" r="2"/>
+<line class="h" x1="340" y1="340" x2="468" y2="340"/>
+<line class="h" x1="492" y1="340" x2="570" y2="340"/>
+<line class="h" x1="340" y1="346" x2="340" y2="351"/>
+<line class="h" x1="363" y1="346" x2="363" y2="351"/>
+<line class="h" x1="386" y1="346" x2="386" y2="351"/>
+<line class="h" x1="409" y1="346" x2="409" y2="351"/>
+<line class="h" x1="432" y1="346" x2="432" y2="351"/>
+<line class="h" x1="455" y1="346" x2="455" y2="351"/>
+<line class="h" x1="501" y1="346" x2="501" y2="351"/>
+<line class="h" x1="524" y1="346" x2="524" y2="351"/>
+<line class="h" x1="547" y1="346" x2="547" y2="351"/>
+<line class="h" x1="570" y1="346" x2="570" y2="351"/>
+<rect class="o" x="470" y="327" width="20" height="26" rx="3"/>
+<line class="h" x1="480" y1="331" x2="480" y2="349"/>
+<rect class="o" x="90" y="432" width="500" height="40" rx="4"/>
+<rect class="h" x="118" y="428" width="46" height="4"/>
+<rect class="h" x="176" y="428" width="46" height="4"/>
+<rect class="h" x="234" y="428" width="46" height="4"/>
+<rect class="h" x="292" y="428" width="46" height="4"/>
+<rect class="h" x="350" y="428" width="46" height="4"/>
+<rect class="h" x="408" y="428" width="46" height="4"/>
+<rect class="h" x="466" y="428" width="46" height="4"/>
+<rect class="h" x="524" y="428" width="46" height="4"/>
+<rect class="o p" x="364" y="412" width="80" height="20" rx="2"/>
+<line class="h" x1="368" y1="419" x2="440" y2="419"/>
+<rect class="o p" x="474" y="412" width="80" height="20" rx="2"/>
+<line class="h" x1="478" y1="419" x2="550" y2="419"/>
+<rect class="h" x="112" y="472" width="44" height="5"/>
+<rect class="h" x="524" y="472" width="44" height="5"/>
+<line class="h" x1="66" y1="412" x2="66" y2="436"/>
+<line class="h" x1="66" y1="454" x2="66" y2="477"/>
+<line class="h" x1="60" y1="412" x2="72" y2="412"/>
+<line class="h" x1="60" y1="477" x2="72" y2="477"/>
+<text x="66" y="449" text-anchor="middle">42</text>
+<text x="604" y="456" text-anchor="start">side</text>
+<rect class="o" x="90" y="506" width="500" height="40" rx="4"/>
+<rect class="h" x="112" y="546" width="44" height="5"/>
+<rect class="h" x="524" y="546" width="44" height="5"/>
+<circle class="o" cx="126" cy="526" r="12"/>
+<circle class="h" cx="126" cy="526" r="5"/>
+<circle class="o" cx="174" cy="526" r="12"/>
+<circle class="h" cx="174" cy="526" r="5"/>
+<circle class="o" cx="222" cy="526" r="8"/>
+<circle class="h" cx="222" cy="526" r="3.5"/>
+<circle class="o" cx="270" cy="526" r="8"/>
+<circle class="h" cx="270" cy="526" r="3.5"/>
+<circle class="o" cx="318" cy="526" r="8"/>
+<circle class="h" cx="318" cy="526" r="3.5"/>
+<circle class="o" cx="366" cy="526" r="8"/>
+<circle class="h" cx="366" cy="526" r="3.5"/>
+<circle class="o" cx="414" cy="526" r="5"/>
+<rect class="o" x="453" y="522" width="18" height="8" rx="4"/>
+<rect class="o" x="497" y="523" width="26" height="6" rx="1"/>
+<line class="h" x1="501" y1="526" x2="519" y2="526"/>
+<circle class="o" cx="558" cy="526" r="6.5"/>
+<circle class="d" cx="558" cy="526" r="1.6"/>
+<text x="604" y="530" text-anchor="start">rear</text>
+<line class="h" x1="38" y1="120" x2="128" y2="120"/>
+<circle class="d" cx="128" cy="120" r="2.6"/>
+<line class="h" x1="642" y1="120" x2="554" y2="120"/>
+<circle class="d" cx="554" cy="120" r="2.6"/>
+<line class="h" x1="642" y1="223" x2="558" y2="223"/>
+<circle class="d" cx="558" cy="223" r="2.6"/>
+<line class="h" x1="38" y1="340" x2="118" y2="340"/>
+<circle class="d" cx="118" cy="340" r="2.6"/>
+<line class="h" x1="642" y1="340" x2="570" y2="340"/>
+<circle class="d" cx="570" cy="340" r="2.6"/>
+</svg>
+        <span class="keyg" style="left:22px;top:120px">1</span>
+        <span class="keyg" style="left:658px;top:120px">2</span>
+        <span class="keyg" style="left:658px;top:223px">3</span>
+        <span class="keyg" style="left:22px;top:340px">4</span>
+        <span class="keyg" style="left:658px;top:340px">5</span>
+      </div>
+      <div class="keys">
+        <div><span class="keyg">1</span><b>Display</b><span>Four meters, always on</span></div>
+        <div><span class="keyg">2</span><b>Gain</b><span>Two knobs, 60 dB each</span></div>
+        <div><span class="keyg">3</span><b>Take keys</b><span>Sixteen, one per slot</span></div>
+        <div><span class="keyg">4</span><b>Transport</b><span>Record, play and stop</span></div>
+        <div><span class="keyg">5</span><b>Monitor</b><span>Headphone level fader</span></div>
+      </div>
+    </div>
+
+    <div class="cellp ro">
+      <div>
+        <div class="ch2"><span class="micro">Input level</span><span>dBFS</span></div>
+        <h4>Input 3 is holding a peak at −3.</h4>
+        <div id="meter"></div>
+      </div>
+      <div>
+        <div class="ch2"><span class="micro">Sample rate</span><span>kHz</span></div>
+        <div class="mx" style="margin-top:12px"><div id="rate"></div><p><b>96 by default</b>Up to 192. Set per project, not per take.</p></div>
+      </div>
+      <div>
+        <div class="ch2"><span class="micro">Battery</span><span>hours</span></div>
+        <div class="mx" style="margin-top:12px"><div id="batt"></div><p><b>22 on one charge</b>At 48 kHz with the display dimmed.</p></div>
+      </div>
+      <div>
+        <div class="ch2"><span class="micro">Take slots</span><span>27 of 48 filled</span></div>
+        <div id="slots" style="margin-top:12px"></div>
+      </div>
+      <div>
+        <div class="ch2"><span class="micro">Firmware</span><span>current first</span></div>
+        <div class="vers" style="margin-top:6px">
+          <div><b>1.4</b><span class="nt">Peak hold per input</span><i></i><em>Oct 2026</em></div>
+          <div><b>1.3</b><span class="nt">Bank C added</span><i></i><span>Jun 2026</span></div>
+          <div><b>1.1</b><span class="nt">Faster card writes</span><i></i><span>Feb 2026</span></div>
+          <div><b>1.0</b><span class="nt">First release</span><i></i><span>Nov 2025</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="io">
+      <div><div class="ch2"><span class="micro">Rear panel</span>
+        <span class="legend4"><span><i></i>analogue</span><span><i class="g2"></i>digital</span><span><i class="g3"></i>power</span></span></div>
+        <h4>Ten ports, left to right.</h4></div>
+      <div>
+        <span class="ports"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="g2"></i><i class="g2"></i><i></i></span>
+        <div class="pl"><span><b>Mic 1</b>combo</span><span><b>Mic 2</b>combo</span><span><b>Line 3</b>6.35 mm</span><span><b>Line 4</b>6.35 mm</span><span><b>Out L</b>6.35 mm</span><span><b>Out R</b>6.35 mm</span><span><b>Phones</b>3.5 mm</span><span><b>USB-C</b>audio, files</span><span><b>Card</b>SD, 1 TB</span><span><b>DC in</b>9 V</span></div>
+      </div>
+    </div>
+
+  </div>
+  <div class="fine"><span>Orrin and the Nocturne N–1 are invented for this example. Every figure is illustrative.</span><span>Drawing not to scale</span></div>
+</div>
+<script>
+AS.theme({signal: '#e4502a'});
+AS.meter('#meter', {W: 300, labelW: 52, numW: 46, rowH: 26, cellH: 13, cells: 20, of: 60, rows: [
+  {label: 'In 1', value: 42, display: '−18'},
+  {label: 'In 2', value: 36, display: '−24'},
+  {label: 'In 3', value: 57, display: '−3', color: 'signal'},
+  {label: 'In 4', value: 24, display: '−36'}]});
+AS.matrix('#rate', '96', {dot: 8, off: true});
+AS.matrix('#batt', '22', {dot: 8, off: true});
+AS.stepgrid('#slots', {W: 300, labelW: 52, gap: 3, lanePad: 4, x: ['slot 1', 'slot 16'], lanes: [
+  {label: 'Bank A', cells: [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]},
+  {label: 'Bank B', cells: [1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0]},
+  {label: 'Bank C', cells: [1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}]});
+</script>
+</body></html>

@@ -1,0 +1,154 @@
+<!doctype html>
+<!-- Showcase: a one-page A4 dinner menu. Signal mode, purely typographic.
+     EVERYTHING HERE IS INVENTED: the restaurant "Sorrel", its address, hours, phone number, dishes,
+     prices, producers and the edition code. It imitates no real restaurant or brand.
+     Layout: top row (lockup, season), two-clause .h-hero beside one small moss orb (the only art),
+     then two columns. Left: three courses as ruled dish rows (name in ink, dietary .tagx.line, dotted
+     leader, mono price, a grey line of ingredients). Right: the set menu in an ink .tile (the page's
+     one ink block), sides, drinks, a dietary legend. Foot: a full-width .plate as the colophon.
+     Signal (deep green, set with AS.theme) appears once: the dot on tonight's special. -->
+<html><head><meta charset="utf-8"><title>Sorrel, autumn dinner menu</title>
+<link rel="stylesheet" href="../assets/style.css">
+<style>@page{size:210mm 297mm;margin:0}
+/* layout glue and sizing only: colours and faces come from the stylesheet tokens */
+body.doc.a4 .page{padding:13mm 17mm 13mm;gap:0}
+.top{display:flex;justify-content:space-between;align-items:center}
+.hero{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;margin-top:28px}
+.hero h1{white-space:nowrap}
+.hero .lede{margin-top:16px;max-width:430px}
+.cols2{display:grid;grid-template-columns:1fr 216px;gap:34px;margin-top:30px;align-items:stretch}
+.col{display:flex;flex-direction:column;min-width:0}
+.col.side{justify-content:space-between}
+/* course: a head row over ruled dish rows */
+.course+.course{margin-top:26px}
+.col.main{justify-content:space-between}.col.main .course+.course{margin-top:0}
+.chd{display:flex;justify-content:space-between;align-items:baseline;padding-bottom:9px;border-bottom:1px solid var(--ink)}
+.chd h2{font:600 21px/1 var(--f-sans);letter-spacing:-.028em}
+.chd span{font:400 11px/1 var(--f-mono);color:var(--ink-3)}
+.dish{padding:7px 0 8px;border-bottom:1px solid var(--line)}
+.dish .ln{display:flex;align-items:center;gap:8px}
+.dish .ln b{font:600 15.5px/1.2 var(--f-sans);letter-spacing:-.018em;white-space:nowrap}
+.dish .ln>i{flex:1;height:3px;background:var(--dots);min-width:18px}
+.dish .ln em{font:500 13px/1 var(--f-mono);font-style:normal;color:var(--ink);font-variant-numeric:tabular-nums}
+.dish p{font-size:12.5px;line-height:1.4;color:var(--ink-3);margin-top:2px}
+.dish .tagx{height:16px;padding:0 4px;font-size:9.5px}
+.dish.s{padding:8px 0}.dish.s .ln b{font-weight:500;font-size:13.5px}.dish.s .ln em{font-size:12px}
+.dish.s .ln small{font:400 11px/1 var(--f-mono);color:var(--ink-3)}
+.set{margin-bottom:0}
+.set .ph2{display:flex;justify-content:space-between;align-items:flex-start}
+.legend{display:grid;gap:6px;font-size:11.5px;line-height:1.4;color:var(--ink-3)}
+.legend .keys{display:grid;grid-template-columns:auto auto;justify-content:start;gap:6px 18px;align-items:center}
+.legend .keys span{display:inline-flex;align-items:center;gap:5px}
+.legend .tagx{height:16px;padding:0 4px;font-size:9.5px}
+.foot2{margin-top:auto;padding-top:24px}
+.plate.wide{display:grid;width:100%;grid-template-columns:auto 1fr;align-items:start;gap:44px}
+.plate.wide .ph{display:grid;gap:9px;justify-content:start}
+.plate.wide .pc{grid-template-columns:auto auto auto auto;justify-content:space-between;gap:2px 16px}.plate.wide .pc div{white-space:nowrap}
+</style>
+<script src="../assets/charts.js"></script>
+<script src="../assets/icons.js"></script>
+<script src="../assets/check.js"></script>
+</head>
+<body class="doc a4">
+
+<section class="page">
+  <div class="top">
+    <span class="lockup" style="--m:26px"><i class="mk" data-m="quarter"></i><span class="nm">Sorrel<small>Seasonal kitchen</small></span></span>
+    <span class="micro">Autumn 2026</span>
+  </div>
+
+  <div class="hero">
+    <div>
+      <span class="micro">Dinner, week of 9 November</span>
+      <h1 class="h-hero" style="font-size:54px;margin-top:14px">Autumn dinner.<br><em>Roots, smoke, orchard.</em></h1>
+    </div>
+    <i class="orbx moss" data-seed="4" style="--o:104px;margin-bottom:6px"></i>
+  </div>
+
+  <div class="cols2 grow">
+    <div class="col main">
+      <div class="course">
+        <div class="chd"><h2>To start</h2><span>01</span></div>
+        <div class="dish"><div class="ln"><b>Sorrel soup</b><span class="tagx line">V</span><span class="tagx line">GF</span><i></i><em>9</em></div>
+          <p>Garden sorrel, new potato, cultured cream, chive oil</p></div>
+        <div class="dish"><div class="ln"><b>Charred leeks</b><span class="tagx line">VG</span><span class="tagx line">GF</span><i></i><em>11</em></div>
+          <p>Hazelnut crumb, burnt apple, mustard leaf</p></div>
+        <div class="dish"><div class="ln"><b>Smoked trout</b><span class="tagx line">GF</span><i></i><em>13</em></div>
+          <p>Pickled beetroot, horseradish, dill oil</p></div>
+      </div>
+
+      <div class="course">
+        <div class="chd"><h2>Mains</h2><span>02</span></div>
+        <div class="dish"><div class="ln"><b>Ember roast squash</b><span class="tagx line">VG</span><span class="tagx line">GF</span><i></i><em>19</em></div>
+          <p>Crown prince squash, white beans, sage, pumpkin seed</p></div>
+        <div class="dish"><div class="ln"><b>Braised short rib</b><span class="sdot" title="Tonight's special"></span><span class="tagx line">GF</span><i></i><em>27</em></div>
+          <p>Nine hours in cider, celeriac mash, pickled walnut</p></div>
+        <div class="dish"><div class="ln"><b>Day boat hake</b><span class="tagx line">GF</span><i></i><em>24</em></div>
+          <p>Brown butter, cockles, sea beet, new season potatoes</p></div>
+        <div class="dish"><div class="ln"><b>Barley and chestnut</b><span class="tagx line">V</span><i></i><em>18</em></div>
+          <p>Pearl barley, roast chestnut, aged cheddar, kale</p></div>
+      </div>
+
+      <div class="course">
+        <div class="chd"><h2>To finish</h2><span>03</span></div>
+        <div class="dish"><div class="ln"><b>Baked quince</b><span class="tagx line">V</span><i></i><em>9</em></div>
+          <p>Bay custard, honey, toasted oats</p></div>
+        <div class="dish"><div class="ln"><b>Dark chocolate pot</b><span class="tagx line">VG</span><span class="tagx line">GF</span><i></i><em>8</em></div>
+          <p>Sea salt, cold pressed rapeseed oil, sloe</p></div>
+        <div class="dish"><div class="ln"><b>Three farm cheeses</b><span class="tagx line">V</span><i></i><em>12</em></div>
+          <p>Oatcakes, damson jelly, a pear from the yard</p></div>
+      </div>
+    </div>
+
+    <div class="col side">
+      <div class="tile ink set">
+        <div class="ph2"><span class="micro">Set menu</span><i class="ic" data-i="clock" style="--ic:16px;opacity:.6"></i></div>
+        <b>48<small>per person</small></b>
+        <p>Five plates chosen by the kitchen, for the whole table. Allow two hours.</p>
+        <p style="margin-top:10px;padding-top:10px;border-top:1px solid rgba(251,248,241,.18)">Add four paired glasses for 26.</p>
+      </div>
+
+      <div class="course">
+        <div class="chd"><h2>Sides</h2><span>04</span></div>
+        <div class="dish s"><div class="ln"><b>Sourdough, whey butter</b><i></i><em>5</em></div></div>
+        <div class="dish s"><div class="ln"><b>Bitter leaves, cider dressing</b><i></i><em>6</em></div></div>
+        <div class="dish s"><div class="ln"><b>Dripping potatoes</b><i></i><em>6</em></div></div>
+      </div>
+
+      <div class="course">
+        <div class="chd"><h2>To drink</h2><span>05</span></div>
+        <div class="dish s"><div class="ln"><b>Field white</b><small>125 ml</small><i></i><em>7</em></div></div>
+        <div class="dish s"><div class="ln"><b>Hillside red</b><small>125 ml</small><i></i><em>8</em></div></div>
+        <div class="dish s"><div class="ln"><b>Orchard sparkling</b><small>125 ml</small><i></i><em>9</em></div></div>
+        <div class="dish s"><div class="ln"><b>Dry cider</b><small>330 ml</small><i></i><em>6</em></div></div>
+        <div class="dish s"><div class="ln"><b>Quince and bay soda</b><i></i><em>5</em></div></div>
+      </div>
+
+      <div class="legend">
+        <div class="keys">
+          <span><span class="tagx line">V</span>Vegetarian</span>
+          <span><span class="tagx line">VG</span>Vegan</span>
+          <span><span class="tagx line">GF</span>No gluten</span>
+        </div>
+        <p>The green dot marks tonight's special. Tell us about allergies before you order.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="foot2">
+    <div class="plate wide">
+      <div class="ph"><b>Sorrel</b><span class="code" style="text-transform:uppercase">SR–11</span></div>
+      <div class="pc">
+        <div><b>Find us</b>14 Tanner's Yard<br>Wexcombe</div>
+        <div><b>Open</b>Wednesday to Saturday<br>6 pm to 11 pm</div>
+        <div><b>Tables</b>01632 960 114<br>The bar is walk-in</div>
+        <div><b>Prices</b>In pounds<br>No service charge</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+AS.theme({signal: '#2f6b4f'});
+</script>
+</body></html>

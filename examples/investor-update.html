@@ -1,0 +1,160 @@
+<!doctype html>
+<!-- Showcase: a one-page monthly investor update, US letter, signal mode.
+     Everything here is invented: Kiln is not a real company, and every figure, date and name is
+     fictional sample data. The numbers are internally consistent:
+       revenue $1.84M / 1,120 units = $1,643 a unit; cost of goods is 69% of that (31% gross margin)
+       cash $7.80M + 1.69 receipts - 1.18 - 0.64 - 0.27 - 0.12 = $7.28M; net burn $0.52M; 7.28 / 0.52 = 14 months
+     The one signal mark is the on-time installs bar in the targets chart (the only missed target). -->
+<html><head><meta charset="utf-8"><title>Kiln investor update, October 2026</title>
+<link rel="stylesheet" href="../assets/style.css">
+<style>@page{size:8.5in 11in;margin:0}
+body.doc .page{gap:10px;padding:.43in .6in .34in}
+.hl{display:grid;grid-template-columns:1fr 212px;gap:26px;align-items:end;margin-top:5px}
+.hl h1{font:600 43px/.98 var(--f-sans);letter-spacing:-.045em}
+.hl h1 em{font-style:normal;color:var(--ink-soft)}
+.hl p{font-size:12.5px;line-height:1.45;color:var(--ink-2);padding-bottom:3px}
+body.doc .tiles>div{padding:12px 14px 11px} body.doc .tiles>div:first-child{padding-left:0}
+body.doc .tiles b{font-size:31px} body.doc .tiles span{margin-top:7px} body.doc .tiles small{margin-top:3px;font-size:10.5px}
+body.doc .fcard{padding:13px 18px 11px;border-radius:18px}
+body.doc .fcard h3{font-size:15px;margin:7px 0 0;line-height:1.25}
+.fcard .micro{font-size:10px}
+.fcard .plot{margin-top:6px}
+.main{--rail:142px;gap:18px}
+.main .rail{align-content:space-between;padding:4px 0 4px 14px}
+.main .rail .micro{font-size:10px;margin-bottom:-2px}
+.pair{display:grid;grid-template-columns:1fr 1.22fr;gap:13px}
+.pair .fcard{min-width:0}
+.legend4 i.tick{width:1.5px;height:11px;border-radius:1px}
+.legend4 i.ringsw{background:transparent;box-shadow:inset 0 0 0 1.5px var(--n3)}
+.wma{display:grid;grid-template-columns:1fr 1fr 1fr;gap:9px}
+.wma .tile{padding:12px 16px 13px}
+.wma .micro{display:flex;align-items:center;gap:6px}
+.wma .micro .ic{--ic:13px;vertical-align:0}
+.wma ul{list-style:none;display:grid;gap:5px}
+.wma li{font-size:11.5px;line-height:1.4;color:var(--ink-2)}
+.wma li strong{color:var(--ink);font-weight:600}
+.wma li+li{border-top:1px solid var(--line);padding-top:5px}
+body.doc .wma .tile.ink h4{font-size:16.5px;line-height:1.2;letter-spacing:-.025em}
+body.doc .wma .tile.ink p{font-size:11.5px;line-height:1.4;margin-top:auto;padding-top:10px}
+.next{display:grid;grid-template-columns:166px 1fr;gap:22px;align-items:start;border-top:1px solid var(--line-2);padding-top:10px}
+.next .micro{padding-top:6px;white-space:nowrap}
+.next .micro small{display:block;font:400 10.5px/1.4 var(--f-sans);letter-spacing:0;text-transform:none;margin-top:5px;white-space:normal}
+.next .steps{display:grid;grid-template-columns:1fr 1fr;column-gap:22px}
+.next .steps li{font-size:12px;line-height:1.4;padding:5px 0 6px;grid-template-columns:18px 1fr;gap:5px;color:var(--ink-2)}
+.next .steps li::before{font-size:10.5px;padding-top:2px}
+.next .steps li strong{color:var(--ink);font-weight:600}
+.next .steps li:nth-last-child(-n+2){border-bottom:0}
+</style>
+<script src="../assets/charts.js"></script>
+<script src="../assets/icons.js"></script>
+<script src="../assets/check.js"></script>
+</head>
+<body class="doc">
+
+<section class="page">
+  <div class="rhead"><span class="lockup one" style="--m:16px"><i class="mk" data-m="quarter"></i><span class="nm">Kiln</span></span><span>Investor update, October 2026</span><span>Sent November 6, 2026</span></div>
+
+  <div class="hl">
+    <h1>1,120 heaters shipped.<br><em>Margin passed 30%.</em></h1>
+    <p>Line 2 came up mid month and the plant had its biggest month yet. Installs in the South are the one thing behind plan.</p>
+  </div>
+
+  <div class="tiles" style="--cols:4">
+    <div><b>$1.84M</b><span>Revenue</span><small>$1.52M in September, up 21%</small></div>
+    <div><b>1,120</b><span>Units shipped</span><small>940 in September, plan 1,000</small></div>
+    <div><b>31%</b><span>Gross margin</span><small>27% in September</small></div>
+    <div><b>14 mo</b><span>Runway</span><small>13 months on September 30</small></div>
+  </div>
+
+  <div class="withrail main">
+    <div class="card fcard">
+      <div class="chd"><span class="micro">Cash, October 2026</span>
+        <div class="legend4"><span><i></i>balance</span><span><i class="g2"></i>cash in</span><span><i class="g3"></i>cash out</span></div></div>
+      <h3>Cash fell $0.52M in October, from $7.80M to $7.28M.</h3>
+      <div class="plot" id="c1"></div>
+      <p class="method"><b>Method.</b> Bank balances on September 30 and October 31, 2026, in $M. Bars start at zero. Unaudited.</p>
+    </div>
+    <div class="rail">
+      <span class="micro">Notes</span>
+      <p><b>Revenue</b> is counted when a unit ships. Customers pay about 20 days later.</p>
+      <p><b>Runway</b> is closing cash over October net burn: $7.28M over $0.52M.</p>
+      <p><b>On time</b> means installed within 21 days of the order.</p>
+    </div>
+  </div>
+
+  <div class="pair">
+    <div class="card fcard">
+      <div class="chd"><span class="micro">October against plan</span>
+        <div class="legend4"><span><i></i>met</span><span><i class="tick"></i>plan</span></div></div>
+      <h3>Three of four October targets were met. On-time installs missed.</h3>
+      <div class="plot" id="c2"></div>
+      <p class="method"><b>Method.</b> October 2026. Each row has its own scale.</p>
+    </div>
+    <div class="card fcard">
+      <div class="chd"><span class="micro">Days from order to install</span>
+        <div class="legend4 dot"><span><i class="ringsw"></i>july</span><span><i></i>october</span></div></div>
+      <h3>Three regions cut install time by more than 40%. The South did not move.</h3>
+      <div class="plot" id="c3"></div>
+      <p class="method"><b>Method.</b> Median days. July n = 610 installs, October 2026 n = 1,040.</p>
+    </div>
+  </div>
+
+  <div class="wma">
+    <div class="tile">
+      <span class="micro"><i class="ic" data-i="check"></i>Wins</span>
+      <ul>
+        <li><strong>Line 2 is running.</strong> Output rose from 215 to 300 units a week.</li>
+        <li><strong>Compressors cost $438 a unit,</strong> down from $496 in July.</li>
+        <li><strong>14 installer partners signed.</strong> The plan was 12.</li>
+      </ul>
+    </div>
+    <div class="tile mid">
+      <span class="micro"><i class="ic" data-i="flag"></i>Misses</span>
+      <ul>
+        <li><strong>On-time installs were 82%.</strong> The plan was 90%. The South ran at 61%.</li>
+        <li><strong>Freight rose to $108 a unit,</strong> from $94 in July.</li>
+        <li><strong>The 80-gallon model slipped</strong> from November to January.</li>
+      </ul>
+    </div>
+    <div class="tile ink">
+      <span class="micro"><i class="ic" data-i="arrow-up-right"></i>The ask</span>
+      <h4>Introduce us to installer networks in Texas and Georgia.</h4>
+      <p>Two introductions this month would close the South gap.</p>
+    </div>
+  </div>
+
+  <div class="next">
+    <span class="micro">November commitments<small>We report against these on December 4.</small></span>
+    <ol class="steps">
+      <li><span><strong>Ship 1,250 units,</strong> up from 1,120.</span></li>
+      <li><span><strong>Hold gross margin</strong> at 31% or better.</span></li>
+      <li><span><strong>Lift on-time installs</strong> from 82% to 86%.</span></li>
+      <li><span><strong>Close the equipment line</strong> of $2.5M.</span></li>
+    </ol>
+  </div>
+
+  <div class="foot"><span>Kiln, Inc. Management figures for October 2026, unaudited. Sample data: fictional.</span><span>1 of 1</span></div>
+</section>
+
+<script>
+const M = v => '$' + (v / 1000).toFixed(2) + 'M';
+AS.waterfall('#c1', {W: 500, H: 124, fmt: M, max: 8000, steps: [
+  {label: 'Sep 30', value: 7800, total: true},
+  {label: 'Receipts', value: 1690},
+  {label: 'Materials', value: -1180},
+  {label: 'Payroll', value: -640},
+  {label: 'Opex', value: -270},
+  {label: 'Capex', value: -120},
+  {label: 'Oct 31', total: true}]});
+AS.bullet('#c2', {W: 270, labelW: 104, numW: 44, rowH: 25, barH: 9, rows: [
+  {label: 'Units shipped', value: 1120, target: 1000, of: 1400, display: '1,120'},
+  {label: 'Gross margin', value: 31, target: 30, of: 40, display: '31%'},
+  {label: 'New partners', value: 14, target: 12, of: 20, display: '14'},
+  {label: 'On-time installs', value: 82, target: 90, of: 100, display: '82%', color: 'signal'}]});
+AS.dumbbell('#c3', {W: 340, labelW: 62, rowH: 23, max: 40, rows: [
+  {label: 'Pacific', a: 36, b: 20},
+  {label: 'Northeast', a: 31, b: 18},
+  {label: 'Midwest', a: 27, b: 16},
+  {label: 'South', a: 25, b: 24}]});
+</script>
+</body></html>
