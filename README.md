@@ -142,7 +142,7 @@ soft gradient spheres in six palettes, the one piece of art the style allows.
 
 ```html
 <i class="ic" data-i="shield-check"></i>
-<span class="lockup"><i class="mk" data-m="split"></i><span class="nm">halden<small>billing</small></span></span>
+<i class="mk" data-m="dab"></i>
 <i class="orbx dawn" style="--o:300px"></i>
 ```
 
