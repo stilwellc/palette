@@ -1,11 +1,13 @@
-<h1 align="center">
+<p align="center">
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="docs/logo-dark.png">
     <img src="docs/logo-light.png" width="250" alt="palette">
   </picture>
-</h1>
+</p>
 
-<p align="center"><b>A design skill for Claude Code.</b><br>
+<h3 align="center">A design skill for Claude Code</h3>
+
+<p align="center">
 Ask for a chart, a slide deck, a report, a dashboard, a landing page, app screens, a social image or a brand sheet.<br>
 Get it in one editorial style, as PDF, PNG or live HTML.</p>
 
