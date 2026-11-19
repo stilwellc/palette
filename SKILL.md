@@ -1,12 +1,24 @@
 ---
 name: palette
-description: Make charts, documents, slide decks, dashboards and app-UI screens in the AppSec house style (cream paper, Inter, huge two-tone headlines, ruled KPI strips, rounded figure cards, ink-grey charts where colour means severity only) and export them as PDF and PNG, or as a live HTML dashboard. Use when asked for a chart, graphic, one-pager, report, brief, doc, deck, slides, dashboard, console mock-up or UI screen "in our style", "house style", "like the PDF", "like the Q3 review", or any AppSec visual that should be a PDF or PNG.
+description: Design anything visual in one editorial house style and export it as PDF and PNG, or as live HTML. Charts and graphs, slide decks, reports and one-pagers, white papers, dashboards and app UI, product and landing pages, mobile screens, social and link-preview images, brand sheets with a logo mark, icons and labels. Cream paper, Inter, huge two-tone headlines, ink-grey charts, one small signal colour (or severity colours for security work). Use when asked for a chart, graphic, image, PNG, PDF, deck, slides, presentation, report, brief, doc, one-pager, white paper, dashboard, UI screen, mock-up, landing page, app screen, social card, OG image, logo, icon, brand guide or design system "in our style", "house style", "like the Q3 review", or for any design task with no other style named.
 ---
 
-# palette: charts, docs, slides, dashboards → PDF / PNG
+# palette: charts, decks, reports, UI, images → PDF / PNG
 
-The style guide is `reference/style-guide.md`. Read it before building anything. For a dashboard
-or UI screen also read `reference/ui-patterns.md`.
+Read `reference/style-guide.md` before building anything. Then read what the job needs:
+
+| Job | Also read |
+|---|---|
+| anything that is not a security or severity report | `reference/brand.md` (the 88 / 11 / 1 colour rule, shape, marks, icons, labels) |
+| deck, white paper, social image, product page, mobile screen | `reference/layouts.md` |
+| dashboard, console, product page, mobile, any UI | `reference/ui-patterns.md` |
+
+**Two colour modes. Pick one per piece and never mix them.**
+* **Severity** (security findings, risk, SLAs): colour means Critical, High, Medium, Low and nothing
+  else. This is the original mode; `graphic`, `slides`, `doc`, `dashboard` templates show it.
+* **Signal** (everything else): ink greys plus one signal colour, about 1% of the page, on the one
+  mark that is live, new or the claim. `deck`, `whitepaper`, `landing`, `mobile`, `social`, `brand`,
+  `charts` templates show it.
 
 **Private layer.** If `local/NOTES.md` exists, read it first: it holds this install's private
 context (reference artefact, branded templates, data sources, team rules). `local/` is gitignored
@@ -16,12 +28,17 @@ public template when one exists.
 ```
 assets/style.css    tokens + components + three formats (body.doc / body.slides / body.graphic)
 assets/ui.css       dashboard and app-UI layer (body.dash): shell, filters, KPI selector, rows, drawer
+assets/ui.css       (same file) product pages, overlays, phone frame and mobile components
 assets/charts.js    AS.bars, diverging, lines, hbars, dots, flow, heat, strip, annotate,
-                    area, compare, track, multiples, mix, kpiSelect (+ hover tooltips)
-assets/check.js     layout check (overflow, chart over note) written to <body data-check>
+                    area, compare, track, multiples, mix, kpiSelect (+ hover tooltips),
+                    bench, dumbbell, slope, scatter, waterfall, funnel, bullet, donut, waffle,
+                    meter, stepgrid, matrix, spark, gantt, theme
+assets/icons.js     109 original line icons (<i class="ic" data-i="name">) and AS.mark brand marks
+assets/check.js     layout check (overflow, chart over note, unknown icon, signal over budget)
 assets/fonts/       Inter, Geist Mono (embedded, works offline)
-templates/          graphic.html, slides.html, doc.html, dashboard.html (working examples, fictional data)
-reference/          style-guide.md (read first), ui-patterns.md (dashboards)
+templates/          severity: graphic, slides, doc, dashboard
+                    signal: deck, whitepaper, landing, mobile, social, brand, charts (catalogue)
+reference/          style-guide.md (read first), brand.md, layouts.md, ui-patterns.md
 scripts/new.sh      copy a template to a working file with absolute asset paths
 scripts/render.sh   HTML → PDF (headless Chrome) → PNG per page, plus the layout check
 local/              private, gitignored: NOTES.md, branded templates, research (optional)
@@ -35,6 +52,13 @@ local/              private, gitignored: NOTES.md, branded templates, research (
 | deck, slides, presentation | slides | `templates/slides.html` | 1600x900 per `<section class="slide">` |
 | report, doc, one-pager, brief | doc | `templates/doc.html` | US letter per `<section class="page">` |
 | dashboard, console, app screen, UI mock-up | dash | `templates/dashboard.html` | 1440 wide per `<div class="screen">`; set `--w/--h` on body AND `@page` |
+| pitch, board or product deck, all-hands | slides | `templates/deck.html` | 1600x900; 12 layouts incl. agenda, summary grid, versus, roadmap |
+| white paper, industry report, A4 anything | doc a4 | `templates/whitepaper.html` | A4 per `<section class="page">` |
+| landing or product page, pricing page | dash | `templates/landing.html` | 1440 wide, `.screen.bare > .web` |
+| mobile app screens | graphic | `templates/mobile.html` | 390x844 `.device` frames on one canvas |
+| social card, OG image, story, announcement | named pages | `templates/social.html` | 1200x630, 1080x1080, 1080x1920, 1600x900 in one file |
+| logo, brand guide, icon sheet, design system | slides | `templates/brand.html` | 1600x1000 per page |
+| "which chart?" | n/a | `templates/charts.html` | catalogue with one working call per newer helper |
 
 If the ask doesn't say which, use graphic for a single chart, doc for anything with prose. Ask only
 if it could reasonably be either a deck or a doc.
@@ -47,7 +71,8 @@ if it could reasonably be either a deck or a doc.
 2. **Write the words before the layout.** Headline in two clauses (fact, then grey consequence),
    one finding-sentence per figure title, a sub line saying what is plotted, a note saying what
    to take from it. Voice rules are at the end of the style guide.
-3. **Start from a template:** `<skill>/scripts/new.sh <graphic|slides|doc|dashboard> <out.html>`
+3. **Start from a template:** `<skill>/scripts/new.sh <kind> <out.html>` (kind = any file name in
+   `templates/` without `.html`)
    into the working folder (the user's named location, else the session scratchpad), named for
    the content (`Repo_Archive_2026-11-12.html`). It rewrites asset links to absolute paths into
    this skill, so the copy renders from anywhere. Templates in the repo use `../assets/` and open
@@ -55,13 +80,16 @@ if it could reasonably be either a deck or a doc.
 4. **Build.** Use the component classes; don't restyle them. Pick the chart by the data's job
    (style guide, Charts). Set each chart's `W` near its rendered width in CSS px (doc cover about
    690, doc card about 640, slide half-card about 760, full slide card about 1400). Severity
-   always goes through `color: 'high'` etc. Anything that isn't severity stays in the neutrals.
+   always goes through `color: 'high'` etc. Anything that isn't severity stays in the neutrals;
+   in signal mode the one mark that carries the claim may take `color: 'signal'`. Icons come from
+   `icons.js` only (`<i class="ic" data-i="...">`, add its script tag); never paste SVG from
+   another icon set, and never draw a real company's logo.
 5. **Render:** `<skill>/scripts/render.sh <file.html> [outdir] [scale]` (`<skill>` is this
    skill's folder, usually `~/.claude/skills/palette`)
    * It prints `check: data-check="OK"` or a list of problems, writes `<name>.pdf`, and writes
      `<name>.png` (one page) or `<name>-01.png ...` (one per slide or page) at 2x by default.
-   * Exit 2 means the layout check failed: content spills off a page or slide, or a chart overlaps
-     its note. Fix it: shorten the text, lower a chart's `H`, or move a block to the next page.
+   * Exit 2 means the layout check failed: content spills off a page or slide, a chart overlaps
+     its note, an icon name does not exist, or the signal colour covers more than 5% of a page. Fix it: shorten the text, lower a chart's `H`, or move a block to the next page.
      Don't shrink type below the doc scale.
    * Don't pipe its output into `head`: that kills the script before the PNG step.
 6. **Look at every PNG** with Read. Check for label collisions, a headline wrapping to an orphan
@@ -71,14 +99,20 @@ if it could reasonably be either a deck or a doc.
 
 ## Rules that matter most
 
-* Colour = severity (Critical `#4a2c17`, High `#722f37`, Medium `#8a5d18`, Low `#004225`), and
-  nothing else. Ring = fixed, filled = open.
+* Severity mode: colour = severity (Critical `#4a2c17`, High `#722f37`, Medium `#8a5d18`, Low
+  `#004225`), and nothing else. Ring = fixed, filled = open.
+* Signal mode: 88 parts paper, 11 parts ink, 1 part signal (`#e4502a`). One signal mark per view,
+  never on a headline, body text, button, background or logo. Change it with `AS.theme({signal})`.
+* One ink block per page (an ink tile, the summary grid's hero cell, or the takeaway bar).
 * The part that matters is darkest ink; context is light grey.
 * Headlines: numbers first, full stops, second clause in `<em>`.
 * Chart over table. One strong chart beats two.
 * Plain human voice: no em dashes, no middle dots, no filler, only provable claims.
-* No dark page backgrounds. Paper is always cream; emphasis comes from ink weight, the part band
-  gradient and soft orbs.
+* No dark page backgrounds. Paper is always cream; emphasis comes from ink weight, the tile ramp
+  (ink, stone, grey), the part band gradient, one colour cell and soft orbs.
+* Shapes nest: inside a 24px card, inner corners are 6 to 8px or full pills. Controls are pills,
+  tags are square. Icons are one line weight, one idea each.
+* The mark appears once per page, in one ink. Other people's logos: one ink, one height, in a grid.
 
 ## Dashboards and UI
 

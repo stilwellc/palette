@@ -1,0 +1,187 @@
+<!doctype html>
+<!-- Mobile app UI: three phone screens on one canvas. Set the canvas size in BOTH body style
+     (--w/--h) and @page. Each phone is .device > .scr (390 x 844), scaled with --z below.
+     ALL DATA IS INVENTED. "Halden" is a fictional usage-based billing app. Shown here:
+       1 Home      month-to-date spend ($4,218), a cumulative spend line for Nov 1 to 18,
+                   four budget meters (Compute 61%, Storage 94%, Egress 38%, API calls 72%), next invoice.
+       2 Activity  this week's spend ($1,062.40) with a 7-day trend and seven usage and payment rows.
+       3 Storage   the storage budget detail with a confirm sheet to raise the budget from $200 to $300.
+     Replace every number from a real source before shipping.
+     Rules kept: one signal mark per phone, one .btn.ink per phone, shadow on the sheet only. -->
+<html><head><meta charset="utf-8"><title>Mobile</title>
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="stylesheet" href="../assets/ui.css">
+<style>@page{size:1600px 1100px;margin:0}
+/* layout glue only: the row of phones, captions, and sizes the phone needs for touch */
+.canvas{--z:.96}
+.phones{flex:1;min-height:0;display:flex;justify-content:center;align-items:center;gap:92px}
+.phone{display:flex;flex-direction:column;gap:18px;width:calc(414px*var(--z))}
+.phone .device{zoom:var(--z)}
+.cap{display:grid;gap:6px;padding:0 12px}
+.cap p{font-size:14px;line-height:1.4;color:var(--ink-3)}
+.mnum{font:600 52px/1 var(--f-sans);letter-spacing:-.045em;font-variant-numeric:tabular-nums}
+.mnum.md{font-size:30px;letter-spacing:-.035em}
+.msub{font-size:13.5px;line-height:1.35;color:var(--ink-3)}
+.mrow{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.mcard h3{font:600 16px/1.2 var(--f-sans);letter-spacing:-.018em}
+.mhead .idisc,.mbar .idisc{--d:44px}
+.mbar{display:flex;justify-content:space-between;padding:6px 16px 0}
+.mbody>.micro{padding:6px 6px 0;margin-bottom:-4px}
+.scr .seg{display:flex}
+.scr .seg a{flex:1;text-align:center;padding:12px 0;font-size:13.5px}
+.mlist .end b{font-weight:500;color:var(--ink)}
+.mlist .tt{display:flex;align-items:center;gap:8px}
+.sheet h2{font:600 24px/1.1 var(--f-sans);letter-spacing:-.03em;margin-top:6px}
+.sheet h2 em{font-style:normal;color:var(--ink-soft)}
+.sheet p{font-size:14.5px;line-height:1.45;color:var(--ink-2)}
+.sheet .mlist{background:var(--paper)}
+.sheet .toggle{zoom:1.5}
+.sheet .toggle::after{box-shadow:none}   /* a blurred shadow prints as a grey box */
+.sheet .acts{display:grid;gap:8px;margin-top:4px}
+.sheet .acts .btn{justify-content:center;height:50px;font-size:16px}
+</style>
+<script src="../assets/charts.js"></script>
+<script src="../assets/icons.js"></script>
+<script src="../assets/check.js"></script>
+</head>
+<body class="graphic" style="--w:1600px;--h:1100px">
+<div class="canvas">
+  <div class="mast">
+    <span class="lockup one"><i class="mk" data-m="stack"></i><span class="nm">halden</span></span>
+    <span class="pill">Mobile app, three screens. Sample data</span>
+  </div>
+
+  <div class="phones">
+
+    <!-- 1 Home -->
+    <div class="phone">
+      <div class="device"><div class="scr">
+        <div class="island"></div>
+        <div class="mstat"><span>9:41</span><span><i class="ic" data-i="signal"></i><i class="ic" data-i="wifi"></i><i class="ic" data-i="battery"></i></span></div>
+        <div class="mhead">
+          <h1>18 days in.<br><em>Spend is on track.</em></h1>
+          <span class="idisc paper"><i class="ic" data-i="bell"></i></span>
+        </div>
+        <div class="mbody">
+          <div class="mcard">
+            <div class="mrow"><span class="micro">November usage</span><span class="spill">12 days left</span></div>
+            <div class="mnum" style="margin-top:12px">$4,218</div>
+            <p class="msub" style="margin:6px 0 10px">Forecast $6,400 against a $7,000 plan</p>
+            <div id="h-area"></div>
+          </div>
+          <div class="mcard">
+            <div class="mrow" style="margin-bottom:6px"><h3>Budgets</h3><span class="msub">Share used this month</span></div>
+            <div id="h-meter"></div>
+          </div>
+          <div class="mlist">
+            <a><span class="idisc"><i class="ic" data-i="doc"></i></span><div>Next invoice<small>Issued Dec 1, paid by card</small></div><span class="end"><b>$6,400</b><i class="ic" data-i="chevron-right"></i></span></a>
+          </div>
+        </div>
+        <nav class="tabbar">
+          <a class="on"><i class="ic" data-i="home"></i>Home</a>
+          <a><i class="ic" data-i="list"></i>Activity</a>
+          <a><i class="ic" data-i="target"></i>Budgets</a>
+          <a><i class="ic" data-i="user"></i>Account</a>
+        </nav>
+        <div class="homebar"></div>
+      </div></div>
+      <div class="cap"><span class="micro">01 Home</span><p>Month to date in one number, the trend behind it, and the one budget that needs a look.</p></div>
+    </div>
+
+    <!-- 2 Activity -->
+    <div class="phone">
+      <div class="device"><div class="scr">
+        <div class="island"></div>
+        <div class="mstat"><span>9:41</span><span><i class="ic" data-i="signal"></i><i class="ic" data-i="wifi"></i><i class="ic" data-i="battery"></i></span></div>
+        <div class="mhead">
+          <h1>Activity</h1>
+          <span class="idisc paper"><i class="ic" data-i="search"></i></span>
+        </div>
+        <div class="mbody">
+          <div class="seg"><a class="on">All</a><a>Usage</a><a>Payments</a></div>
+          <div class="mcard mrow">
+            <div><span class="micro">This week</span><div class="mnum md" style="margin-top:8px">$1,062.40</div></div>
+            <div id="a-spark"></div>
+          </div>
+          <span class="micro">Today</span>
+          <div class="mlist">
+            <a><span class="idisc"><i class="ic" data-i="cpu"></i></span><div>Compute<small>1,840 vCPU hours</small></div><span class="end"><b>$312.80</b></span></a>
+            <a><span class="idisc"><i class="ic" data-i="database"></i></span><div><span class="tt">Storage<span class="badge sigc">Near limit</span></span><small>94% of the $200 budget</small></div><span class="end"><b>$188.10</b></span></a>
+            <a><span class="idisc"><i class="ic" data-i="cloud"></i></span><div>Egress<small>2.1 TB to eu-west</small></div><span class="end"><b>$96.40</b></span></a>
+            <a><span class="idisc"><i class="ic" data-i="card"></i></span><div>Payment received<small>October invoice, Visa 4417</small></div><span class="end">$5,912.00</span></a>
+          </div>
+          <span class="micro">Yesterday</span>
+          <div class="mlist">
+            <a><span class="idisc"><i class="ic" data-i="cpu"></i></span><div>Compute<small>1,792 vCPU hours</small></div><span class="end"><b>$304.60</b></span></a>
+            <a><span class="idisc"><i class="ic" data-i="bolt"></i></span><div>API calls<small>4.2M requests</small></div><span class="end"><b>$126.00</b></span></a>
+            <a><span class="idisc"><i class="ic" data-i="users"></i></span><div>Seats<small>2 added by Mara Lind</small></div><span class="end"><b>$58.00</b></span></a>
+          </div>
+        </div>
+        <nav class="tabbar">
+          <a><i class="ic" data-i="home"></i>Home</a>
+          <a class="on"><i class="ic" data-i="list"></i>Activity</a>
+          <a><i class="ic" data-i="target"></i>Budgets</a>
+          <a><i class="ic" data-i="user"></i>Account</a>
+        </nav>
+        <div class="homebar"></div>
+      </div></div>
+      <div class="cap"><span class="micro">02 Activity</span><p>Every charge and payment as a row. One row carries the flag, the rest stay ink.</p></div>
+    </div>
+
+    <!-- 3 Storage detail with the confirm sheet open -->
+    <div class="phone">
+      <div class="device"><div class="scr">
+        <div class="island"></div>
+        <div class="mstat"><span>9:41</span><span><i class="ic" data-i="signal"></i><i class="ic" data-i="wifi"></i><i class="ic" data-i="battery"></i></span></div>
+        <div class="mbar">
+          <span class="idisc paper"><i class="ic" data-i="chevron-left"></i></span>
+          <span class="idisc paper"><i class="ic" data-i="more"></i></span>
+        </div>
+        <div class="mhead"><h1>Storage.<br><em>$11.90 of budget left.</em></h1></div>
+        <div class="mbody">
+          <div class="mcard">
+            <div class="mrow"><span class="micro">November</span><span class="spill">Budget $200</span></div>
+            <div class="mnum" style="margin-top:12px">$188.10</div>
+            <div id="s-meter" style="margin-top:8px"></div>
+          </div>
+          <div class="mlist">
+            <a><span class="idisc"><i class="ic" data-i="database"></i></span><div>Hot tier<small>1.9 TB</small></div><span class="end"><b>$121.40</b></span></a>
+            <a><span class="idisc"><i class="ic" data-i="box"></i></span><div>Archive<small>6.4 TB</small></div><span class="end"><b>$48.20</b></span></a>
+            <a><span class="idisc"><i class="ic" data-i="layers"></i></span><div>Snapshots<small>212 kept</small></div><span class="end"><b>$18.50</b></span></a>
+          </div>
+        </div>
+        <div class="scrim"></div>
+        <div class="sheet">
+          <h2>Raise the storage budget? <em>It runs out in 3 days.</em></h2>
+          <p>Storage has used $188.10 of $200. At this pace it reaches the limit on Nov 21 and new writes pause until Dec 1.</p>
+          <div class="mlist">
+            <div><div>New monthly budget<small>Was $200</small></div><span class="end"><b>$300</b><i class="ic" data-i="chevron-right"></i></span></div>
+            <div><div>Alert me at 80%<small>Push and email</small></div><span class="end"><span class="toggle on"></span></span></div>
+          </div>
+          <div class="acts">
+            <a class="btn ink lg">Raise to $300</a>
+            <a class="btn ghost lg">Not now</a>
+          </div>
+        </div>
+        <div class="homebar"></div>
+      </div></div>
+      <div class="cap"><span class="micro">03 Confirm sheet</span><p>One decision, one ink button. The sheet says what happens and when.</p></div>
+    </div>
+
+  </div>
+</div>
+<script>
+// Home: cumulative spend, Nov 1 to 18 (invented)
+AS.area('#h-area', {W: 322, H: 168, ticks: 2, fmt: v => v ? '$' + v / 1000 + 'k' : '$0',
+  x: ['Nov 1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','Nov 18'],
+  series: [{name: 'Spend', values: [210, 436, 655, 902, 1160, 1378, 1540, 1702, 1968, 2231, 2490, 2764, 3020, 3196, 3352, 3640, 3925, 4218]}]});
+// Home: budgets. The one near its limit takes the signal colour.
+AS.meter('#h-meter', {W: 322, labelW: 82, numW: 42, cells: 18, rowH: 37, cellH: 14, rows: [
+  {label: 'Compute', value: 61, display: '61%'}, {label: 'Storage', value: 94, display: '94%', color: 'signal'},
+  {label: 'Egress', value: 38, display: '38%'}, {label: 'API calls', value: 72, display: '72%'}]});
+// Activity: daily spend, last 7 days
+AS.spark('#a-spark', [118, 131, 126, 149, 158, 177, 203], {W: 124, H: 40, fill: true});
+// Storage detail: one meter row, no label
+AS.meter('#s-meter', {W: 322, labelW: 0, numW: 42, cells: 22, rowH: 32, cellH: 14, rows: [{label: '', value: 94, display: '94%', color: 'signal'}]});
+</script>
+</body></html>
