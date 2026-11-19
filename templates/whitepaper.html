@@ -1,0 +1,288 @@
+<!doctype html>
+<!-- A4 industry report (whitepaper), 6 sheets. One <section class="page"> per sheet; content must fit
+     (render.sh checks). Every page after the cover opens with a .rhead running header.
+     SAMPLE DATA: the publisher "Halden", every company, person, number and source is invented.
+     Page layouts:
+       1 Cover      top row (lockup, code), micro eyebrow, two-clause .h-hero, grey dek, .author row,
+                    then a .cellx holding one card with the report's main chart (AS.lines).
+       2 Contents   .withrail: .toc (5 entries) and a 4-item .steps list, with "About the data" in the
+                    .rail; then a .tiles strip of four numbers and a .logos row.
+       3 Opener     .page.opener: .eyebrow + .h-part at the top, a void, then .low with a .bignum and
+                    lede left, and a .pullq over a .spec list right.
+       4 Stat page  ink hero .tile (1/3) beside a chart card (2/3, AS.compare); a row of two stone
+                    tiles with .bar and a table.tbl; a ranked-bar card (AS.hbars) with notes in a .rail.
+       5 KPI grid   .tilegrid of 6 tiles (icon disc, .spill.cat, number, caption with sup.fn), then
+                    .phases of three tiles (ink, stone, mid) with .nb badges, a timeline card (AS.gantt), then .fns.
+       6 Close      .vs pair, a dumbbell figure (AS.dumbbell), .takeaway bar, .sources, colophon.
+     House rules kept here: one ink block per page, the signal colour at most once per page, figure
+     titles are full sentences, bars start at zero, outcomes carry a baseline and a window. -->
+<html><head><meta charset="utf-8"><title>Whitepaper</title>
+<link rel="stylesheet" href="../assets/style.css">
+<style>@page{size:210mm 297mm;margin:0}
+/* layout glue only: no colours, no type restyling */
+.rhead>*{flex:1}.rhead>:nth-child(2){text-align:center}.rhead>:last-child{text-align:right}
+.toc li{position:relative;padding-bottom:31px}.toc li small{position:absolute;left:40px;bottom:11px}   /* grey line under the title, leader stays on the title line */
+.vs>.tile.paper.fav{box-shadow:inset 0 3px 0 var(--ink),var(--ring)}   /* the print rule for .tile.paper drops the favoured top rule */
+.vs>.tile:first-child{padding-right:34px}.vs>.tile+.tile{padding-left:34px}   /* keep copy clear of the vs badge */
+.row{display:grid;grid-template-columns:var(--grid,1fr 2fr);gap:9px;min-height:0}
+.fcard{display:flex;flex-direction:column}
+.fcard .chd{display:flex;justify-content:space-between;align-items:flex-start;gap:18px}
+.fcard .plot{flex:1;display:flex;align-items:center;margin-top:10px}
+.fcard .rule{height:1px;background:var(--line);margin:10px 0 8px}
+.stack{display:grid;gap:var(--g,10px);align-content:start}
+.top{display:flex;justify-content:space-between;align-items:center}
+</style>
+<script src="../assets/charts.js"></script>
+<script src="../assets/icons.js"></script>
+<script src="../assets/check.js"></script>
+</head>
+<body class="doc a4">
+
+<!-- 1 Cover -->
+<section class="page">
+  <div class="top">
+    <span class="lockup one" style="--m:22px"><i class="mk sig" data-m="split"></i><span class="nm">Halden</span></span>
+    <span class="code">HR–26</span>
+  </div>
+  <div class="stack" style="--g:16px;margin-top:34px">
+    <span class="micro">Industry report, 2026</span>
+    <h1 class="h-hero" style="font-size:68px">Usage beat seats.<br><em>Billing has to follow.</em></h1>
+    <p class="lede" style="max-width:560px">The state of usage-based pricing, 2026. What 412 software companies charge for, what the switch did to revenue, and how they made it.</p>
+  </div>
+  <div class="top" style="margin-top:8px">
+    <div class="author"><span class="av">MO</span><div><b>Marit Olsen</b><span>Head of pricing research, Halden</span></div></div>
+    <div class="author"><span class="av">TK</span><div><b>Tomas Kerr</b><span>Data lead, Halden</span></div></div>
+    <span class="tagx line">March 2026</span>
+  </div>
+  <div class="cellx grow" style="margin-top:10px">
+    <div class="card fcard">
+      <div class="chd"><span class="micro">The shift in one chart</span>
+        <div class="legend4"><span><i></i>usage-based</span><span><i class="g2"></i>seat-based</span></div></div>
+      <h3>In 2026 more companies price on usage than on seats, for the first time.</h3>
+      <div class="plot" id="c1"></div>
+      <div class="rule"></div>
+      <p class="method"><b>Method.</b> Share of companies naming each model as their main pricing model. Northlight panel 2021 to 2025 (300 to 380 companies a year), Halden survey 2026 (n = 412). Flat and tiered plans make up the rest.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 2 Contents -->
+<section class="page">
+  <div class="rhead"><span class="lockup one" style="--m:15px"><i class="mk" data-m="split"></i><span class="nm">Halden</span></span><span>Contents</span><span>2</span></div>
+  <div class="chap" style="margin-top:14px"><div class="eyebrow">The state of usage-based pricing, 2026</div><h2 class="h-sec" style="margin-top:8px">Contents</h2></div>
+  <div class="withrail" style="margin-top:12px">
+    <div class="stack" style="--g:40px">
+      <ol class="toc">
+        <li><span>The shift<small>Why pricing moved from the seat to the meter</small></span><i></i><em>3</em></li>
+        <li><span>Adoption by the numbers<small>Who bills on usage, how much, and for what</small></span><i></i><em>4</em></li>
+        <li><span>What changes after the switch<small>Six outcomes, each against a seat-based baseline</small></span><i></i><em>5</em></li>
+        <li><span>How teams roll it out<small>Three phases and about nine months</small></span><i></i><em>5</em></li>
+        <li><span>What to do next<small>Before and after, the takeaway, and sources</small></span><i></i><em>6</em></li>
+      </ol>
+      <div>
+        <span class="rule-lab">What you will learn</span>
+        <ol class="steps" style="margin-top:4px">
+          <li>How fast usage-based pricing grew, and where it is still rare.</li>
+          <li>Which units companies meter, and which are growing.</li>
+          <li>What the switch does to retention, sales cycles and forecasts.</li>
+          <li>A rollout order that cut invoice disputes by two thirds.</li>
+        </ol>
+      </div>
+    </div>
+    <aside class="rail">
+      <p><b>About the data</b></p>
+      <p><b>Survey.</b> 412 software companies, fielded Jan 12 to Feb 27, 2026.</p>
+      <p><b>Platform.</b> 1.9 billion billed events from 1,140 Halden accounts in 2025.</p>
+      <p><b>Cohort.</b> 58 companies that moved from seats to usage, 12 months each side.</p>
+      <p><b>Medians.</b> Every typical value is a median, never a mean.</p>
+      <p><b>Sources.</b> Numbered on page 6.</p>
+    </aside>
+  </div>
+  <div class="stack" style="--g:12px;margin-top:auto">
+    <span class="rule-lab" style="margin-bottom:2px">The report in four numbers</span>
+    <div class="tiles" style="--cols:4;border-top:0">
+      <div><b>46%</b><span>price mainly on usage</span><small>21% in 2021</small></div>
+      <div><b>61%</b><span>bill a product on usage</span><small>34% in 2023</small></div>
+      <div><b>118%</b><span>net revenue retention</span><small>104% for seat plans</small></div>
+      <div><b>9 mo</b><span>median time to switch</span><small>58 companies</small></div>
+    </div>
+  </div>
+  <div class="stack" style="--g:16px;margin-top:30px">
+    <span class="rule-lab">Survey partners</span>
+    <div class="logos" style="--cols:5">
+      <span class="ph"><i class="mk" data-m="ring" style="--m:16px"></i>Northlight</span>
+      <span class="ph"><i class="mk" data-m="stack" style="--m:16px"></i>Calder</span>
+      <span class="ph"><i class="mk" data-m="quarter" style="--m:16px"></i>Ostrava</span>
+      <span class="ph"><i class="mk" data-m="steps" style="--m:16px"></i>Brightwell</span>
+      <span class="ph"><i class="mk" data-m="grid" style="--m:16px"></i>Fennick</span>
+    </div>
+  </div>
+</section>
+
+<!-- 3 Section opener -->
+<section class="page opener">
+  <div class="rhead"><span class="lockup one" style="--m:15px"><i class="mk" data-m="split"></i><span class="nm">Halden</span></span><span>01 The shift</span><span>3</span></div>
+  <div class="stack" style="--g:14px;margin-top:40px">
+    <div class="eyebrow">Section 01</div>
+    <h2 class="h-part" style="font-size:64px">The meter is now<br><em>the price list.</em></h2>
+  </div>
+  <div class="low">
+    <div class="stack" style="--g:14px">
+      <div class="bignum">46<small>%</small></div>
+      <p class="lede">of software companies now price mainly on usage, up from 21% in 2021. Seat pricing fell from 58% to 38%.</p>
+    </div>
+    <div class="stack" style="--g:30px">
+    <blockquote class="pullq">Price is now something a customer watches move every day. The companies that did well showed the meter before they sent the bill.</blockquote>
+    <div class="spec">
+      <div><b>Cost became variable</b><span>Heavy AI accounts cost 40 times light ones.</span></div>
+      <div><b>Buyers ask for it</b><span>57% of finance leads prefer it (n = 412).</span></div>
+      <div><b>Metering got cheap</b><span>A first meter ships in 5 weeks, down from 14.</span></div>
+    </div>
+    </div>
+  </div>
+</section>
+
+<!-- 4 Stat page -->
+<section class="page">
+  <div class="rhead"><span class="lockup one" style="--m:15px"><i class="mk" data-m="split"></i><span class="nm">Halden</span></span><span>02 Adoption</span><span>4</span></div>
+  <div class="chap" style="margin-top:10px"><div class="eyebrow">Section 02</div><h2 class="h-sec" style="margin-top:8px">Six in ten bill on usage. <em>Most only in part.</em></h2></div>
+  <div class="row">
+    <div class="tile ink"><span class="micro">Adoption, 2026</span>
+      <div class="low"><b style="font-size:72px">61%</b>
+      <p>of software companies bill at least one product on usage. It was 34% in 2023.</p></div></div>
+    <div class="card fcard">
+      <div class="chd"><span class="micro">Figure 1</span>
+        <div class="legend4"><span><i></i>highest band</span><span><i class="g3"></i>other bands</span></div></div>
+      <h3>The smallest companies bill on usage most often. The largest trail by 31 points.</h3>
+      <div class="plot" id="c2"></div>
+      <div class="rule"></div>
+      <p class="method"><b>Method.</b> Share of companies with at least one usage-billed product, by annual recurring revenue. Halden survey, Jan to Feb 2026, n = 412.</p>
+    </div>
+  </div>
+  <div class="row" style="--grid:1fr 1fr 2.05fr">
+    <div class="tile"><b>38%</b><p>Median share of revenue billed on usage, among companies that meter</p><div class="low"><div class="bar"><i style="width:38%"></i></div></div></div>
+    <div class="tile"><b>27%</b><p>Publish a price calculator. It was 15% in 2024</p><div class="low"><div class="bar"><i style="width:27%"></i></div></div></div>
+    <div style="padding:2px 0 0 10px">
+      <table class="tbl">
+        <tr><th>What gets metered</th><th class="r" style="white-space:nowrap">Share of plans</th><th class="r" style="white-space:nowrap">Since 2024</th></tr>
+        <tr><td>API calls</td><td class="r">31%</td><td class="r">−4 pts</td></tr>
+        <tr><td>Tokens or compute</td><td class="r">24%</td><td class="r">+11 pts</td></tr>
+        <tr><td>Data volume</td><td class="r">19%</td><td class="r">−2 pts</td></tr>
+        <tr><td>Transactions</td><td class="r">15%</td><td class="r">−3 pts</td></tr>
+        <tr><td>Active users</td><td class="r">11%</td><td class="r">−2 pts</td></tr>
+      </table>
+    </div>
+  </div>
+  <div class="withrail grow">
+    <div class="card fcard">
+      <div class="chd"><span class="micro">Figure 2</span>
+        <div class="legend4"><span><i></i>over half</span><span><i class="g2"></i>under half</span></div></div>
+      <h3>AI, infrastructure and data products bill most of their revenue on usage. Vertical software bills 18%.</h3>
+      <div class="plot" id="c3"></div>
+      <div class="rule"></div>
+      <p class="method"><b>Method.</b> Median share of 2025 revenue billed on usage, by product category. Halden platform data, 1,140 accounts.</p>
+    </div>
+    <aside class="rail">
+      <p><b>Notes</b></p>
+      <p><b>Usage-based.</b> The bill changes with a metered unit. A fixed fee with overage counts.</p>
+      <p><b>Plans.</b> 1,930 public price plans from the 412 companies. A plan with two meters counts under its larger one.</p>
+      <p><b>Window.</b> Survey answers describe pricing live on Feb 27, 2026.</p>
+      <p><b>Bands.</b> Annual recurring revenue at the end of 2025, in US dollars.</p>
+    </aside>
+  </div>
+</section>
+
+<!-- 5 KPI grid + process -->
+<section class="page">
+  <div class="rhead"><span class="lockup one" style="--m:15px"><i class="mk" data-m="split"></i><span class="nm">Halden</span></span><span>03 Outcomes and rollout</span><span>5</span></div>
+  <div class="chap" style="margin-top:10px"><div class="eyebrow">Section 03</div><h2 class="h-sec" style="margin-top:8px">Revenue holds better. <em>Forecasts get harder.</em></h2></div>
+  <div class="tilegrid grow" style="grid-auto-rows:1fr">
+    <div class="tile"><span class="idisc paper" style="--d:30px"><i class="ic" data-i="trend-up"></i></span><span class="spill cat">Revenue</span>
+      <div class="low"><b>118%</b><p>Median net revenue retention. Seat plans kept 104%.<sup class="fn">1</sup></p></div></div>
+    <div class="tile"><span class="idisc paper" style="--d:30px"><i class="ic" data-i="chart-bar"></i></span><span class="spill cat">Growth</span>
+      <div class="low"><b>38%</b><p>Median revenue growth in 2025. Seat peers grew 27%.<sup class="fn">1</sup></p></div></div>
+    <div class="tile"><span class="idisc paper" style="--d:30px"><i class="ic" data-i="clock"></i></span><span class="spill cat">Sales</span>
+      <div class="low"><b>23<small>days</small></b><p>Median sales cycle, against 41 days for annual seats.<sup class="fn">2</sup></p></div></div>
+    <div class="tile"><span class="idisc paper" style="--d:30px"><i class="ic" data-i="doc"></i></span><span class="spill cat">Billing</span>
+      <div class="low"><b>0.8%</b><p>Invoices disputed after the switch. Before it, 2.1%.<sup class="fn">3</sup></p></div></div>
+    <div class="tile"><span class="idisc paper" style="--d:30px"><i class="ic" data-i="target"></i></span><span class="spill cat">Finance</span>
+      <div class="low"><b>11%</b><p>Median forecast error. Under seats it was 4%.<sup class="fn">4</sup></p></div></div>
+    <div class="tile"><span class="idisc paper" style="--d:30px"><i class="ic" data-i="chat"></i></span><span class="spill cat">Support</span>
+      <div class="low"><b>31%</b><p>Billing tickets asking why a bill rose. Before, 12%.<sup class="fn">3</sup></p></div></div>
+  </div>
+  <h3 class="h-sec" style="font-size:22px;margin-top:12px">A switch takes three phases <em>and about nine months.</em></h3>
+  <div class="phases" style="min-height:176px">
+    <div class="tile ink"><span class="nb">01</span><h4>Meter first</h4><p>Send every billable event before any price changes. Check the totals against product analytics.</p><span class="micro" style="margin:12px 0 0">Median 11 weeks</span></div>
+    <div class="tile"><span class="nb">02</span><h4>Bill in shadow</h4><p>Send a usage invoice beside the real one. Customers see the meter before it costs them.</p><span class="micro" style="margin:12px 0 0">Median 2 billing cycles</span></div>
+    <div class="tile mid"><span class="nb">03</span><h4>Move by cohort</h4><p>New customers first, then each renewal. Keep a spend cap for the first year.</p><span class="micro" style="margin:12px 0 0">Median 5 months</span></div>
+  </div>
+  <div class="card fcard">
+    <div class="chd"><span class="micro">Figure 4</span>
+      <div class="legend4"><span><i class="g3"></i>median span of each phase</span></div></div>
+    <h3>Phases overlap, so the first real usage invoice lands in month 5.</h3>
+    <div class="plot" id="c5"></div>
+  </div>
+  <ol class="fns" style="margin-top:4px">
+    <li>Calder &amp; Voss retention index, FY2025. 97 usage-based and 171 seat-based companies.</li>
+    <li>Halden survey 2026. 96 companies that sell both a pay-as-you-go and an annual seat plan.</li>
+    <li>Halden switch cohort, 58 companies, 12 months before and after the first usage invoice. Figure 4 uses the same cohort.</li>
+    <li>Ostrava Institute working paper 26-04. Absolute error of the quarterly revenue forecast, 44 companies.</li>
+  </ol>
+</section>
+
+<!-- 6 Close -->
+<section class="page">
+  <div class="rhead"><span class="lockup one" style="--m:15px"><i class="mk" data-m="split"></i><span class="nm">Halden</span></span><span>04 What to do next</span><span>6</span></div>
+  <div class="chap" style="margin-top:10px"><div class="eyebrow">Section 04</div><h2 class="h-sec" style="margin-top:8px">The switch pays back. <em>The order matters.</em></h2></div>
+  <div class="vs">
+    <div class="tile paper"><span class="micro">Seat-based plans</span><b>17<small>months</small></b><p>Median time to earn back the cost of winning a customer, FY2025 (n = 171).</p></div>
+    <div class="tile paper fav"><span class="micro">Usage-based plans</span><b>12<small>months</small></b><p>Median time to earn back the cost of winning a customer, FY2025 (n = 97).</p></div>
+  </div>
+  <div class="card fcard grow">
+    <div class="chd"><span class="micro">Figure 3</span>
+      <div class="legend4"><span><i class="g2"></i>12 months before</span><span><i></i>12 months after</span></div></div>
+    <h3>Every measure improved in the year after the switch. Expansion moved most.</h3>
+    <div class="plot" id="c4"></div>
+    <div class="rule"></div>
+    <p class="method"><b>Method.</b> Medians for 58 companies that moved from seats to usage between Jan 2023 and Dec 2024. Ring is the 12 months before the first usage invoice, dot the 12 months after. The coloured dot marks the largest move.</p>
+  </div>
+  <div class="takeaway"><span class="micro">Takeaway</span><p>Meter first, price second.<small>Teams that metered for 60 days before changing price saw 0.6% of invoices disputed in the first six months. Teams that did not saw 1.9%.</small></p></div>
+  <div class="stack" style="--g:10px;margin-top:6px">
+    <span class="rule-lab">Sources</span>
+    <ol class="sources" style="grid-template-columns:1fr 1fr;gap:8px 28px">
+      <li>Halden, Pricing model survey 2026. 412 software companies, fielded Jan 12 to Feb 27, 2026.</li>
+      <li>Halden platform data. 1.9 billion billed events from 1,140 accounts, Jan 1 to Dec 31, 2025.</li>
+      <li>Northlight Research, Software pricing benchmarks, 2021 to 2025. Annual panel of 300 to 380 companies.</li>
+      <li>Calder &amp; Voss, Retention index FY2025. 268 companies reporting net revenue retention.</li>
+      <li>Ostrava Institute for Digital Markets, Working paper 26-04, Forecast error under metered billing.</li>
+      <li>Halden, Switch cohort study. 58 customers that moved from seats to usage, Jan 2023 to Dec 2024.</li>
+    </ol>
+  </div>
+  <div class="foot" style="align-items:center">
+    <span class="lockup" style="--m:22px"><i class="mk" data-m="split"></i><span class="nm">Halden<small>Usage-based billing</small></span></span>
+    <span style="max-width:330px;text-align:right">Published March 2026. Set in Inter and Geist Mono. Sample report: every name, number and source is invented. <span class="code" style="font-size:10px;margin-left:6px">HR–26</span></span>
+  </div>
+</section>
+
+<script>
+const pct = v => v + '%';
+AS.lines('#c1', {W: 585, H: 425, endW: 128, fmt: pct, max: 60, x: ['2021', '2022', '2023', '2024', '2025', '2026'], series: [
+  {name: 'seats', label: '38% seat-based', color: '#8c8478', values: [58, 55, 51, 47, 43, 38]},
+  {name: 'usage', label: '46% usage-based', values: [21, 25, 29, 34, 39, 46]}]});
+AS.compare('#c2', {W: 403, H: 172, ticks: 2, max: 80, unit: '%', name: 'Bill on usage', hi: 0,
+  cats: ['<$1M', '$1–10M', '$10–50M', '$50–250M', '>$250M'], values: [74, 68, 61, 52, 43]});
+AS.hbars('#c3', {W: 461, labelW: 150, rowH: 26, max: 100, rows: [
+  {label: 'AI and ML APIs', value: 71, display: '71%'}, {label: 'Infrastructure', value: 64, display: '64%'},
+  {label: 'Data platforms', value: 55, display: '55%'}, {label: 'Communications', value: 49, display: '49%'},
+  {label: 'Fintech', value: 37, display: '37%'}, {label: 'Vertical software', value: 18, display: '18%'}].map((r, i) => ({...r, segs: [{v: r.value, color: i < 3 ? '#1c1917' : '#8c8478'}]}))});
+AS.dumbbell('#c4', {W: 633, labelW: 190, rowH: 54, max: 100, delta: false, fmt: pct, rows: [
+  {label: 'Accounts kept at 12 months', a: 86, b: 89},
+  {label: 'Invoices paid on time', a: 78, b: 88},
+  {label: 'Gross margin', a: 69, b: 74},
+  {label: 'Accounts that expanded', a: 22, b: 37, color: 'signal'}]});
+AS.gantt('#c5', {W: 633, labelW: 110, rowH: 26, barH: 18, cols: ['Month 1', '2', '3', '4', '5', '6', '7', '8', '9'], lanes: [
+  {label: 'Meter first', bars: [{from: 0, to: 2.6}]},
+  {label: 'Bill in shadow', bars: [{from: 2, to: 4}]},
+  {label: 'Move by cohort', bars: [{from: 4, to: 9}]}]});
+</script>
+</body></html>

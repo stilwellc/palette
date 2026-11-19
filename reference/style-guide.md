@@ -165,6 +165,41 @@ eyebrows and "FIGURE 3"; everything else stays sentence case.
 8. Every chart has a method line somewhere on the page, and outcomes are paired with a baseline:
    "41 to 12 days (n = 37)", never "much faster".
 
+## v3 additions (general design)
+
+The brand layer (colour ratio, shape, marks, icons, labels) is in `brand.md`; page and slide layouts
+are in `layouts.md`. Chart additions, all in `assets/charts.js`, working calls in
+`templates/charts.html`:
+
+| Call | Draws | Use it when |
+|---|---|---|
+| `AS.bench(el,{rows:[{label,value,hi,display}],color})` | thick rounded bars, hero in ink or signal, big figure at the bar end | "2.4x faster" |
+| `AS.dumbbell(el,{rows:[{label,a,b}],names})` | before ring, after dot, both labelled, change in a right column | before and after, per group |
+| `AS.slope(el,{left,right,rows:[{label,a,b,hi}]})` | one line per row between two moments | who moved, who did not |
+| `AS.scatter(el,{points:[{x,y,r,label,hi}],mid,quads})` | scatter or bubble, pale except the `hi` points | two measures, one outlier |
+| `AS.waterfall(el,{steps:[{label,value,total}]})` | start, rises, falls, end | how a number became another |
+| `AS.funnel(el,{steps:[{label,value}]})` | pills on a track with share of the previous step | drop-off |
+| `AS.bullet(el,{rows:[{label,value,target}]})` | value on a track with a target tick | against a goal |
+| `AS.donut(el,{value,label})` or `{segs}` | ring with the number inside | one share; never more than four segments |
+| `AS.waffle(el,{value,total})` | unit grid | a share people should be able to count |
+| `AS.meter(el,{rows:[{label,value,color}]})` | segment level strip, last lit cell takes the colour | budgets, limits, capacity |
+| `AS.stepgrid(el,{lanes:[{label,cells}]})` | lanes of on, off and flagged cells | cadence, uptime, releases |
+| `AS.matrix(el,'99.98%',{dot,off})` | dot-matrix readout | one hero number; dot 4px or more |
+| `AS.spark(el,[..])` | sparkline | a table cell or a tile |
+| `AS.gantt(el,{cols,lanes,today})` | roadmap lanes with a today line | plans by quarter |
+| `AS.theme({signal})` | sets the signal colour for charts and CSS | once, at the top |
+
+Rules added with them:
+
+1. **Three tones before any hue.** This period ink, the previous period mid grey (`#8c8478`), everyone
+   else pale (`#d9d2c5`). Say which is which in a `.legend4`.
+2. **`color:'signal'` once.** In a piece that is not about severity, the mark that carries the claim
+   may take the signal colour. One mark, one chart, one page.
+3. **Draw a chart at the size it will be shown.** Set `W` (and `H`) near the plot box in CSS px. A
+   chart squeezed into a smaller box shrinks its labels with it.
+4. **Both ends labelled.** A dumbbell or slope shows both values; the reader should not need the axis.
+5. **Say the scale.** If groups do not share a scale, the method line says so.
+
 ## Voice
 
 Plain, human, short sentences. No em dashes, no middle dots, no "not X but Y", no signpost filler

@@ -1,0 +1,233 @@
+<!doctype html>
+<!-- General 16:9 deck (not a security review): 12 slides at 1600x900.
+     Layouts: 1 cover with lockup and port strip, 2 agenda, 3 section opener, 4 hero stat tile + chart
+     card, 5 benchmark, 6 summary grid (bento), 7 versus pair, 8 three phases, 9 quote, 10 roadmap,
+     11 logo wall + co-brand, 12 close (takeaway bar + ask).
+     Colour: ink greys, with the signal colour once per slide at most. One ink block per slide.
+     Halden is an invented company. Every name and number here is fictional. -->
+<html><head><meta charset="utf-8"><title>Deck</title>
+<link rel="stylesheet" href="../assets/style.css">
+<style>@page{size:1600px 900px;margin:0}
+/* layout glue for this deck only */
+.slide .mast .lockup{--m:26px}
+.slide .foot .ports{margin-right:14px}
+.split{display:grid;grid-template-columns:var(--grid,1fr 1fr);gap:56px;flex:1 1 auto;min-height:0}
+.split>*{min-width:0;min-height:0}
+.col{display:flex;flex-direction:column}
+</style>
+<script src="../assets/charts.js"></script>
+<script src="../assets/icons.js"></script>
+<script src="../assets/check.js"></script>
+</head>
+<body class="slides">
+
+<!-- 1. cover -->
+<section class="slide">
+  <div class="orb o1"></div><div class="orb o2"></div><div class="orb o3"></div>
+  <div class="mast"><span class="lockup"><i class="mk sig" data-m="split"></i><span class="nm">halden<small>billing</small></span></span><span>Annual review</span><span class="pill">Fiscal 2026</span></div>
+  <div class="rel" style="margin-top:86px"><span class="tag">Board deck</span></div>
+  <h1 class="h-hero rel" style="margin-top:6px">4.1M invoices. Zero re-runs.<br><em>The year billing got boring.</em></h1>
+  <p class="lede rel">What shipped, what it did to the numbers, and what we are asking for next.</p>
+  <div class="foot rel"><span><span class="ports"><i class="on"></i><i></i><i></i><i></i><i></i></span>Halden, Inc. Sample data.</span><span>1</span></div>
+</section>
+
+<!-- 2. agenda -->
+<section class="slide">
+  <span class="eyebrow">Agenda</span>
+  <h2 class="h-slide">Four parts. <em>Forty minutes.</em></h2>
+  <ol class="agenda grow" style="margin-top:26px">
+    <li class="on">The year in numbers<span>10 min</span></li>
+    <li>What we shipped<span>10 min</span></li>
+    <li>Where customers are<span>10 min</span></li>
+    <li>The plan and the ask<span>10 min</span></li>
+  </ol>
+  <div class="foot"><span><span class="ports"><i class="on"></i><i class="on"></i><i></i><i></i><i></i></span>Halden annual review</span><span>2</span></div>
+</section>
+
+<!-- 3. section opener: title at the top, a void, body from the lower half -->
+<section class="slide opener">
+  <div class="orb o2" style="right:-140px;top:-160px"></div>
+  <span class="eyebrow rel"><span class="code">PT–01</span></span>
+  <h2 class="h-part rel">The year<br><em>in numbers.</em></h2>
+  <div class="low rel" style="--grid:1fr 1.1fr">
+    <p class="lede">Revenue retention passed 118%. Invoice runs got 2.4 times faster. Support load fell while usage tripled.</p>
+    <div class="spec">
+      <div><b>Fiscal 2026, Feb 1 to Jan 31</b><span>All figures audited unless marked estimate</span></div>
+      <div><b>1,284 paying accounts</b><span>Up from 902 at the start of the year</span></div>
+      <div><b>One definition per metric</b><span>The glossary is on the last page of the appendix</span></div>
+    </div>
+  </div>
+  <div class="foot rel" style="margin-top:28px"><span>Halden annual review</span><span>3</span></div>
+</section>
+
+<!-- 4. hero stat tile (one third) + chart card (two thirds) -->
+<section class="slide">
+  <span class="eyebrow">The year in numbers</span>
+  <h2 class="h-slide" style="font-size:60px">Customers stayed. <em>Then they bought more.</em></h2>
+  <div class="split" style="--grid:1fr 2fr;gap:14px">
+    <div class="tile ink" style="padding:34px 36px">
+      <span class="micro" style="font-size:13px">Net revenue retention</span>
+      <b style="font-size:168px;margin-top:auto">118<small>%</small></b>
+      <p style="font-size:19px;line-height:1.4;margin-top:20px">A dollar of revenue from a year ago is worth $1.18 today, after churn and downgrades.</p>
+      <div class="bar" style="margin-top:26px"><i style="width:84.7%"></i></div>
+      <p style="font-size:13px;margin-top:10px">100% is the line where a cohort holds its value.</p>
+    </div>
+    <div class="card fcard">
+      <div class="chd"><span class="micro">Figure 1</span>
+        <span class="legend4"><span><i></i>fiscal 2026</span><span><i class="g2"></i>fiscal 2025</span><span><i class="g3"></i>peer median</span></span></div>
+      <h3>Retention rose in every plan, most in the plan with usage alerts.</h3>
+      <div class="plot" id="f1"></div>
+      <p class="method"><b>Method.</b> Net revenue retention by plan, trailing twelve months to Jan 31, 2026. Accounts older than one year, n = 902. Peer median from a survey of 41 billing vendors.</p>
+    </div>
+  </div>
+  <div class="foot"><span><span class="ports"><i class="on"></i><i class="on"></i><i></i><i></i><i></i></span>Halden annual review</span><span>4</span></div>
+</section>
+
+<!-- 5. benchmark: one claim, one signal mark -->
+<section class="slide">
+  <div class="split" style="--grid:1fr 1.05fr">
+    <div class="col">
+      <span class="eyebrow">What we shipped</span>
+      <h2 class="h-slide" style="margin-top:14px">Invoice runs are 2.4x faster. <em>Same hardware.</em></h2>
+      <p class="lede" style="margin-top:22px">The new rating engine prices events as they arrive, so the month-end run only has to add them up.</p>
+      <p class="method" style="margin-top:auto"><b>Method.</b> Median wall-clock time for the month-end invoice run, largest 50 accounts, three runs each. Engine 4 shipped Aug 12, 2026.</p>
+    </div>
+    <div class="cellx sand" style="--inset:40px"><div class="card fcard" style="padding:34px 38px 30px">
+      <div class="chd"><span class="micro">Month-end run, relative speed</span><span class="tagx line">higher is better</span></div>
+      <div class="plot" id="f2" style="margin-top:18px"></div>
+    </div></div>
+  </div>
+  <div class="foot"><span><span class="ports"><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i></span>Halden annual review</span><span>5</span></div>
+</section>
+
+<!-- 6. summary grid: one hero cell, one idea per cell, no body copy -->
+<section class="slide" style="gap:18px">
+  <div class="bento" style="grid-template-rows:repeat(4,1fr)">
+    <div class="bc c3 r2"><span class="micro">Speed</span><b>2.4<small>x</small></b><p>Faster invoice runs</p></div>
+    <div class="bc c6 r2 hero"><h2>Fiscal 2026.<br><em>One year on one slide.</em></h2></div>
+    <div class="bc c3"><span class="idisc" style="--d:44px"><i class="ic" data-i="shield-check"></i></span><p style="margin-top:auto">First SOC 2 audit, no findings</p></div>
+    <div class="bc c3"><b>99.98<small>%</small></b><p>API uptime</p></div>
+    <div class="bc c4 r2"><span class="micro">Renewals</span><div class="plot" id="g1"></div><p>Two thirds renewed early</p></div>
+    <div class="bc c2 stone"><b>38</b><p>Countries invoiced</p></div>
+    <div class="bc c2"><span class="idisc ink" style="--d:44px"><i class="ic" data-i="bolt"></i></span><p style="margin-top:auto">Real-time rating</p></div>
+    <div class="bc c4 r2 dawn" style="justify-content:flex-end"><p class="st">Billing that reads like a receipt, not a ransom note.</p></div>
+    <div class="bc c4" style="flex-direction:row;align-items:flex-end;gap:16px"><div><b>4.1<small>M</small></b><p>Invoices sent</p></div><div id="g2" style="margin-left:auto;margin-bottom:6px"></div></div>
+  </div>
+  <div class="foot" style="margin-top:0"><span><span class="ports"><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i></span>Halden annual review. Sample data.</span><span>6</span></div>
+</section>
+
+<!-- 7. versus pair -->
+<section class="slide">
+  <span class="eyebrow">Where customers are</span>
+  <h2 class="h-slide" style="font-size:60px">Seats cap revenue. <em>Usage follows value.</em></h2>
+  <div class="vs" style="flex:1 1 auto;min-height:0">
+    <div class="card col" style="box-shadow:var(--ring);border:0;padding:34px 38px">
+      <span class="micro">Per-seat pricing</span>
+      <h3 style="font-size:40px;letter-spacing:-.03em;margin-top:14px">You pay for logins.</h3>
+      <ul class="summary" style="border:0;padding:0;margin-top:10px"><ul>
+        <li style="font-size:21px">Revenue grows only when headcount does.</li>
+        <li style="font-size:21px">Heavy users and idle users cost the same.</li>
+        <li style="font-size:21px">Discounting is the only lever at renewal.</li></ul></ul>
+      <div style="margin-top:auto"><span class="micro">Median expansion, year two</span><div class="bignum" style="color:var(--ink-soft);margin-top:10px">+6<small>%</small></div></div>
+    </div>
+    <div class="card col fav" style="border:0;padding:34px 38px">
+      <span class="micro">Usage-based pricing</span>
+      <h3 style="font-size:40px;letter-spacing:-.03em;margin-top:14px">You pay for what ran.</h3>
+      <ul class="summary" style="border:0;padding:0;margin-top:10px"><ul>
+        <li style="font-size:21px"><b>Revenue grows with the customer's own success.</b></li>
+        <li style="font-size:21px">Small teams start for almost nothing.</li>
+        <li style="font-size:21px">Alerts and caps replace the renewal fight.</li></ul></ul>
+      <div style="margin-top:auto"><span class="micro">Median expansion, year two</span><div class="bignum" style="margin-top:10px">+31<small>%</small></div></div>
+    </div>
+  </div>
+  <div class="foot"><span>Survey of 212 finance leads, Oct 2026. Sample data.</span><span>7</span></div>
+</section>
+
+<!-- 8. three phases: ink, stone, grey -->
+<section class="slide">
+  <span class="eyebrow">The plan and the ask</span>
+  <h2 class="h-slide" style="font-size:60px">Three moves. <em>In this order.</em></h2>
+  <div class="phases" style="flex:1 1 auto;min-height:0;margin-top:8px">
+    <div class="tile ink" style="padding:30px 32px"><span class="nb">1</span><span class="micro" style="margin-top:22px">Now to June</span><h4 style="font-size:32px">Tax in every region</h4><p style="font-size:21px">Calculate and file in the 38 countries we already invoice.</p></div>
+    <div class="tile" style="padding:30px 32px"><span class="nb">2</span><span class="micro" style="margin-top:22px">July to October</span><h4 style="font-size:32px">Contracts as code</h4><p style="font-size:21px">Ramp deals, minimums and credits in one versioned file.</p></div>
+    <div class="tile mid" style="padding:30px 32px"><span class="nb">3</span><span class="micro" style="margin-top:22px">November on</span><h4 style="font-size:32px">Revenue recognition</h4><p style="font-size:21px">Close the books from the same event stream that bills.</p></div>
+  </div>
+  <div class="foot"><span><span class="ports"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span>Halden annual review</span><span>8</span></div>
+</section>
+
+<!-- 9. quote -->
+<section class="slide">
+  <div class="orb o3" style="left:-120px;top:-80px"></div>
+  <span class="eyebrow rel">A customer, in their words</span>
+  <p class="quote rel" style="margin-top:auto;font-size:62px">We stopped holding a meeting about the invoice run. <em>It finishes before anyone thinks to ask.</em></p>
+  <div class="author rel" style="margin:34px 0 auto .62em;font-size:16px"><span class="av">MO</span><div><b>Mira Okafor</b><span>Head of finance systems, Lantern Freight</span></div></div>
+  <div class="foot rel"><span>Quoted with permission. Invented for this sample.</span><span>9</span></div>
+</section>
+
+<!-- 10. roadmap -->
+<section class="slide">
+  <span class="eyebrow">The plan and the ask</span>
+  <h2 class="h-slide" style="font-size:60px">Tax ships first. <em>Everything else waits on it.</em></h2>
+  <div class="card fcard" style="flex:1 1 auto;min-height:0">
+    <div class="chd"><span class="micro">Fiscal 2027 by quarter</span>
+      <span class="legend4"><span><i></i>committed</span><span><i class="g3"></i>planned</span><span><i class="s"></i>today</span></span></div>
+    <div class="plot" id="f3"></div>
+  </div>
+  <div class="foot"><span>Dashed bars are not yet staffed.</span><span>10</span></div>
+</section>
+
+<!-- 11. logo wall + co-brand card -->
+<section class="slide">
+  <span class="eyebrow">Where customers are</span>
+  <h2 class="h-slide" style="font-size:60px">1,284 teams bill with Halden. <em>Twelve of them.</em></h2>
+  <div class="logos" style="--cols:6;--lh:40px;margin:auto 0;gap:84px 24px">
+    <span class="ph"><i class="mk" data-m="ring" style="--m:30px"></i>Lantern</span><span class="ph">northfold</span><span class="ph"><i class="mk" data-m="stack" style="--m:30px"></i>Quay</span>
+    <span class="ph">BRISKET</span><span class="ph"><i class="mk" data-m="grid" style="--m:30px"></i>Fourpoint</span><span class="ph">oda&amp;co</span>
+    <span class="ph">Marlow</span><span class="ph"><i class="mk" data-m="steps" style="--m:30px"></i>Stair</span><span class="ph">TALLY HO</span>
+    <span class="ph"><i class="mk" data-m="orbit" style="--m:30px"></i>Perigee</span><span class="ph">kiln</span><span class="ph"><i class="mk" data-m="stem" style="--m:30px"></i>Wickett</span>
+  </div>
+  <div class="cobrand" style="padding:26px"><span class="lockup one" style="--m:30px"><i class="mk" data-m="split"></i><span class="nm">halden</span></span><span class="x">&times;</span>
+    <span class="lockup one" style="--m:30px"><i class="mk" data-m="ring"></i><span class="nm">lantern</span></span>
+    <span style="margin-left:36px;font-size:15px;color:var(--ink-2)">Other people's marks: one ink, one height, never recoloured.</span></div>
+  <div class="foot"><span>Every company on this slide is invented.</span><span>11</span></div>
+</section>
+
+<!-- 12. close -->
+<section class="slide">
+  <span class="rule-lab">In one minute</span>
+  <h2 class="h-slide" style="font-size:60px">Three things the year <em>says.</em></h2>
+  <div class="sums grow" style="--cols:3;margin-top:18px">
+    <div class="sum"><div class="n">01</div><h4>Retention</h4><p>118% net revenue retention, up from 109%. Every plan improved.</p></div>
+    <div class="sum"><div class="n">02</div><h4>Speed</h4><p>Month-end runs are 2.4x faster on the same hardware.</p></div>
+    <div class="sum"><div class="n">03</div><h4>Reach</h4><p>Invoices went to 38 countries. Tax filing covers 9 of them.</p></div>
+  </div>
+  <div class="takeaway"><span class="micro">The ask</span><p>Fund six engineers for tax in every region.<small>It unblocks contracts and revenue recognition, in that order.</small></p>
+    <a class="btn">Read the plan</a></div>
+  <div class="foot" style="margin-top:0"><span><span class="ports"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span>Halden annual review</span><span>12</span></div>
+</section>
+
+<script>
+// Fig 1: three-tone ranked bars. This year ink, last year mid grey, the peer median pale.
+AS.hbars('#f1', {W: 900, labelW: 150, rowH: 40, max: 140, rows: [
+  {label: 'Scale', value: 131, display: '131%', segs: [{v: 131, color: '#1c1917'}]},
+  {label: '', value: 117, display: '117%', segs: [{v: 117, color: '#8c8478'}]},
+  {label: '', value: 104, display: '104%', segs: [{v: 104, color: '#d9d2c5'}]},
+  {label: 'Team', value: 116, display: '116%', segs: [{v: 116, color: '#1c1917'}]},
+  {label: '', value: 109, display: '109%', segs: [{v: 109, color: '#8c8478'}]},
+  {label: '', value: 102, display: '102%', segs: [{v: 102, color: '#d9d2c5'}]},
+  {label: 'Starter', value: 103, display: '103%', segs: [{v: 103, color: '#1c1917'}]},
+  {label: '', value: 98, display: '98%', segs: [{v: 98, color: '#8c8478'}]},
+  {label: '', value: 96, display: '96%', segs: [{v: 96, color: '#d9d2c5'}]}]});
+AS.bench('#f2', {W: 560, rowH: 96, barH: 34, rows: [
+  {label: 'Engine 4', value: 2.4, display: '2.4x', hi: true, color: 'signal'},
+  {label: 'Engine 3', value: 1.3, display: '1.3x'},
+  {label: 'Engine 2 (baseline)', value: 1, display: '1x'}]});
+AS.donut('#g1', {value: 67, label: '67%', size: 200});
+AS.spark('#g2', [1.1, 1.3, 1.2, 1.6, 2.0, 2.3, 2.9, 3.4, 4.1], {W: 190, H: 54, fill: true});
+AS.gantt('#f3', {W: 1380, labelW: 200, rowH: 78, barH: 40, cols: ['Q1  Feb to Apr', 'Q2  May to Jul', 'Q3  Aug to Oct', 'Q4  Nov to Jan'], today: 0.35, todayLabel: 'Today', lanes: [
+  {label: 'Tax', bars: [{from: 0, to: 1.7, label: 'Calculate and file, 38 countries', hi: true}]},
+  {label: 'Contracts', bars: [{from: 1.5, to: 3, label: 'Contracts as code'}]},
+  {label: 'Revenue', bars: [{from: 3, to: 4, label: 'Recognition', ghost: true}]},
+  {label: 'Platform', bars: [{from: 0, to: 2.2, label: 'Two new regions'}, {from: 2.4, to: 4, label: 'Event replay', ghost: true}]}]});
+</script>
+</body></html>

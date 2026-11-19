@@ -1,0 +1,86 @@
+<!doctype html>
+<!-- Chart catalogue: one working call per v3 helper, on two 1600x1000 canvases. Copy a call from
+     here. Sample data: fictional. -->
+<html><head><meta charset="utf-8"><title>Charts</title>
+<link rel="stylesheet" href="../assets/style.css">
+<style>@page{size:1600px 1000px;margin:0}
+.cat{display:grid;grid-template-columns:repeat(var(--cols,3),1fr);gap:16px;flex:1;min-height:0}
+.cat .card{padding:20px 22px 18px;border-radius:20px;display:flex;flex-direction:column;box-shadow:var(--ring);border:0}
+.cat .card h3{font-size:16px;margin:8px 0 2px}.cat .card .sub{font-size:12.5px;margin-bottom:12px}
+.cat .plot{flex:1;min-height:0;display:flex;align-items:center;justify-content:center}.cat .plot>svg{width:100%;height:100%;max-height:var(--mh,100%)}</style>
+<script src="../assets/charts.js"></script>
+<script src="../assets/check.js"></script>
+</head>
+<body class="slides" style="width:1600px">
+
+<section class="slide" style="height:1000px;padding:44px 56px 36px;gap:16px">
+  <div class="mast"><span class="mark"><i></i>palette</span><span>Chart catalogue, 1 of 2</span><span class="pill">Sample data</span></div>
+  <div class="cat" style="--cols:3">
+    <div class="card"><span class="micro">AS.bench</span><h3>The new build is 2.4x the old one</h3><p class="sub">Requests per second, same hardware</p><div class="plot" id="a1"></div></div>
+    <div class="card"><span class="micro">AS.slope</span><h3>Only one region lost share</h3><p class="sub">Share of revenue, 2025 to 2026</p><div class="plot" id="a2"></div></div>
+    <div class="card"><span class="micro">AS.scatter</span><h3>One plan is both cheap and fast</h3><p class="sub">Median latency against price per million</p><div class="plot" id="a3"></div></div>
+    <div class="card"><span class="micro">AS.waterfall</span><h3>Churn took back a third of new revenue</h3><p class="sub">Annual recurring revenue, $K</p><div class="plot" id="a4"></div></div>
+    <div class="card"><span class="micro">AS.funnel</span><h3>Most sign-ups never make a first call</h3><p class="sub">Accounts created in October</p><div class="plot" id="a5"></div></div>
+    <div class="card"><span class="micro">AS.dumbbell</span><h3>Every queue got shorter</h3><p class="sub">Median wait in minutes, before and after</p><div class="plot" id="a6"></div></div>
+  </div>
+  <div class="foot"><span>One mark carries the claim. Everything else is ink grey.</span><span>1</span></div>
+</section>
+
+<section class="slide" style="height:1000px;padding:44px 56px 36px;gap:16px">
+  <div class="mast"><span class="mark"><i></i>palette</span><span>Chart catalogue, 2 of 2</span><span class="pill">Sample data</span></div>
+  <div class="cat" style="--cols:4;grid-template-rows:1.25fr 1fr 1fr">
+    <div class="card"><span class="micro">AS.donut</span><h3>Two thirds renewed</h3><p class="sub">Contracts due this quarter</p><div class="plot" id="b1"></div></div>
+    <div class="card"><span class="micro">AS.waffle</span><h3>38 of 100 seats are active</h3><p class="sub">One cell is one seat</p><div class="plot" id="b2"></div></div>
+    <div class="card" style="grid-column:span 2"><span class="micro">AS.matrix</span><h3>Uptime, last 90 days</h3><p class="sub">Dot-matrix readout for one hero number</p><div class="plot" id="b3"></div></div>
+    <div class="card" style="grid-column:span 2"><span class="micro">AS.meter</span><h3>Storage is the one budget near its limit</h3><p class="sub">Share of monthly budget used</p><div class="plot" id="b4"></div></div>
+    <div class="card" style="grid-column:span 2"><span class="micro">AS.stepgrid</span><h3>Two missed releases in 24 weeks</h3><p class="sub">One cell is one week. Signal marks a miss.</p><div class="plot" id="b5"></div></div>
+    <div class="card" style="grid-column:span 2"><span class="micro">AS.gantt</span><h3>Billing ships before the mobile beta</h3><p class="sub">2027 roadmap by quarter</p><div class="plot" id="b6"></div></div>
+    <div class="card"><span class="micro">AS.bullet</span><h3>Two of three targets met</h3><p class="sub">Tick is the target</p><div class="plot" id="b7"></div></div>
+    <div class="card"><span class="micro">AS.spark</span><h3>Inline trend</h3><p class="sub">For a table cell or a tile</p><div class="plot" style="flex-direction:column;gap:14px" id="b8"></div></div>
+  </div>
+  <div class="foot"><span>Signal colour appears once per view, on the mark that matters.</span><span>2</span></div>
+</section>
+
+<script>
+AS.bench('#a1', {W: 440, rows: [
+  {label: 'Build 4.2', value: 2.4, display: '2.4x', hi: true},
+  {label: 'Build 4.1', value: 1.6, display: '1.6x'},
+  {label: 'Build 3.9 (baseline)', value: 1, display: '1x'}]});
+AS.slope('#a2', {W: 440, H: 300, left: '2025', right: '2026', padL: 130, padR: 60, fmt: v => v + '%', rows: [
+  {label: 'Americas', a: 41, b: 46}, {label: 'Europe', a: 33, b: 24, hi: true},
+  {label: 'Asia', a: 18, b: 21}, {label: 'Other', a: 8, b: 9}]});
+AS.scatter('#a3', {W: 440, H: 300, xLabel: 'USD per million', yLabel: 'Latency, ms', xMax: 40, yMax: 800, points: [
+  {x: 6, y: 180, label: 'Plan C', hi: true}, {x: 12, y: 420}, {x: 18, y: 380}, {x: 22, y: 610}, {x: 30, y: 300},
+  {x: 34, y: 520}, {x: 9, y: 690}, {x: 26, y: 450}, {x: 15, y: 540}]});
+AS.waterfall('#a4', {W: 440, H: 290, steps: [
+  {label: 'Start', value: 820, total: true}, {label: 'New', value: 310}, {label: 'Expand', value: 120},
+  {label: 'Churn', value: -140}, {label: 'End', total: true}]});
+AS.funnel('#a5', {W: 440, labelW: 110, rowH: 46, steps: [
+  {label: 'Signed up', value: 8400}, {label: 'Verified', value: 6100}, {label: 'API key', value: 3900},
+  {label: 'First call', value: 1700}, {label: 'Paid', value: 420}]});
+AS.dumbbell('#a6', {W: 440, labelW: 70, rowH: 44, names: ['August', 'November'], rows: [
+  {label: 'Billing', a: 42, b: 18}, {label: 'Technical', a: 67, b: 31}, {label: 'Sales', a: 21, b: 9}, {label: 'Abuse', a: 55, b: 12}]});
+
+AS.donut('#b1', {value: 67, label: '67%', size: 190}).style.maxHeight = '170px';
+AS.waffle('#b2', {value: 38, cell: 11, gap: 4});
+AS.matrix('#b3', '99.982%', {dot: 11, off: true});
+AS.meter('#b4', {W: 640, rows: [
+  {label: 'Compute', value: 61, display: '61%'}, {label: 'Storage', value: 94, display: '94%', color: 'signal'},
+  {label: 'Egress', value: 38, display: '38%'}, {label: 'Support', value: 72, display: '72%'}]});
+AS.stepgrid('#b5', {W: 640, labelW: 90, x: ['Jun 1', 'Nov 15'], lanes: [
+  {label: 'Web', cells: [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]},
+  {label: 'iOS', cells: [1,0,1,0,1,0,1,0,1,2,1,0,1,0,1,0,1,0,1,0,1,0,1,0]},
+  {label: 'API', cells: [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,1,1,1,1,1,1,1]}]});
+AS.gantt('#b6', {W: 640, labelW: 90, rowH: 44, cols: ['Q1', 'Q2', 'Q3', 'Q4'], today: 1.4, todayLabel: 'Today', lanes: [
+  {label: 'Billing', bars: [{from: 0, to: 1.8, label: 'Usage billing', hi: true}]},
+  {label: 'Mobile', bars: [{from: 1, to: 2.5, label: 'Beta'}, {from: 2.5, to: 4, label: 'GA', ghost: true}]},
+  {label: 'Platform', bars: [{from: 0.5, to: 3, label: 'Regions'}]}]});
+AS.bullet('#b7', {W: 300, labelW: 80, numW: 44, rows: [
+  {label: 'NPS', value: 62, target: 55}, {label: 'CSAT', value: 91, target: 90}, {label: 'FCR', value: 48, target: 70}]});
+[[12,14,13,18,17,22,26], [30,28,29,24,22,19,15], [8,9,8,9,10,9,10]].forEach((v, i) => {
+  const d = document.createElement('div'); d.style.cssText = 'display:flex;align-items:center;gap:14px;font-size:13px;color:var(--ink-2);width:100%';
+  d.innerHTML = '<span style="width:70px">' + ['Revenue', 'Tickets', 'Latency'][i] + '</span>';
+  document.querySelector('#b8').appendChild(d); AS.spark(d, v, {W: 130, H: 30, fill: i === 0});
+});
+</script>
+</body></html>

@@ -58,3 +58,24 @@ Page headlines follow the house pattern at 32px: `297 open. <em>52 past SLA.</em
 `render.sh` prints one PDF page per `.screen`. Set the same size in `body style="--w;--h"` and in
 `@page`. The layout check flags anything spilling out of a screen. The live HTML is the deliverable
 when someone will click around; the PNG is the deliverable for a deck or Slack.
+
+## Product pages, overlays and mobile (v3)
+
+Working examples: `templates/landing.html` and `templates/mobile.html`; the layout recipes are in
+`layouts.md`. These pieces are not about severity, so they follow the 88 / 11 / 1 rule in `brand.md`:
+ink greys, one signal mark per screen, no severity colours.
+
+| Need | Class | Notes |
+|---|---|---|
+| page column | `.web`, `.wrap` | combine `.wrap` with `.nav`, `.footer`, `.fine` on one element |
+| section | `.sect`, `.sect.alt`, `.sect.tight` | `.alt` changes the ground; never a dark section |
+| headline | `.h-web` (76px), `.h-web2` (44px) | two clauses, second in `<em>` |
+| feature grid | `.feat > div` | icon disc, h4, one or two lines |
+| pricing | `.plans > .plan > .ph + .pb` | `.price`, `.pd`, `ul` with check icons, button pinned to the bottom |
+| testimonial | `.tcard` + `.author` | |
+| badge | `.badge`, `.badge.soft`, `.badge.sigc` | outlined pill; `.sigc` is the screen's signal mark |
+| audio row | `.player` | `.pp` button, `.wv` wave, `time` |
+| transcript | `.transcript > div` | micro speaker label over the line |
+| overlay | `.scrim` + `.modal`, `.toast`, `.cmdk` | the only shadows on a screen |
+| phone | `.device > .scr` | `.island .mstat .mhead .mbody .mcard .mlist .tabbar .sheet .homebar` |
+| phone sizes | `.seg.fill`, `.btn.block`, `.mnum` | 44px targets inside `.device` |

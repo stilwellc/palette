@@ -187,3 +187,92 @@ body.dash .screen.bare{grid-template-columns:1fr}
 /* print: keep floating shadows small so Chrome doesn't rasterise them into boxes */
 @media print{.drawer,.anom{box-shadow:0 0 0 .5px rgba(28,25,23,.2)}.tip{display:none!important}}
 @media print{.seg a.on,.switch,.statcard{box-shadow:0 0 0 .5px rgba(28,25,23,.16)}}
+
+/* =================== v3 additions: product pages, mobile, overlays ===================
+   A marketing or product page is <div class="screen bare"><div class="web">...</div></div>.
+   Sections change by ground (.sect.alt), never by hue. One .btn.ink per viewport height. */
+.web{display:flex;flex-direction:column;min-width:0}
+.wrap{width:min(var(--wrap,1120px),100% - 96px);margin:0 auto}
+.banner{display:flex;align-items:center;justify-content:center;gap:10px;height:38px;background:var(--ink);color:var(--paper-2);font:500 13px/1 var(--f-sans)}
+.banner a{color:inherit;opacity:.7}
+.nav{height:68px;display:flex;align-items:center;gap:30px;font:500 14px/1 var(--f-sans)}
+.nav .links{display:flex;gap:26px;color:var(--ink-2)} .nav .links a{color:inherit;text-decoration:none}
+.nav .acts{margin-left:auto;display:flex;gap:8px;align-items:center}
+.sect{padding:88px 0} .sect.tight{padding:56px 0} .sect.alt{background:var(--ground-2)}
+.sect>.wrap>.eyebrow{display:block;margin-bottom:14px}
+.h-web{font:600 76px/.98 var(--f-sans);letter-spacing:-.045em} .h-web em,.h-web2 em{font-style:normal;color:var(--ink-soft)}
+.h-web2{font:600 44px/1.04 var(--f-sans);letter-spacing:-.035em}
+.btn.lg{height:44px;padding:0 20px;font-size:15px}
+.badge{display:inline-flex;align-items:center;gap:6px;height:22px;padding:0 9px;border-radius:999px;box-shadow:inset 0 0 0 1px var(--ink);font:500 11.5px/1 var(--f-sans);color:var(--ink);white-space:nowrap}
+.badge.soft{box-shadow:none;background:var(--chip)} .badge.sigc{box-shadow:none;background:var(--signal);color:#fff}
+/* feature grid: icon disc, short head, one or two lines */
+.feat{display:grid;grid-template-columns:repeat(var(--cols,3),1fr);gap:14px}
+.feat>div{background:var(--paper-2);border-radius:24px;padding:24px 26px 26px;box-shadow:var(--ring);display:flex;flex-direction:column;gap:10px}
+.feat h4{font:600 18px/1.2 var(--f-sans);letter-spacing:-.02em;margin-top:10px} .feat p{font-size:14.5px;line-height:1.5;color:var(--ink-2)}
+/* pricing plan: cell header, price, list, action pinned to the bottom */
+.plans{display:grid;grid-template-columns:repeat(var(--cols,3),1fr);gap:14px;align-items:stretch}
+.plan{background:var(--paper-2);border-radius:24px;box-shadow:var(--ring);overflow:hidden;display:flex;flex-direction:column}
+.plan .ph{min-height:104px;padding:18px 20px;background:var(--n6);display:flex;justify-content:space-between;align-items:flex-start;box-shadow:var(--keyline);font:600 17px/1 var(--f-sans);letter-spacing:-.015em}
+.plan .ph.sand{background:var(--cell-sand)}.plan .ph.dawn{background:var(--cell-dawn)}.plan .ph.mist{background:var(--cell-mist)}.plan .ph.moss{background:var(--cell-moss)}
+.plan .pb{padding:22px 22px 24px;display:flex;flex-direction:column;gap:16px;flex:1}
+.plan .price{font:600 44px/1 var(--f-sans);letter-spacing:-.04em} .plan .price small{font:400 14px/1 var(--f-sans);color:var(--ink-3);letter-spacing:0;margin-left:4px}
+.plan .pd{font-size:14px;color:var(--ink-2);line-height:1.45}
+.plan ul{list-style:none;display:grid;gap:10px;font-size:14px;color:var(--ink-2);border-top:1px solid var(--line);padding-top:16px}
+.plan li{display:flex;gap:10px;align-items:flex-start;line-height:1.35} .plan li .ic{--ic:16px;margin-top:1px;color:var(--ink)}
+.plan .btn{margin-top:auto;justify-content:center}
+/* testimonial card and footer */
+.tcard{background:var(--paper-2);border-radius:24px;padding:26px;box-shadow:var(--ring);display:flex;flex-direction:column;gap:20px}
+.tcard .author{margin-top:auto}
+.tcard p{font:500 19px/1.4 var(--f-sans);letter-spacing:-.018em}
+.footer{border-top:1px solid var(--line-2);padding:40px 0 34px;display:grid;grid-template-columns:1.6fr repeat(var(--cols,4),1fr);gap:24px;font-size:13.5px;color:var(--ink-2)}
+.footer h5{font:500 12px/1 var(--f-sans);color:var(--ink-3);margin-bottom:14px} .footer a{display:block;color:inherit;text-decoration:none;margin-bottom:9px}
+.fine{display:flex;justify-content:space-between;font-size:12px;color:var(--ink-3);padding:16px 0 28px}
+/* audio row and transcript card */
+.player{display:flex;align-items:center;gap:14px;padding:8px 18px 8px 8px;border-radius:999px;background:var(--paper-2);box-shadow:var(--ring)}
+.player .pp{width:40px;height:40px;border-radius:50%;background:var(--ink);color:var(--paper-2);display:grid;place-items:center;flex:none} .player .pp .ic{--ic:18px}
+.player .wv{flex:1;height:26px;min-width:80px;background:repeating-linear-gradient(90deg,var(--n3) 0 2px,transparent 2px 5px);
+  -webkit-mask:linear-gradient(#000,#000) center/100% var(--amp,60%) no-repeat;mask:linear-gradient(#000,#000) center/100% var(--amp,60%) no-repeat}
+.player time{font:500 12px/1 var(--f-mono);color:var(--ink-3)}
+.transcript{display:grid;gap:14px} .transcript>div{display:grid;gap:5px} .transcript p{font-size:14.5px;line-height:1.5;color:var(--ink)}
+.transcript .them p{color:var(--ink-2)}
+/* overlays: the only places a shadow is allowed */
+.scrim{position:absolute;inset:0;background:rgba(28,25,23,.28);z-index:5}
+.modal{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:var(--mw,440px);border-radius:24px;background:var(--paper-2);box-shadow:var(--pop);padding:26px;z-index:6;display:flex;flex-direction:column;gap:14px}
+.modal h3{font:600 20px/1.2 var(--f-sans);letter-spacing:-.022em} .modal p{font-size:14px;line-height:1.5;color:var(--ink-2)} .modal .acts{display:flex;gap:8px;justify-content:flex-end;margin-top:8px}
+.toast{display:inline-flex;gap:10px;align-items:center;padding:11px 16px 11px 12px;border-radius:14px;background:var(--paper-2);box-shadow:var(--pop);font:500 13.5px/1.2 var(--f-sans)}
+.toast .ic{--ic:18px}
+.cmdk{width:560px;border-radius:18px;background:var(--paper-2);box-shadow:var(--pop);overflow:hidden}
+.cmdk .q{display:flex;align-items:center;gap:10px;height:50px;padding:0 16px;border-bottom:1px solid var(--line);font-size:15px;color:var(--ink-3)}
+.cmdk a{display:flex;align-items:center;gap:12px;height:40px;padding:0 16px;font:450 14px/1 var(--f-sans);color:var(--ink-2);text-decoration:none} .cmdk a.on{background:var(--n6);color:var(--ink)}
+.cmdk a kbd{margin-left:auto} .cmdk .grp{font:500 11.5px/1 var(--f-sans);color:var(--ink-3);padding:12px 16px 6px}
+
+/* ---------- mobile: a phone frame with concentric corners (56 outer, 12 bezel, 44 screen) ---------- */
+.device{position:relative;width:var(--dw,390px);height:var(--dh,844px);border-radius:56px;padding:12px;background:var(--ink);flex:none;box-sizing:content-box}
+.device>.scr{position:relative;width:100%;height:100%;border-radius:44px;background:var(--paper);overflow:hidden;display:flex;flex-direction:column}
+.device .island{position:absolute;top:11px;left:50%;margin-left:-56px;width:112px;height:32px;border-radius:16px;background:var(--ink);z-index:3}
+.mstat{height:54px;flex:none;display:flex;align-items:flex-end;justify-content:space-between;padding:0 30px 8px;font:600 15px/1 var(--f-sans)}
+.mstat span:last-child{display:flex;gap:6px;align-items:center} .mstat .ic{--ic:17px}
+.mhead{padding:10px 20px 6px;display:flex;align-items:center;justify-content:space-between}
+.mhead h1{font:600 30px/1.05 var(--f-sans);letter-spacing:-.035em} .mhead h1 em{font-style:normal;color:var(--ink-soft)}
+.mbody{flex:1;min-height:0;padding:10px 16px 0;display:flex;flex-direction:column;gap:12px;overflow:hidden}
+.mcard{background:var(--paper-2);border-radius:22px;padding:16px 18px;box-shadow:var(--ring)}
+.mlist{background:var(--paper-2);border-radius:22px;box-shadow:var(--ring);overflow:hidden}
+.mlist>a,.mlist>div{display:flex;align-items:center;gap:12px;min-height:56px;padding:8px 16px;font:500 15px/1.2 var(--f-sans);color:var(--ink);text-decoration:none;border-bottom:1px solid var(--line)}
+.mlist>:last-child{border-bottom:0} .mlist small{display:block;font:400 12.5px/1.3 var(--f-sans);color:var(--ink-3);margin-top:2px}
+.mlist .end{margin-left:auto;display:flex;align-items:center;gap:6px;font:500 13px var(--f-mono);color:var(--ink-3)}
+.tabbar{height:84px;flex:none;display:grid;grid-template-columns:repeat(var(--cols,4),1fr);align-items:start;padding:10px 12px 0;border-top:1px solid var(--line);background:var(--paper)}
+.tabbar a{display:flex;flex-direction:column;align-items:center;gap:5px;font:500 10.5px/1 var(--f-sans);color:var(--ink-3);text-decoration:none} .tabbar a.on{color:var(--ink)} .tabbar .ic{--ic:23px}
+.sheet{position:absolute;left:0;right:0;bottom:0;border-radius:32px 32px 0 0;background:var(--paper-2);box-shadow:var(--pop);padding:10px 20px 34px;z-index:6;display:flex;flex-direction:column;gap:14px}
+.sheet::before{content:"";align-self:center;width:36px;height:5px;border-radius:3px;background:var(--n4)}
+.homebar{position:absolute;bottom:8px;left:50%;margin-left:-67px;width:134px;height:5px;border-radius:3px;background:var(--ink);z-index:7}
+@media print{.plan,.feat>div,.tcard,.mcard,.mlist,.player{box-shadow:0 0 0 .5px rgba(28,25,23,.16)}
+  .modal,.toast,.cmdk,.sheet{box-shadow:0 0 0 .5px rgba(28,25,23,.22)}}
+/* mobile sizes and small gaps found while building templates/mobile.html */
+.seg.fill{display:flex} .seg.fill a{flex:1;text-align:center}
+.btn.block{display:flex;justify-content:center;width:100%}
+.device .btn.lg{height:50px;font-size:16px} .device .seg a{padding:12px 13px;font-size:13.5px}
+.device .toggle{zoom:1.5}
+.sheet h3{font:600 22px/1.15 var(--f-sans);letter-spacing:-.025em} .sheet h3 em{font-style:normal;color:var(--ink-soft)} .sheet p{font-size:14.5px;line-height:1.5;color:var(--ink-2)}
+.mlist .end b{color:var(--ink);font-weight:500}
+.mnum{font:600 46px/1 var(--f-sans);letter-spacing:-.04em;font-variant-numeric:tabular-nums}
+@media print{.toggle::after{box-shadow:none}}

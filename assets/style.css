@@ -319,3 +319,214 @@ body.slides .sum p{font-size:19px;line-height:1.45}
 .sums.grow .sum{display:flex;flex-direction:column}
 .sums.grow .sum h4{margin-top:auto}
 body.slides .sums.grow .sum .n{font-size:64px;letter-spacing:-.04em;color:var(--n4)}
+
+/* =================== v3 additions (Nov 2026): general design ===================
+   Three sources, structure only. From a second, deeper pass over the same product site: chart-card
+   anatomy, the ink / stone / grey tile ramp, colour "cells" that hold a card, takeaway bars, report
+   pages (contents, sources, running header). From industrial product design: continuous corners,
+   concentric radii, an accent budget, the summary grid. From hardware instrument design: one signal
+   colour with a meaning, label plates, model codes, segment and dot-matrix readouts, key glyphs.
+   Everything here is optional and additive: a severity piece never needs it. */
+:root{
+  --signal:#2b44d9;        /* the one accent for work that is not about severity. Budget: about 1% of a page */
+  --ground-2:#efe9dc;      /* one step down from paper: change section by ground, never by hue */
+  --r:24px; --pad:26px;    /* concentric rule: a shape inside a rounded shape uses --r-in */
+  --r-in:max(calc(var(--r) - var(--pad)),6px);
+  /* cells: soft colour fields that hold a card or one statement. Background only, never data. */
+  --cell-dawn:linear-gradient(135deg,#f3d9c4 0%,#ecc9d2 55%,#d9d0ea 100%);
+  --cell-mist:linear-gradient(135deg,#d6e0ee 0%,#dcd6ec 60%,#ece0d6 100%);
+  --cell-sand:linear-gradient(135deg,#f0e4c4 0%,#ecd7bd 60%,#e6ddd0 100%);
+  --cell-moss:linear-gradient(135deg,#dfe6cf 0%,#e9e3c6 60%,#efe6d8 100%);
+}
+/* continuous corners where the browser has them; plain radius everywhere else */
+@supports (corner-shape:squircle){.bc,.tile,.cellx,.idisc.sq,.plan{corner-shape:squircle}}
+
+/* ---------- signal: one mark per view ---------- */
+.sig{color:var(--signal)}
+.sdot{display:inline-block;width:.42em;height:.42em;border-radius:50%;background:var(--signal);vertical-align:.1em;margin-left:.08em}
+.sw-sig{background:var(--signal)}
+
+/* ---------- icons (assets/icons.js) ---------- */
+.ic{display:inline-flex;width:var(--ic,1.25em);height:var(--ic,1.25em);flex:none;vertical-align:-.24em;color:inherit}
+.ic svg{width:100%;height:100%;display:block}
+.ic.sig .f{fill:var(--signal)}
+/* icon disc: glyph at half the disc, one fill, no shadow. .sq = continuous-corner tile */
+.idisc{display:inline-grid;place-items:center;width:var(--d,40px);height:var(--d,40px);border-radius:50%;background:var(--n6);color:var(--ink);flex:none}
+.idisc .ic{width:calc(var(--d,40px)*.5);height:calc(var(--d,40px)*.5)}
+.idisc.ink{background:var(--ink);color:var(--paper-2)} .idisc.ring{background:transparent;box-shadow:var(--ring)}
+.idisc.paper{background:var(--paper-2);box-shadow:var(--ring)} .idisc.sigc{background:var(--signal);color:#fff}
+.idisc.sq{border-radius:calc(var(--d,40px)*.2237)}
+
+/* ---------- marks and lockups (AS.mark in icons.js) ---------- */
+.mk{display:inline-block;width:var(--m,28px);height:var(--m,28px);flex:none;color:var(--ink)}
+.mk svg{width:100%;height:100%;display:block}
+/* lockup: mark height = two lines of the name. Gap = 0.4 of the mark. */
+.lockup{--m:28px;display:inline-flex;align-items:center;gap:calc(var(--m)*.4);color:var(--ink)}
+.lockup .nm{font:600 calc(var(--m)*.47)/1.06 var(--f-sans);letter-spacing:-.02em;text-transform:lowercase}
+.lockup .nm small{display:block;font:inherit;font-weight:400;color:var(--ink-3);text-transform:none}
+.lockup.one .nm{font-size:calc(var(--m)*.62)}
+.clearbox{display:inline-grid;padding:calc(var(--m,28px)*.5);outline:1px dashed var(--n3)}
+/* other people's logos: one ink, one height, a grid (not a marquee) */
+.logos{display:grid;grid-template-columns:repeat(var(--cols,6),1fr);align-items:center;justify-items:center;gap:30px 24px}
+.logos>*{height:var(--lh,28px);max-width:150px;opacity:.42;color:var(--ink)}
+.logos img{filter:brightness(0);object-fit:contain}
+.logos .ph{display:flex;align-items:center;gap:8px;font:600 calc(var(--lh,28px)*.72)/1 var(--f-sans);letter-spacing:-.03em;white-space:nowrap}
+.cobrand{display:flex;align-items:center;justify-content:center;gap:28px;background:var(--n6);border-radius:var(--r);padding:34px}
+.cobrand .x{font:300 22px/1 var(--f-sans);color:var(--ink-3)}
+
+/* ---------- label system: tags, model codes, plates ---------- */
+.tagx{display:inline-flex;align-items:center;height:20px;padding:0 6px;border-radius:3px;background:var(--ink);color:var(--paper-2);
+  font:500 11px/1 var(--f-mono);letter-spacing:.03em;text-transform:uppercase;white-space:nowrap}
+.tagx.line{background:transparent;color:var(--ink);box-shadow:inset 0 0 0 1px var(--ink)}
+.tagx.sigc{background:var(--signal);color:#fff}
+.code{font:500 12px/1 var(--f-mono);color:var(--ink);white-space:nowrap}          /* AB–12: two letters, en dash, number */
+.code sup{color:var(--signal);font-size:.74em;margin-left:2px;vertical-align:.55em}
+.plate{display:inline-grid;gap:12px;padding:14px 16px 13px;border-radius:4px;box-shadow:inset 0 0 0 1px var(--ink);
+  font:400 11px/1.5 var(--f-mono);color:var(--ink-2);text-transform:lowercase}
+.plate .ph{display:flex;justify-content:space-between;align-items:baseline;gap:28px}
+.plate .ph b{font:600 20px/1 var(--f-sans);letter-spacing:-.02em;color:var(--ink);text-transform:none}
+.plate .ph em{font-style:normal;color:var(--signal)}
+.plate .pc{display:grid;grid-template-columns:repeat(3,auto);gap:2px 20px}
+.plate .pc b{display:block;font-weight:500;color:var(--ink)}
+/* version table: code, dotted leader, value in signal */
+.vers{display:grid;font:400 13px/1 var(--f-mono);color:var(--ink-2)}
+.vers>div{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--line)}
+.vers b{font-weight:500;color:var(--ink)} .vers i{flex:1;height:3px;background:var(--dots)} .vers em{font-style:normal;color:var(--signal)}
+/* control legend: up to four swatches with lowercase labels, top right of a card */
+.legend4{display:flex;gap:14px;font:400 11px/1 var(--f-mono);color:var(--ink-3);text-transform:lowercase}
+.legend4 span{display:flex;align-items:center;gap:6px}
+.legend4.dot i{border-radius:50%}
+.legend4 i{width:9px;height:9px;border-radius:2px;background:var(--ink)} .legend4 i.g2{background:var(--n3)} .legend4 i.g3{background:var(--n5)} .legend4 i.s{background:var(--signal)}
+/* port strip: equal cells, one filled. Progress through a deck or a process. */
+.ports{display:inline-flex;gap:4px;vertical-align:middle}
+.ports i{width:22px;height:6px;border-radius:1.5px;background:var(--n5)} .ports i.on{background:var(--ink)} .ports i.s{background:var(--signal)}
+/* key glyph: rounded square, inscribed hairline circle, numeral. Steps, callouts, "press this". */
+.keyg{display:inline-grid;place-items:center;width:var(--d,32px);height:var(--d,32px);border-radius:11%;box-shadow:inset 0 0 0 1.5px var(--ink);
+  position:relative;font:500 calc(var(--d,32px)*.38)/1 var(--f-mono);color:var(--ink);flex:none}
+.keyg::before{content:"";position:absolute;inset:10.5%;border-radius:50%;box-shadow:inset 0 0 0 .6px var(--ink)}
+.keyg.on{background:var(--ink);color:var(--paper-2)} .keyg.on::before{box-shadow:inset 0 0 0 .6px var(--paper-2)}
+
+/* ---------- tile ramp: ink is the hero, stone supports, grey is third. One ink tile per page. ---------- */
+.tilegrid{display:grid;grid-template-columns:repeat(var(--cols,3),1fr);gap:12px}
+.tile{position:relative;border-radius:22px;padding:22px 24px;background:var(--n6);display:flex;flex-direction:column;min-height:0;break-inside:avoid}
+.tile.ink{background:var(--ink);color:var(--paper-2)} .tile.mid{background:var(--n5)} .tile.paper{background:var(--paper-2);box-shadow:var(--ring)}
+.tile .micro{margin-bottom:14px} .tile.ink .micro{color:var(--n3)}
+.tile b{font:600 64px/.95 var(--f-sans);letter-spacing:-.045em;font-variant-numeric:tabular-nums}
+.tile b small{font-size:.4em;font-weight:500;letter-spacing:-.01em;color:var(--ink-3);margin-left:4px} .tile.ink b small{color:var(--n3)}
+.tile h4{font:600 20px/1.2 var(--f-sans);letter-spacing:-.022em}
+.tile p{font-size:15px;line-height:1.45;color:var(--ink-2);margin-top:10px} .tile.ink p{color:var(--n4)}
+.tile .cat{position:absolute;top:16px;right:16px}
+.tile .low{margin-top:auto;padding-top:16px}                     /* pin a number or note to the bottom */
+.tile .bar{height:4px;border-radius:2px;background:rgba(36,30,21,.12);margin-top:14px;overflow:hidden}
+.tile .bar i{display:block;height:100%;border-radius:2px;background:var(--ink)} .tile.ink .bar{background:rgba(251,248,241,.2)} .tile.ink .bar i{background:var(--paper-2)}
+/* numbered badge and the arrow between phase tiles */
+.nb{display:inline-grid;place-items:center;width:30px;height:30px;border-radius:50%;box-shadow:inset 0 0 0 1px currentColor;font:500 12px/1 var(--f-mono);margin-bottom:auto}
+.phases{display:grid;grid-template-columns:repeat(var(--cols,3),1fr);gap:12px}
+.phases>.tile+.tile::before{content:"";position:absolute;left:-21px;top:50%;width:30px;height:30px;margin-top:-15px;border-radius:50%;background:var(--paper);box-shadow:var(--ring);z-index:1}
+.phases>.tile+.tile::after{content:"";position:absolute;left:-11px;top:50%;width:7px;height:7px;margin-top:-4.5px;border-top:1.5px solid var(--ink);border-right:1.5px solid var(--ink);transform:rotate(45deg);z-index:2}
+
+/* ---------- summary grid ("bento"): 12 columns, one hero cell, one idea per cell ---------- */
+.bento{display:grid;grid-template-columns:repeat(12,1fr);grid-auto-rows:1fr;gap:14px;flex:1 1 auto;min-height:0}
+.bc{position:relative;background:var(--paper-2);border-radius:28px;padding:24px 26px;box-shadow:var(--ring);display:flex;flex-direction:column;overflow:hidden;min-height:0;min-width:0}
+.bc.c2{grid-column:span 2}.bc.c3{grid-column:span 3}.bc.c4{grid-column:span 4}.bc.c5{grid-column:span 5}.bc.c6{grid-column:span 6}.bc.c7{grid-column:span 7}.bc.c8{grid-column:span 8}.bc.c9{grid-column:span 9}.bc.c12{grid-column:span 12}
+.bc.r2{grid-row:span 2}.bc.r3{grid-row:span 3}
+.bc.hero{background:var(--ink);color:var(--paper-2);box-shadow:none;justify-content:center}
+.bc.hero h2{font:600 46px/1 var(--f-sans);letter-spacing:-.04em} .bc.hero h2 em{font-style:normal;color:var(--n3)}
+.bc.stone{background:var(--n6);box-shadow:none}
+.bc.dawn{background:var(--cell-dawn)}.bc.mist{background:var(--cell-mist)}.bc.sand{background:var(--cell-sand)}.bc.moss{background:var(--cell-moss)}
+.bc.dawn,.bc.mist,.bc.sand,.bc.moss{box-shadow:var(--keyline)}
+.bc.mid{align-items:center;justify-content:center;text-align:center}
+.bc b{font:600 58px/.95 var(--f-sans);letter-spacing:-.045em;font-variant-numeric:tabular-nums;margin-top:auto}
+.bc b small{font-size:.4em;font-weight:500;color:var(--ink-3);margin-left:3px;letter-spacing:-.01em}
+.bc p{font:500 17px/1.25 var(--f-sans);letter-spacing:-.016em;margin-top:8px}
+.bc .st{font:600 30px/1.08 var(--f-sans);letter-spacing:-.032em}            /* a text-only statement cell */
+.bc h4{font:600 17px/1.25 var(--f-sans);letter-spacing:-.018em} .bc .cap{font-size:13px;color:var(--ink-3);margin-top:3px}
+.bc .plot{flex:1;min-height:0;display:flex;align-items:center;justify-content:center;margin-top:8px}
+.bc .plot>svg{width:100%;height:100%}
+
+/* ---------- cell: a colour field that holds one card (chart, screenshot, code) ---------- */
+.cellx{position:relative;border-radius:28px;padding:var(--inset,44px);background:var(--cell-dawn);display:flex;align-items:center;justify-content:center;box-shadow:var(--keyline);overflow:hidden;min-height:0}
+.cellx.mist{background:var(--cell-mist)}.cellx.sand{background:var(--cell-sand)}.cellx.moss{background:var(--cell-moss)}.cellx.stone{background:var(--n6)}
+.cellx>.card{width:100%;box-shadow:var(--ring);border:0}
+
+/* ---------- chart card anatomy: label + legend, finding, plot, hairline, method ---------- */
+.fcard{display:flex;flex-direction:column;box-shadow:var(--ring);border:0}
+.fcard .chd{display:flex;justify-content:space-between;align-items:center;gap:16px}
+.fcard .plot{flex:1;min-height:0;display:flex;align-items:center}
+.fcard .plot>svg{width:100%;max-height:100%}
+.fcard .method{border-top:1px solid var(--line);padding-top:12px;margin-top:12px;font-size:13px}
+body.doc .fcard .method{font-size:10px;padding-top:8px;margin-top:8px}
+
+/* ---------- slide and page blocks ---------- */
+/* takeaway bar: the closing line of a graphic or slide. Counts as the page's one ink block. */
+.takeaway{display:flex;align-items:center;gap:22px;background:var(--ink);color:var(--paper-2);border-radius:20px;padding:20px 26px}
+.takeaway .micro{color:var(--n3);white-space:nowrap}
+.takeaway p{font:600 22px/1.2 var(--f-sans);letter-spacing:-.025em}
+.takeaway p small{display:block;font:400 14px/1.4 var(--f-sans);color:var(--n4);margin-top:4px;letter-spacing:0}
+.takeaway .btn{margin-left:auto;flex:none}
+/* agenda: numbered, ruled. .on marks where we are. */
+.agenda{list-style:none;counter-reset:a}
+.agenda li{counter-increment:a;display:grid;grid-template-columns:84px 1fr auto;align-items:baseline;padding:20px 0;border-top:1px solid var(--line-2);
+  font:600 34px/1.1 var(--f-sans);letter-spacing:-.032em;color:var(--ink-soft)}
+.agenda li:last-child{border-bottom:1px solid var(--line-2)}
+.agenda li::before{content:counter(a,decimal-leading-zero);font:500 14px var(--f-mono);color:var(--ink-3);letter-spacing:0}
+.agenda li span{font:400 15px/1 var(--f-sans);color:var(--ink-3);letter-spacing:0}
+.agenda li.on{color:var(--ink)}
+.agenda.grow{display:grid;grid-auto-rows:1fr;flex:1 1 auto;min-height:0}
+.agenda.grow li{align-items:center;font-size:46px}
+/* quote with a hanging mark, and the person row under it */
+.quote{position:relative;font:500 50px/1.14 var(--f-sans);letter-spacing:-.035em;max-width:1240px;padding-left:.62em}
+.quote::before{content:"\201C";position:absolute;left:0;top:0;color:var(--ink-soft)}
+.quote em{font-style:normal;color:var(--ink-soft)}
+.author{display:flex;align-items:center;gap:14px}
+.author .av{width:46px;height:46px;border-radius:50%;background:var(--n5);display:grid;place-items:center;font:600 14px var(--f-sans);color:var(--ink-2);flex:none}
+.author b{display:block;font-size:16px;letter-spacing:-.012em} .author span{font-size:14px;color:var(--ink-3)}
+/* section opener: title at the top, a void, body from the lower half */
+.opener>.low{margin-top:auto;display:grid;grid-template-columns:var(--grid,1fr 1fr);gap:48px;align-items:end;min-height:46%}
+/* spec lines: ink head over a grey detail, ruled */
+.spec{display:grid}
+.spec>div{padding:14px 0;border-top:1px solid var(--line-2)}
+.spec>div:last-child{border-bottom:1px solid var(--line-2)}
+.spec b{display:block;font:600 22px/1.2 var(--f-sans);letter-spacing:-.022em} .spec span{font-size:15px;color:var(--ink-3)}
+/* a number as big as the chart beside it */
+.bignum{font:600 150px/.88 var(--f-sans);letter-spacing:-.055em;font-variant-numeric:tabular-nums}
+.bignum small{font-size:.3em;font-weight:500;letter-spacing:-.02em;color:var(--ink-3);margin-left:6px}
+/* versus pair: the favoured side gets the top rule */
+.vs{display:grid;grid-template-columns:1fr 1fr;gap:14px;position:relative}
+.vs>*{min-width:0} .vs>.fav{border-top:3px solid var(--ink)}
+.vs::after{content:"vs";position:absolute;left:50%;top:50%;width:44px;height:44px;margin:-22px 0 0 -22px;border-radius:50%;background:var(--paper);box-shadow:var(--ring);
+  display:grid;place-items:center;font:500 12px var(--f-mono);text-transform:uppercase;color:var(--ink-2)}
+
+/* ---------- report furniture ---------- */
+.rhead{display:flex;justify-content:space-between;align-items:center;font:500 11.5px/1 var(--f-sans);color:var(--ink-3);border-bottom:1px solid var(--line);padding-bottom:10px}
+.rhead>*{flex:1} .rhead>:nth-child(2):not(:last-child){text-align:center} .rhead>:last-child{text-align:right}
+.toc{list-style:none;counter-reset:t}
+.toc li{counter-increment:t;display:flex;align-items:baseline;gap:10px;padding:11px 0;border-top:1px solid var(--line);font:600 17px/1.2 var(--f-sans);letter-spacing:-.018em}
+.toc li::before{content:counter(t,decimal-leading-zero);font:500 11px var(--f-mono);color:var(--ink-3);width:30px;letter-spacing:0}
+.toc li i{flex:1;height:3px;background:var(--dots)} .toc li em{font:500 12px var(--f-mono);font-style:normal;color:var(--ink-3)}
+.toc li small{font:400 12.5px/1.3 var(--f-sans);color:var(--ink-3);letter-spacing:0}
+.sources{list-style:none;counter-reset:s;display:grid;gap:7px}
+.sources li{counter-increment:s;display:grid;grid-template-columns:26px 1fr;font-size:12px;line-height:1.45;color:var(--ink-2)}
+.sources li::before{content:counter(s);font:500 10.5px var(--f-mono);color:var(--ink-3);padding-top:2px}
+.pullq{position:relative;font:500 22px/1.32 var(--f-sans);letter-spacing:-.02em;padding-left:22px;border-left:2px solid var(--ink)}
+.withrail{display:grid;grid-template-columns:1fr var(--rail,150px);gap:22px;min-height:0}
+.rail{border-left:1px solid var(--line);padding-left:12px;font-size:10.5px;line-height:1.5;color:var(--ink-3);display:grid;gap:8px;align-content:start}
+.rail b{color:var(--ink-2);font-weight:600}
+/* A4: add class a4 to body.doc and set @page{size:210mm 297mm} */
+body.doc.a4{width:210mm} body.doc.a4 .page{width:210mm;height:297mm;padding:15mm 16mm}
+
+/* ---------- doc scale ---------- */
+body.doc .tile{padding:14px 16px;border-radius:16px} body.doc .tile b{font-size:38px} body.doc .tile p{font-size:12.5px;margin-top:7px}
+body.doc .tile h4{font-size:15px} body.doc .tile .micro{font-size:10px;margin-bottom:8px} body.doc .tile .cat{top:11px;right:11px}
+body.doc .tilegrid,body.doc .phases{gap:9px} body.doc .nb{width:24px;height:24px;font-size:10.5px}
+body.doc .phases>.tile+.tile::before{left:-16px;width:22px;height:22px;margin-top:-11px} body.doc .phases>.tile+.tile::after{left:-9px;width:5px;height:5px;margin-top:-3.5px}
+body.doc .takeaway{padding:13px 18px;border-radius:14px;gap:14px} body.doc .takeaway p{font-size:15px} body.doc .takeaway p small{font-size:11.5px}
+body.doc .agenda li{font-size:22px;padding:13px 0;grid-template-columns:54px 1fr auto} body.doc .agenda li span{font-size:12px}
+body.doc .quote{font-size:28px} body.doc .author b{font-size:13.5px} body.doc .author span{font-size:12px} body.doc .author .av{width:36px;height:36px;font-size:12px}
+body.doc .spec b{font-size:15.5px} body.doc .spec span{font-size:12.5px} body.doc .spec>div{padding:9px 0}
+body.doc .bignum{font-size:92px} body.doc .cellx{--inset:24px;border-radius:20px}
+body.doc .bc{border-radius:18px;padding:14px 16px} body.doc .bc b{font-size:34px} body.doc .bc p{font-size:12.5px} body.doc .bc .st{font-size:19px} body.doc .bento{gap:9px}
+body.doc .bc.hero h2{font-size:28px} body.doc .pullq{font-size:16px;padding-left:16px}
+body.doc .logos{--lh:20px;gap:20px 16px}
+body.doc .vs::after{width:32px;height:32px;margin:-16px 0 0 -16px;font-size:10px}
+@media print{.tile.paper,.idisc.paper,.idisc.ring{box-shadow:0 0 0 .5px rgba(28,25,23,.16)}}
