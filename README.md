@@ -1,5 +1,7 @@
 # palette
 
+![palette: one style, every format](docs/palette.gif)
+
 A Claude Code skill that designs charts, slide decks, reports, dashboards, product pages, mobile
 screens, social images and brand sheets in one consistent editorial style, and exports them as PDF
 and PNG.
