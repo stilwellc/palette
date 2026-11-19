@@ -1,11 +1,13 @@
-<h1 align="center">
+<p align="center">
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="docs/logo-dark.png">
     <img src="docs/logo-light.png" width="250" alt="palette">
   </picture>
-</h1>
+</p>
 
-<p align="center"><b>A design skill for Claude Code.</b><br>
+<h3 align="center">A design skill for Claude Code</h3>
+
+<p align="center">
 Ask for a chart, a slide deck, a report, a dashboard, a landing page, app screens, a social image or a brand sheet.<br>
 Get it in one editorial style, as PDF, PNG or live HTML.</p>
 
@@ -13,11 +15,13 @@ Get it in one editorial style, as PDF, PNG or live HTML.</p>
   <a href="#install">Install</a> &nbsp;|&nbsp;
   <a href="#showcase">Showcase</a> &nbsp;|&nbsp;
   <a href="#templates">Templates</a> &nbsp;|&nbsp;
-  <a href="#charts">Charts</a> &nbsp;|&nbsp;
+  <a href="#charts-and-icons">Charts and icons</a> &nbsp;|&nbsp;
   <a href="#the-rules-briefly">The rules</a>
 </p>
 
 <p align="center"><img src="docs/palette.gif" width="840" alt="palette making a board deck, an event poster, a spec sheet, app screens, a menu, an investor update and a landing page in one style"></p>
+
+## Install
 
 ```sh
 git clone https://github.com/stilwellc/palette ~/.claude/skills/palette
@@ -26,83 +30,19 @@ git clone https://github.com/stilwellc/palette ~/.claude/skills/palette
 Then ask Claude Code: *"make a five-slide board deck from this CSV"*, *"a one-page brief as a PDF"*,
 *"an OG image for the launch post"*, *"chart last quarter's numbers"*.
 
-- **HTML in, PDF and PNG out.** Headless Chrome renders it; a layout check fails the build when
+palette is an [Agent Skill](https://docs.claude.com/en/docs/claude-code/skills): a folder of instructions,
+templates and scripts that Claude reads when you ask for something visual. It picks the format, starts
+from a template, renders, runs a layout check and looks at the result before handing you the files.
+
+- **HTML in, PDF and PNG out.** Headless Chrome renders it. A layout check fails the build when
   content spills off a page, a chart hits its caption or colour goes over budget.
 - **No npm, no build step, works offline.** 29 SVG chart helpers and 109 icons in two dependency-free
   scripts, fonts embedded.
 - **One style across every format.** Cream paper, big two-tone headlines, ink-grey charts, and one
-  small signal colour per page (or severity colours for security work).
-- **Eleven templates and seven finished examples** to start from, all with fictional data.
+  small signal colour per page.
 
-## Showcase
-
-palette is an [Agent Skill](https://docs.claude.com/en/docs/claude-code/skills) for Claude Code: a folder of
-instructions, templates and scripts that Claude reads when you ask for something visual.
-
-Seven pieces made with the skill, each for a different invented brand with its own signal colour.
-The sources are in [`examples/`](examples/); every name and number in them is made up.
-
-| Conference talk | Hardware spec sheet |
-|---|---|
-| [![Talk title slide](docs/showcase/talk-01.png)](examples/talk.html) | [![Spec sheet](docs/showcase/spec-sheet.png)](examples/spec-sheet.html) |
-
-| Event poster | Restaurant menu | Résumé |
-|---|---|---|
-| [![Poster](docs/showcase/poster.png)](examples/poster.html) | [![Menu](docs/showcase/menu.png)](examples/menu.html) | [![Résumé](docs/showcase/resume.png)](examples/resume.html) |
-
-| Investor update | Year in review, square | Year in review, story |
-|---|---|---|
-| [![Investor update](docs/showcase/investor-update.png)](examples/investor-update.html) | [![Recap square](docs/showcase/year-recap-01.png)](examples/year-recap.html) | [![Recap story](docs/showcase/year-recap-02.png)](examples/year-recap.html) |
-
-| One number | One chart | Four principles |
-|---|---|---|
-| [![Talk number](docs/showcase/talk-02.png)](examples/talk.html) | [![Talk chart](docs/showcase/talk-03.png)](examples/talk.html) | [![Talk principles](docs/showcase/talk-04.png)](examples/talk.html) |
-
-Render any of them yourself: `scripts/render.sh examples/poster.html out/`.
-
-## Templates
-
-The starting points the skill copies from:
-
-![Summary slide](docs/deck.png)
-
-| Deck | Charts | Brand sheet |
-|---|---|---|
-| ![Deck](docs/deck-stat.png) | ![Charts](docs/charts.png) | ![Brand](docs/brand.png) |
-
-| Product page | Mobile | Report (A4) |
-|---|---|---|
-| ![Landing](docs/landing.png) | ![Mobile](docs/mobile.png) | ![White paper](docs/whitepaper.png) |
-
-| Social image | Readouts | Mark and lockup |
-|---|---|---|
-| ![Social](docs/social.png) | ![Charts 2](docs/charts-2.png) | ![Mark](docs/brand-mark.png) |
-
-| Section opener with an orb | Colour, type and orbs |
-|---|---|
-| ![Opener](docs/opener.png) | ![Colour](docs/brand-colour.png) |
-
-The original severity mode, where colour means Critical, High, Medium or Low and nothing else:
-
-![Graphic](docs/graphic.png)
-
-| Slides | Doc | Dashboard |
-|---|---|---|
-| ![Slides](docs/slides.png) | ![Doc](docs/doc.png) | ![Dashboard](docs/dashboard.png) |
-
-All data in the templates and screenshots is fictional.
-
-## Install
-
-```sh
-git clone https://github.com/stilwellc/palette ~/.claude/skills/palette
-```
-
-Then ask Claude Code for a chart of last quarter's numbers, a one-page brief, a board deck, a
-landing page, three mobile screens, a link-preview image or a brand sheet. The skill picks the format, starts from a template,
-renders, runs a layout check and looks at the result before handing you the files.
-
-### Requirements
+<details>
+<summary>Requirements</summary>
 
 * Google Chrome, Chromium or Edge (headless, for HTML to PDF). Set `CHROME=/path/to/chrome` if it
   is somewhere unusual.
@@ -110,39 +50,57 @@ renders, runs a layout check and looks at the result before handing you the file
   small PDFKit rasteriser. On Linux, `pdftoppm` from poppler-utils.
 * No npm, no build step. The charts are plain SVG from one dependency-free script.
 
-## Use it without Claude
+</details>
 
-```sh
-scripts/new.sh doc ~/work/Q4_Brief.html       # copy a template, asset paths made absolute
-$EDITOR ~/work/Q4_Brief.html                  # replace the sample words and numbers
-scripts/render.sh ~/work/Q4_Brief.html        # writes Q4_Brief.pdf and Q4_Brief-01.png ...
-```
+## Showcase
 
-`render.sh` prints `check: data-check="OK"` when nothing spills off a page and no chart runs into
-its note, and exits 2 when the layout check fails. It still writes the files so you can see why.
+Seven pieces made with the skill, each for a different invented brand with its own signal colour.
 
-## Formats
+<p align="center"><a href="examples/"><img src="docs/showcase.png" width="840" alt="Showcase: a conference talk, a hardware spec sheet, an event poster, a restaurant menu, a résumé, an investor update and year-in-review cards"></a></p>
+
+The sources are in [`examples/`](examples/). Every name and number in them is made up. Render one
+yourself with `scripts/render.sh examples/poster.html out/`.
+
+## Templates
+
+Eleven starting points. The skill copies one, replaces the sample words and numbers, and renders.
+
+<p align="center"><a href="templates/"><img src="docs/templates.png" width="840" alt="Templates: deck, chart catalogue, landing page, A4 report, social image, mobile screens and a three-page brand sheet"></a></p>
 
 | Format | Template | Canvas | For |
 |---|---|---|---|
-| graphic | `templates/graphic.html` | 1600×1000 (any size) | one chart, Slack image, social card |
-| slides | `templates/slides.html` | 1600×900 per slide | decks |
-| doc | `templates/doc.html` | US letter per page | reports, one-pagers, briefs |
-| dash | `templates/dashboard.html` | 1440 wide per screen | dashboards, console and UI mock-ups |
-| deck | `templates/deck.html` | 1600×900 per slide | board, pitch and product decks: 12 layouts |
-| report | `templates/whitepaper.html` | A4 per page | white papers and industry reports |
-| page | `templates/landing.html` | 1440 wide | landing, product and pricing pages |
-| mobile | `templates/mobile.html` | 390×844 screens | app screens in a phone frame |
-| social | `templates/social.html` | 1200×630, 1080², 1080×1920, 1600×900 | link previews, square, story, announcement, all in one file |
-| brand | `templates/brand.html` | 1600×1000 per page | mark and lockup rules, colour, type, icons, labels |
-| charts | `templates/charts.html` | 1600×1000 | a catalogue with one working call per newer chart |
+| graphic | [`graphic.html`](templates/graphic.html) | 1600×1000 (any size) | one chart, Slack image, social card |
+| slides | [`slides.html`](templates/slides.html) | 1600×900 per slide | decks |
+| doc | [`doc.html`](templates/doc.html) | US letter per page | reports, one-pagers, briefs |
+| dash | [`dashboard.html`](templates/dashboard.html) | 1440 wide per screen | dashboards, console and UI mock-ups |
+| deck | [`deck.html`](templates/deck.html) | 1600×900 per slide | board, pitch and product decks: 12 layouts |
+| report | [`whitepaper.html`](templates/whitepaper.html) | A4 per page | white papers and industry reports |
+| page | [`landing.html`](templates/landing.html) | 1440 wide | landing, product and pricing pages |
+| mobile | [`mobile.html`](templates/mobile.html) | 390×844 screens | app screens in a phone frame |
+| social | [`social.html`](templates/social.html) | 1200×630, 1080², 1080×1920, 1600×900 | link previews, square, story, announcement, all in one file |
+| brand | [`brand.html`](templates/brand.html) | 1600×1000 per page | mark and lockup rules, colour, type, icons, labels |
+| charts | [`charts.html`](templates/charts.html) | 1600×1000 | a catalogue with one working call per newer chart |
 
-Opened in a browser, the dashboard is live: KPI tiles switch the main chart and chart marks show
-tooltips. The PDF and PNG show its default state.
+<details>
+<summary>Severity mode: the original security-report style</summary>
+<br>
 
-## Charts
+Colour means Critical, High, Medium or Low and nothing else. The `graphic`, `slides`, `doc` and
+`dashboard` templates use it. Opened in a browser, the dashboard is live: KPI tiles switch the main
+chart and chart marks show tooltips.
 
-`assets/charts.js` exposes `AS`. Every helper draws SVG into an element or selector.
+<p align="center"><img src="docs/severity.png" width="840" alt="Severity mode: a chart graphic, a slide, a dashboard and two report pages"></p>
+
+</details>
+
+## Charts and icons
+
+`assets/charts.js` exposes `AS`. Every helper draws plain SVG into an element, with no dependencies.
+[`templates/charts.html`](templates/charts.html) has a working call for each of the newer ones.
+
+<details>
+<summary>All 29 chart helpers</summary>
+<br>
 
 | Call | Draws |
 |---|---|
@@ -176,7 +134,7 @@ tooltips. The PDF and PNG show its default state.
 | `AS.spark` | sparkline for a cell or tile |
 | `AS.gantt` | roadmap lanes with a today line |
 
-## Icons and marks
+</details>
 
 `assets/icons.js` holds 109 line icons drawn for this skill on one 24-unit grid (one stroke, round
 caps, one idea each), ten two-shape brand marks to start a logo from, and the painter for orbs:
@@ -184,7 +142,7 @@ soft gradient spheres in six palettes, the one piece of art the style allows.
 
 ```html
 <i class="ic" data-i="shield-check"></i>
-<span class="lockup"><i class="mk" data-m="split"></i><span class="nm">halden<small>billing</small></span></span>
+<i class="mk" data-m="dab"></i>
 <i class="orbx dawn" style="--o:300px"></i>
 ```
 
@@ -208,6 +166,17 @@ icons and labels are in [`reference/brand.md`](reference/brand.md); deck, report
 mobile layouts in [`reference/layouts.md`](reference/layouts.md); UI rules in
 [`reference/ui-patterns.md`](reference/ui-patterns.md). `SKILL.md` is what Claude reads.
 
+## Run it without Claude
+
+```sh
+scripts/new.sh doc ~/work/Q4_Brief.html       # copy a template, asset paths made absolute
+$EDITOR ~/work/Q4_Brief.html                  # replace the sample words and numbers
+scripts/render.sh ~/work/Q4_Brief.html        # writes Q4_Brief.pdf and Q4_Brief-01.png ...
+```
+
+`render.sh` prints `check: data-check="OK"` when nothing spills off a page and no chart runs into
+its note, and exits 2 when the layout check fails. It still writes the files so you can see why.
+
 ## Make it yours
 
 The repo keeps a private layer out of git. Create `local/` (it is in `.gitignore`) and add:
@@ -220,7 +189,8 @@ severity colours) and the matching values in `assets/charts.js` (`SEV`, `N`). Th
 one line: `AS.theme({signal: '#e4502a'})`, or `--signal` in the stylesheet. Start a brand from
 `templates/brand.html`: swap the mark, the name and the signal.
 
-## Layout
+<details>
+<summary>What is in the repo</summary>
 
 ```
 SKILL.md              instructions Claude follows
@@ -238,6 +208,8 @@ scripts/render.sh     HTML to PDF to PNG, plus the layout check
 scripts/pdf2png.swift macOS rasteriser, compiled on first run
 docs/                 README screenshots
 ```
+
+</details>
 
 ## Credits
 
