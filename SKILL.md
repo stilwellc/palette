@@ -39,6 +39,8 @@ assets/check.js     layout check (overflow, chart over note, unknown icon, signa
 assets/fonts/       Inter, Geist Mono (embedded, works offline)
 templates/          severity: graphic, slides, doc, dashboard
                     signal: deck, whitepaper, landing, mobile, social, brand, charts (catalogue)
+examples/           finished pieces for range: poster, menu, résumé, investor update, talk, spec sheet,
+                    year recap. Look at one when a job has no template (do not copy its content)
 reference/          style-guide.md (read first), brand.md, layouts.md, ui-patterns.md
 scripts/new.sh      copy a template to a working file with absolute asset paths
 scripts/render.sh   HTML → PDF (headless Chrome) → PNG per page, plus the layout check

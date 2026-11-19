@@ -1,0 +1,128 @@
+<!doctype html>
+<!-- Showcase: four slides from a conference talk, 1600x900 each.
+     1 title slide around one large orb, 2 one number, 3 one chart, 4 four principles and the ask.
+     Colour: cream paper and ink greys, a violet signal used once per slide, one ink block per slide at most.
+     Everything here is invented: the talk "Quiet software", the speaker Ines Varga, the company
+     Odd Harbor, the conference Stillpoint, and every number. None of it is real data. -->
+<html><head><meta charset="utf-8"><title>Quiet software</title>
+<link rel="stylesheet" href="../assets/style.css">
+<style>@page{size:1600px 900px;margin:0}
+/* layout and sizing for this talk only */
+.slide .mast .lockup{--m:26px}
+.slide .mast .code{font-size:14px}
+.slide .foot{font-size:13px}
+.slide .foot .ports{margin-right:14px}
+.slide .eyebrow{font-size:15px}
+
+/* 1. title: words left, the orb alone on the right */
+.cover{display:grid;grid-template-columns:1fr 520px;gap:64px;align-items:center;flex:1 1 auto;min-height:0}
+.cover .words{display:flex;flex-direction:column;min-width:0}
+.cover h1{font-size:136px;line-height:.92;letter-spacing:-.052em;margin-top:22px}
+.cover .lede{font-size:24px;max-width:640px;margin-top:30px}
+.cover .author{margin-top:40px}
+.cover .author .av{width:54px;height:54px;font-size:16px}
+.cover .author b{font-size:19px}.cover .author span{font-size:16px}
+
+/* 2. one number */
+.one{display:grid;grid-template-columns:auto 1fr;gap:64px;align-items:end;margin-top:auto}
+.one .bignum{font-size:520px;line-height:.76;letter-spacing:-.07em;margin-left:-14px}
+.one h2{font-size:68px;line-height:1;padding-bottom:6px}
+.tally{display:flex;justify-content:space-between;margin-top:38px}
+.tally i{width:22px;height:22px;border-radius:50%;background:var(--n5)}
+.tally i.s{background:var(--signal)}
+.tallycap{display:flex;justify-content:space-between;font:400 13px/1 var(--f-mono);color:var(--ink-3);margin-top:-6px}
+.src{font-size:14px;line-height:1.5;color:var(--ink-3);border-top:1px solid var(--line);padding-top:14px;margin-top:22px}
+.src b{color:var(--ink-2);font-weight:600}
+
+/* 3. one chart */
+.chart{flex:1 1 auto;min-height:0;padding:30px 40px 26px}
+.chart h3{font-size:26px;letter-spacing:-.025em;margin-top:12px}
+.chart .micro{font-size:12px}.chart .legend4{font-size:12px}
+.chart .method{font-size:14px;max-width:none;padding-top:14px}
+
+/* 4. four principles */
+.rules{display:grid;grid-template-columns:repeat(4,1fr);gap:40px;flex:1 1 auto;min-height:0;margin-top:20px}
+.rule{display:flex;flex-direction:column;border-top:1px solid var(--line-2);padding-top:26px;min-width:0}
+.rule .top{display:flex;align-items:flex-start;justify-content:space-between}
+.rule h3{font:600 41px/1.02 var(--f-sans);letter-spacing:-.04em;margin-top:auto}
+.rule p{font-size:19px;line-height:1.4;color:var(--ink-2);margin-top:14px;min-height:4.2em}
+.slide .takeaway{padding:24px 32px}
+.slide .takeaway p{font-size:26px}.slide .takeaway p small{font-size:16px;margin-top:6px}
+.slide .takeaway .micro{font-size:12px}
+</style>
+<script src="../assets/charts.js"></script>
+<script src="../assets/icons.js"></script>
+<script src="../assets/check.js"></script>
+</head>
+<body class="slides">
+
+<!-- 1. title -->
+<section class="slide">
+  <div class="mast"><span class="lockup"><i class="mk sig" data-m="orbit"></i><span class="nm">stillpoint<small>Conference 2026</small></span></span><span>Day two, main hall</span><span class="code">QS–26</span></div>
+  <div class="cover">
+    <div class="words">
+      <span class="eyebrow">Keynote, 10:40</span>
+      <h1 class="h-hero">Quiet<br>software.<br><em>Less noise.</em></h1>
+      <p class="lede">What happened when one product stopped interrupting the people who use it.</p>
+      <div class="author"><span class="av">IV</span><div><b>Ines Varga</b><span>Design lead, Odd Harbor</span></div></div>
+    </div>
+    <i class="orbx mist" style="--o:520px" data-seed="4"></i>
+  </div>
+  <div class="foot"><span><span class="ports"><i class="on"></i><i></i><i></i><i></i></span>Stillpoint 2026. Invented for this sample.</span><span>1</span></div>
+</section>
+
+<!-- 2. one number -->
+<section class="slide">
+  <div class="mast"><span class="eyebrow">The problem</span><span class="code">QS–26</span></div>
+  <div class="one">
+    <div class="bignum">41</div>
+    <h2 class="h-slide">Notifications a day, to every person. <em>They opened one.</em></h2>
+  </div>
+  <div class="tally" id="tally"></div>
+  <div class="tallycap"><span>1</span><span>41</span></div>
+  <p class="src"><b>Source.</b> Odd Harbor product analytics, March 2026. Median sends and opens per active user per day, 18,400 users. One dot is one notification.</p>
+  <div class="foot" style="margin-top:8px"><span><span class="ports"><i class="on"></i><i class="on"></i><i></i><i></i></span>Quiet software, Ines Varga</span><span>2</span></div>
+</section>
+
+<!-- 3. one chart -->
+<section class="slide">
+  <div class="mast"><span class="eyebrow">What we did</span><span class="code">QS–26</span></div>
+  <h2 class="h-slide" style="font-size:68px">We cut 41 a day to 6. <em>Nobody left.</em></h2>
+  <div class="card fcard chart">
+    <div class="chd"><span class="micro">Figure 1</span>
+      <span class="legend4 dot"><span><i class="g2"></i>march, before</span><span><i></i>september, after</span></span></div>
+    <h3>Every channel got quieter. Push fell the most, from 16 a day to 2.</h3>
+    <div class="plot" id="f1"></div>
+    <p class="method"><b>Method.</b> Median notifications sent per active user per day, by channel, March against September 2026, n = 18,400. Thirty-day retention over the same window went from 61% to 63%.</p>
+  </div>
+  <div class="foot" style="margin-top:6px"><span><span class="ports"><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span>Quiet software, Ines Varga</span><span>3</span></div>
+</section>
+
+<!-- 4. four principles -->
+<section class="slide">
+  <div class="mast"><span class="eyebrow">What to take home</span><span class="code">QS–26</span></div>
+  <h2 class="h-hero" style="margin-top:18px">Four rules <em>for quiet.</em></h2>
+  <div class="rules">
+    <div class="rule"><div class="top"><span class="keyg" style="--d:120px">1</span><span class="tagx sigc">Start here</span></div><h3>Off by default.</h3><p>A person turns a notification on. The product never does it for them.</p></div>
+    <div class="rule"><div class="top"><span class="keyg" style="--d:120px">2</span></div><h3>Batch, then send.</h3><p>One digest at an hour they chose beats nine separate pings.</p></div>
+    <div class="rule"><div class="top"><span class="keyg" style="--d:120px">3</span></div><h3>Say it in the app.</h3><p>If it can wait until they open the product, it waits.</p></div>
+    <div class="rule"><div class="top"><span class="keyg" style="--d:120px">4</span></div><h3>Count every send.</h3><p>Sends per person per day is a metric, and it has an owner.</p></div>
+  </div>
+  <div class="takeaway"><span class="micro">On Monday</span><p>Turn off one notification and watch retention for 30 days.<small>We did it 35 times. Retention went up two points.</small></p></div>
+  <div class="foot" style="margin-top:0"><span><span class="ports"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span>Quiet software, Ines Varga</span><span>4</span></div>
+</section>
+
+<script>
+AS.theme({signal: '#6b4fd8'});
+
+// Slide 2: one dot per notification, the opened one in signal.
+document.querySelector('#tally').innerHTML = Array.from({length: 41}, (_, i) => i === 26 ? '<i class="s"></i>' : '<i></i>').join('');
+
+// Slide 3: before and after per channel. Push carries the claim.
+AS.dumbbell('#f1', {W: 860, labelW: 110, rowH: 56, max: 16, rows: [
+  {label: 'Push', a: 16, b: 2, color: 'signal'},
+  {label: 'In-app badge', a: 12, b: 3},
+  {label: 'Email', a: 11, b: 1},
+  {label: 'Text message', a: 2, b: 0}]});
+</script>
+</body></html>

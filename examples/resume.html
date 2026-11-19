@@ -1,0 +1,216 @@
+<!doctype html>
+<!-- One-page A4 résumé. Showcase piece for the README gallery.
+     EVERYTHING HERE IS INVENTED: the person (Ines Vauquelin), every employer, school, event, date,
+     number, quote and contact detail. No real company or person is named or imitated.
+     Layout: top strip (micro label, edition code), a two-line name beside a small orb and a role
+     block, a .lede, a .meta row, then a two-column body. Left: four roles with key-glyph counters,
+     a one-lane release cadence strip (AS.stepgrid) and a reference .callout. Right: a .rail with skills,
+     tools, education, languages and talks.
+     House rules kept: cream paper, ink greys, one signal mark (the availability dot), one small orb
+     as the only art, icons from icons.js only, sentence case. -->
+<html><head><meta charset="utf-8"><title>Résumé</title>
+<link rel="stylesheet" href="../assets/style.css">
+<style>@page{size:210mm 297mm;margin:0}
+/* layout and sizing only: no new colours, no new type families */
+body.doc .page{--railw:178px;--gut:28px;gap:11px}
+.top{display:flex;justify-content:space-between;align-items:center}
+.head{display:grid;grid-template-columns:1fr var(--railw);gap:var(--gut);align-items:end;margin-top:10px}
+.head h1{font-size:82px;line-height:.9}
+.who{display:grid;gap:10px;padding:0 0 7px 17px}
+.who b{display:block;font:600 14px/1.25 var(--f-sans);letter-spacing:-.012em}
+.who span{display:block;font:400 10.5px/1.5 var(--f-mono);color:var(--ink-3);margin-top:4px}
+.page .lede{font-size:16.5px;max-width:600px;margin-top:4px}
+.page .meta{justify-content:space-between;gap:10px 20px;padding:12px 0 2px;border-top:1px solid var(--line-2);margin-top:4px}
+.meta>div span{display:flex;align-items:center;gap:6px}
+.meta .ic{--ic:14px;color:var(--ink-3)}
+.meta .sdot{width:7px;height:7px;margin:0 1px 0 0}
+
+.body{display:grid;grid-template-columns:1fr var(--railw);gap:var(--gut);margin-top:6px}
+.main{display:flex;flex-direction:column;min-height:0}
+.roles{display:grid;margin-top:4px}
+.role{display:grid;grid-template-columns:26px 1fr;gap:14px;padding:10px 0 9px;border-bottom:1px solid var(--line)}
+.role:last-child{border-bottom:0}
+.role .keyg{--d:26px;margin-top:1px}
+.role .hd{display:flex;justify-content:space-between;align-items:baseline;gap:12px}
+.role h3{font:600 15.5px/1.2 var(--f-sans);letter-spacing:-.018em}
+.role h3 small{font-weight:400;font-size:12px;letter-spacing:-.005em;color:var(--ink-3);margin-left:6px}
+.role .dates,.role .ttl{font:400 10.5px/1.4 var(--f-mono);color:var(--ink-3);white-space:nowrap}
+.role .ttl{margin-top:3px;color:var(--ink-2)}
+.role ul{list-style:none;display:grid;gap:3px;margin-top:6px}
+.role li{position:relative;padding-left:15px;font-size:11.5px;line-height:1.46;color:var(--ink-2)}
+.role li::before{content:"";position:absolute;left:1px;top:.7em;width:7px;height:1.5px;background:var(--ink-3)}
+.role li b{color:var(--ink);font-weight:600}
+
+.cad{margin-top:auto;padding-top:11px;border-top:1px solid var(--line-2)}
+.cad .chd{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px}
+.cad .chd b{font:600 12.5px/1.2 var(--f-sans);letter-spacing:-.012em}
+.cad .chd span{font:400 10.5px/1 var(--f-mono);color:var(--ink-3)}
+.page .callout{margin-top:10px;padding:12px 18px 12px 22px}
+
+.page .rail{gap:0;font-size:11px;padding-left:16px;align-content:space-between}
+.rail section{padding:0 0 12px}
+.rail section:last-child{padding-bottom:0}
+.rail section+section{border-top:1px solid var(--line);padding-top:12px}
+.rail .micro{display:block;font-size:10px;margin-bottom:8px}
+.tags{display:flex;flex-wrap:wrap;gap:5px}
+.rail .tagx{height:19px;font-size:10px}
+.rail .spill{height:20px;font-size:11px;padding:0 8px;border-radius:6px}
+.ent{display:grid;gap:9px}
+.ent p b{display:block;font-size:11.5px;line-height:1.3;color:var(--ink)}
+.ent p span{display:block;font:400 10px/1.5 var(--f-mono);color:var(--ink-3);margin-top:1px}
+.rail .vers{font-size:10.5px}
+.rail .vers>div{padding:6px 0;gap:7px}
+.rail .vers>div:first-child{padding-top:0}
+.rail .vers>div:last-child{border-bottom:0;padding-bottom:0}
+.rail .vers span{color:var(--ink-3)}
+</style>
+<script src="../assets/charts.js"></script>
+<script src="../assets/icons.js"></script>
+<script src="../assets/check.js"></script>
+</head>
+<body class="doc a4">
+
+<section class="page">
+  <div class="top">
+    <span class="micro">Résumé, 2026</span>
+    <span class="code">IV–26</span>
+  </div>
+
+  <div class="head">
+    <h1 class="h-hero">Ines<br><em>Vauquelin.</em></h1>
+    <div class="who">
+      <i class="orbx dawn" data-seed="5" style="--o:58px"></i>
+      <div><b>Staff product designer</b><span>12 years in product<br>6 leading design systems</span></div>
+    </div>
+  </div>
+
+  <p class="lede">I design the dense, everyday tools that operations teams live in, and I build the systems that let forty designers ship them the same way.</p>
+
+  <div class="meta">
+    <div><small>Based in</small><span><i class="ic" data-i="pin"></i>Lyon, France</span></div>
+    <div><small>Email</small><span><i class="ic" data-i="mail"></i>ines@example.com</span></div>
+    <div><small>Portfolio</small><span><i class="ic" data-i="globe"></i>vauquelin.example.com</span></div>
+    <div><small>Availability</small><span><i class="sdot"></i>Available from January</span></div>
+  </div>
+
+  <div class="body grow">
+    <div class="main">
+      <span class="rule-lab">Experience</span>
+      <div class="roles">
+
+        <div class="role">
+          <span class="keyg on">04</span>
+          <div>
+            <div class="hd"><h3>Ostrelle<small>freight scheduling platform</small></h3><span class="dates">2022 to now</span></div>
+            <div class="ttl">Staff product designer, Lyon</div>
+            <ul>
+              <li>Rebuilt the dispatch board around one timeline. Median time to plan a route fell from <b>11 to 4 minutes</b> across 3,200 dispatchers.</li>
+              <li>Started the Quay design system. <b>212 components</b>, used by 9 product teams, with 86% of new screens built from it by 2025.</li>
+              <li>Mentored 7 designers. <b>4 promoted</b> to senior within two years.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="role">
+          <span class="keyg">03</span>
+          <div>
+            <div class="hd"><h3>Pindrift<small>maps for field crews</small></h3><span class="dates">2019 to 2022</span></div>
+            <div class="ttl">Senior product designer, remote</div>
+            <ul>
+              <li>Led the offline mobile app from 64 ride-along interviews to launch. Weekly active crews grew from <b>1,400 to 9,600</b> in 18 months.</li>
+              <li>Cut the onboarding flow from 14 screens to 5. Completion rose from <b>52% to 81%</b> (n = 6,300 signups).</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="role">
+          <span class="keyg">02</span>
+          <div>
+            <div class="hd"><h3>Studio Carrow<small>product design agency</small></h3><span class="dates">2016 to 2019</span></div>
+            <div class="ttl">Product designer, Nantes</div>
+            <ul>
+              <li>Shipped <b>17 client products</b> in three years, from clinics to grain trading.</li>
+              <li>Wrote the accessibility checklist. <b>9 launches</b> passed outside AA audits.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="role">
+          <span class="keyg">01</span>
+          <div>
+            <div class="hd"><h3>Lumenhal<small>energy metering</small></h3><span class="dates">2014 to 2016</span></div>
+            <div class="ttl">Interface designer, Grenoble</div>
+            <ul>
+              <li>Redrew the home energy dashboard. Support tickets about bills dropped <b>38%</b> in the first year.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="cad">
+        <div class="chd"><b>Shipped every quarter since 2019.</b><span>31 of 31 quarters</span></div>
+        <div id="cad"></div>
+      </div>
+
+      <div class="callout">
+        <span class="micro">Reference</span>
+        <p>Ines makes the hard screen look obvious, then teaches the whole team how she did it.</p>
+        <small>Maren Aldecott, VP of product at Ostrelle. Full references on request.</small>
+      </div>
+    </div>
+
+    <aside class="rail">
+      <section>
+        <span class="micro">Skills</span>
+        <div class="tags">
+          <span class="tagx line">Design systems</span>
+          <span class="tagx line">Interaction</span>
+          <span class="tagx line">Research</span>
+          <span class="tagx line">Prototyping</span>
+          <span class="tagx line">Data display</span>
+          <span class="tagx line">Accessibility</span>
+          <span class="tagx line">Mentoring</span>
+        </div>
+      </section>
+      <section>
+        <span class="micro">Tools</span>
+        <div class="tags">
+          <span class="spill">HTML</span><span class="spill">CSS</span><span class="spill">SVG</span>
+          <span class="spill">SQL</span><span class="spill">Git</span><span class="spill">Motion</span>
+          <span class="spill">Design tokens</span>
+        </div>
+      </section>
+      <section>
+        <span class="micro">Education</span>
+        <div class="ent">
+          <p><b>MA, interaction design</b><span>École de Valmont, 2014</span></p>
+          <p><b>BA, graphic communication</b><span>Institut Serane, 2012</span></p>
+        </div>
+      </section>
+      <section>
+        <span class="micro">Languages</span>
+        <div class="vers">
+          <div><b>French</b><i></i><span>native</span></div>
+          <div><b>English</b><i></i><span>fluent</span></div>
+          <div><b>Portuguese</b><i></i><span>working</span></div>
+        </div>
+      </section>
+      <section>
+        <span class="micro">Talks</span>
+        <div class="ent">
+          <p><b>One timeline, many jobs</b><span>Forma conference, 2025</span></p>
+          <p><b>Systems are a staffing plan</b><span>Atelier Nord, 2023</span></p>
+          <p><b>Designing for no signal</b><span>Field Days, 2021</span></p>
+        </div>
+      </section>
+    </aside>
+  </div>
+
+</section>
+
+<script>
+/* 2019 Q1 to 2026 Q3: one cell per quarter, a release in every one. */
+AS.stepgrid(document.getElementById('cad'), {W: 466, labelW: 0, gap: 3, cell: 11, lanePad: 2,
+  lanes: [{label: '', cells: Array(31).fill(1)}], x: ['2019 Q1', '2026 Q3']});
+</script>
+</body></html>
