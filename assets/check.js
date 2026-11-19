@@ -1,4 +1,5 @@
-/* Layout check run by render.sh. Result goes on <body data-check>: "OK" or a list of problems.
+/* Layout check run by render.sh. Add class "bleed" to art that is meant to run off the edge.
+    Result goes on <body data-check>: "OK" or a list of problems.
    - content spilling out of a page / slide / canvas / screen
    - a figure whose chart overlaps the note or legend below it
    - an icon or mark name that does not exist in icons.js
@@ -13,7 +14,7 @@ window.addEventListener('load', () => setTimeout(() => {
     const all = [...box.querySelectorAll('*')];
     const spill = all.filter(e => {
       const r = e.getBoundingClientRect();
-      return r.width && !e.closest('.orb,.tip') && (r.bottom > b.bottom + 1 || r.right > b.right + 1);
+      return r.width && !e.closest('.orb,.tip,.bleed') && (r.bottom > b.bottom + 1 || r.right > b.right + 1);
     }).map(e => e.className.baseVal ?? e.className ?? e.tagName).slice(0, 3);
     if (spill.length) out.push(`${name} overflows: ${spill.join(', ')}`);
     if (SIG && b.width) {

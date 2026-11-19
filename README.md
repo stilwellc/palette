@@ -27,6 +27,13 @@ Get it in one editorial style, as PDF, PNG or live HTML.</p>
 git clone https://github.com/stilwellc/palette ~/.claude/skills/palette
 ```
 
+Or as a plugin, from inside Claude Code (use one or the other, not both):
+
+```
+/plugin marketplace add stilwellc/palette
+/plugin install palette@palette
+```
+
 Then ask Claude Code: *"make a five-slide board deck from this CSV"*, *"a one-page brief as a PDF"*,
 *"an OG image for the launch post"*, *"chart last quarter's numbers"*.
 
@@ -38,6 +45,9 @@ from a template, renders, runs a layout check and looks at the result before han
   content spills off a page, a chart hits its caption or colour goes over budget.
 - **No npm, no build step, works offline.** 29 SVG chart helpers and 109 icons in two dependency-free
   scripts, fonts embedded.
+- **PowerPoint and GIF too.** `scripts/pptx.py` writes a deck that opens in PowerPoint, Keynote and
+  Google Slides (slides are pictures, with the text in the notes). `scripts/animate.sh` turns an
+  animation page into a looping GIF; the one above is `templates/pitch.html`.
 - **One style across every format.** Cream paper, big two-tone headlines, ink-grey charts, and one
   small signal colour per page.
 
@@ -184,10 +194,16 @@ The repo keeps a private layer out of git. Create `local/` (it is in `.gitignore
 * `local/NOTES.md`: your reference artefact, data sources and team rules. The skill reads it first.
 * `local/templates/<kind>.html`: branded versions of any template. `scripts/new.sh` prefers them.
 
-To change the look itself, edit the tokens at the top of `assets/style.css` (paper, ink, the four
-severity colours) and the matching values in `assets/charts.js` (`SEV`, `N`). The signal colour is
-one line: `AS.theme({signal: '#e4502a'})`, or `--signal` in the stylesheet. Start a brand from
-`templates/brand.html`: swap the mark, the name and the signal.
+To rebrand, put one line at the top of a page's script. It derives every grey, card and ground from
+three colours, and the charts follow:
+
+```js
+AS.theme({paper: '#eef1f4', ink: '#0e1c2f', signal: '#e4502a'})
+```
+
+To change the default for everything, edit the tokens at the top of `assets/style.css`. Nothing else
+holds a colour: charts, icons and components all read those variables. Start a brand from
+`templates/brand.html`: swap the mark, the name and the three colours.
 
 <details>
 <summary>What is in the repo</summary>

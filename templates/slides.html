@@ -96,7 +96,7 @@ AS.bars('#s2b', {W: 600, H: 380, cats: ['Q2', 'Q3'], segLabels: true, noGrid: tr
   {name: 'Critical', color: 'critical', values: [1, 9]}]});
 AS.flow('#s3', {W: 1400, H: 520, nodes: {
     left: [{id:'sa',label:'SAST'},{id:'pt',label:'Pen test'},{id:'sc',label:'SCA'},{id:'se',label:'Secrets scan'},{id:'mt',label:'Manual testing'},{id:'cl',label:'Cloud scan'},{id:'bb',label:'Bug bounty'}],
-    right: [{id:'fp',label:'Ruled out as noise',color:'#b9b1a4'},{id:'op',label:'Verified, still open'},{id:'fx',label:'Verified and fixed',color:'#8c8478'},{id:'tr',label:'Awaiting triage',color:'#d9d2c5'}]},
+    right: [{id:'fp',label:'Ruled out as noise',color:'n4'},{id:'op',label:'Verified, still open'},{id:'fx',label:'Verified and fixed',color:'n3'},{id:'tr',label:'Awaiting triage',color:'n5'}]},
   links: [{s:'sa',t:'fp',v:591},{s:'sa',t:'op',v:18,dark:true},{s:'sa',t:'fx',v:6},
           {s:'pt',t:'op',v:38,dark:true},{s:'pt',t:'fx',v:22},{s:'sc',t:'op',v:43,dark:true},{s:'sc',t:'fx',v:9},
           {s:'se',t:'op',v:26,dark:true},{s:'se',t:'fx',v:19},{s:'mt',t:'op',v:24,dark:true},{s:'mt',t:'fx',v:13},

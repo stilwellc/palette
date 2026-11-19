@@ -51,7 +51,7 @@ body.dash .screen.bare{grid-template-columns:1fr}
 .tabs a .ct{font:500 11px var(--f-mono);color:var(--ink-3);margin-left:6px}
 
 /* segmented control with a sliding paper thumb */
-.seg{display:inline-flex;padding:3px;border-radius:999px;background:var(--n6);box-shadow:inset 0 0 0 .5px rgba(28,25,23,.08);font:500 12.5px/1 var(--f-sans)}
+.seg{display:inline-flex;padding:3px;border-radius:999px;background:var(--n6);box-shadow:inset 0 0 0 .5px color-mix(in srgb,var(--ink) 8%,transparent);font:500 12.5px/1 var(--f-sans)}
 .seg a{padding:7px 13px;border-radius:999px;color:var(--ink-3);text-decoration:none}
 .seg a.on{background:var(--paper-2);color:var(--ink);box-shadow:var(--lift)}
 
@@ -60,7 +60,7 @@ body.dash .screen.bare{grid-template-columns:1fr}
 .chip{display:inline-flex;align-items:center;height:32px;border-radius:999px;background:var(--paper-2);box-shadow:var(--ring);
   font:500 13px/1 var(--f-sans);color:var(--ink);white-space:nowrap;overflow:hidden}
 .chip>span{padding:0 12px;display:flex;align-items:center;gap:6px;height:100%}
-.chip>span+span{box-shadow:-.5px 0 0 rgba(28,25,23,.16)}
+.chip>span+span{box-shadow:-.5px 0 0 color-mix(in srgb,var(--ink) 16%,transparent)}
 .chip .k{color:var(--ink-3)}
 .chip.on{background:var(--ink);color:var(--paper-2);box-shadow:none}
 .chip.on .k{color:var(--n4)} .chip.on>span+span{box-shadow:-.5px 0 0 rgba(251,248,241,.25)}
@@ -82,7 +82,7 @@ body.dash .screen.bare{grid-template-columns:1fr}
 /* KPI strip that is also the chart selector: selected tile is paper with an ink underline */
 .kpis{display:grid;grid-template-columns:repeat(var(--cols,5),1fr);border-radius:19px 19px 0 0;overflow:hidden;border-bottom:1px solid var(--line)}
 .kpis>button{all:unset;cursor:pointer;padding:16px 20px 15px;background:var(--n6);position:relative;transition:background .2s var(--ease)}
-.kpis>button+button{box-shadow:-.5px 0 0 rgba(28,25,23,.10)}
+.kpis>button+button{box-shadow:-.5px 0 0 color-mix(in srgb,var(--ink) 10%,transparent)}
 .kpis>button span{display:block;font:500 12.5px/1.2 var(--f-sans);color:var(--ink-3)}
 .kpis>button b{display:block;font:500 26px/1 var(--f-sans);letter-spacing:-.03em;margin-top:9px;color:var(--ink-2);font-variant-numeric:tabular-nums}
 .kpis>button b small{font-size:13px;font-weight:500;color:var(--ink-3);letter-spacing:0;margin-left:3px}
@@ -177,7 +177,7 @@ body.dash .screen.bare{grid-template-columns:1fr}
 .check.on i{background:var(--ink)} .check.on i::after{content:"";width:8px;height:4px;border:1.8px solid var(--paper-2);border-top:0;border-right:0;transform:rotate(-45deg) translate(1px,-1px)}
 .check small{display:block;color:var(--ink-3);font-size:12px;margin-top:2px}
 .toggle{width:32px;height:19px;border-radius:999px;background:var(--n5);position:relative;flex:none}
-.toggle::after{content:"";position:absolute;left:2px;top:2px;width:15px;height:15px;border-radius:50%;background:var(--paper-2);box-shadow:0 1px 2px rgba(28,25,23,.2)}
+.toggle::after{content:"";position:absolute;left:2px;top:2px;width:15px;height:15px;border-radius:50%;background:var(--paper-2);box-shadow:0 1px 2px color-mix(in srgb,var(--ink) 20%,transparent)}
 .toggle.on{background:var(--ink)} .toggle.on::after{left:15px}
 
 /* ---------- empty state ---------- */
@@ -185,8 +185,8 @@ body.dash .screen.bare{grid-template-columns:1fr}
 .empty b{display:block;color:var(--ink);font:600 15px var(--f-sans);margin-bottom:4px}
 
 /* print: keep floating shadows small so Chrome doesn't rasterise them into boxes */
-@media print{.drawer,.anom{box-shadow:0 0 0 .5px rgba(28,25,23,.2)}.tip{display:none!important}}
-@media print{.seg a.on,.switch,.statcard{box-shadow:0 0 0 .5px rgba(28,25,23,.16)}}
+@media print{.drawer,.anom{box-shadow:0 0 0 .5px color-mix(in srgb,var(--ink) 20%,transparent)}.tip{display:none!important}}
+@media print{.seg a.on,.switch,.statcard{box-shadow:0 0 0 .5px color-mix(in srgb,var(--ink) 16%,transparent)}}
 
 /* =================== v3 additions: product pages, mobile, overlays ===================
    A marketing or product page is <div class="screen bare"><div class="web">...</div></div>.
@@ -236,7 +236,7 @@ body.dash .screen.bare{grid-template-columns:1fr}
 .transcript{display:grid;gap:14px} .transcript>div{display:grid;gap:5px} .transcript p{font-size:14.5px;line-height:1.5;color:var(--ink)}
 .transcript .them p{color:var(--ink-2)}
 /* overlays: the only places a shadow is allowed */
-.scrim{position:absolute;inset:0;background:rgba(28,25,23,.28);z-index:5}
+.scrim{position:absolute;inset:0;background:color-mix(in srgb,var(--ink) 28%,transparent);z-index:5}
 .modal{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:var(--mw,440px);border-radius:24px;background:var(--paper-2);box-shadow:var(--pop);padding:26px;z-index:6;display:flex;flex-direction:column;gap:14px}
 .modal h3{font:600 20px/1.2 var(--f-sans);letter-spacing:-.022em} .modal p{font-size:14px;line-height:1.5;color:var(--ink-2)} .modal .acts{display:flex;gap:8px;justify-content:flex-end;margin-top:8px}
 .toast{display:inline-flex;gap:10px;align-items:center;padding:11px 16px 11px 12px;border-radius:14px;background:var(--paper-2);box-shadow:var(--pop);font:500 13.5px/1.2 var(--f-sans)}
@@ -265,8 +265,8 @@ body.dash .screen.bare{grid-template-columns:1fr}
 .sheet{position:absolute;left:0;right:0;bottom:0;border-radius:32px 32px 0 0;background:var(--paper-2);box-shadow:var(--pop);padding:10px 20px 34px;z-index:6;display:flex;flex-direction:column;gap:14px}
 .sheet::before{content:"";align-self:center;width:36px;height:5px;border-radius:3px;background:var(--n4)}
 .homebar{position:absolute;bottom:8px;left:50%;margin-left:-67px;width:134px;height:5px;border-radius:3px;background:var(--ink);z-index:7}
-@media print{.plan,.feat>div,.tcard,.mcard,.mlist,.player{box-shadow:0 0 0 .5px rgba(28,25,23,.16)}
-  .modal,.toast,.cmdk,.sheet{box-shadow:0 0 0 .5px rgba(28,25,23,.22)}}
+@media print{.plan,.feat>div,.tcard,.mcard,.mlist,.player{box-shadow:0 0 0 .5px color-mix(in srgb,var(--ink) 16%,transparent)}
+  .modal,.toast,.cmdk,.sheet{box-shadow:0 0 0 .5px color-mix(in srgb,var(--ink) 22%,transparent)}}
 /* mobile sizes and small gaps found while building templates/mobile.html */
 .seg.fill{display:flex} .seg.fill a{flex:1;text-align:center}
 .btn.block{display:flex;justify-content:center;width:100%}

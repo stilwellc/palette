@@ -1,0 +1,12 @@
+{
+  "name": "palette",
+  "description": "palette: a design skill for Claude Code. Charts, decks, reports, UI, images and brand sheets in one editorial style, as PDF and PNG.",
+  "owner": { "name": "stilwellc" },
+  "plugins": [
+    {
+      "name": "palette",
+      "source": "./",
+      "description": "Design charts, slide decks, reports, dashboards, landing pages, mobile screens, social images and brand sheets in one editorial style. HTML to PDF and PNG, no build step."
+    }
+  ]
+}

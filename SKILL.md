@@ -44,6 +44,8 @@ examples/           finished pieces for range: poster, menu, résumé, investor 
 reference/          style-guide.md (read first), brand.md, layouts.md, ui-patterns.md
 scripts/new.sh      copy a template to a working file with absolute asset paths
 scripts/render.sh   HTML → PDF (headless Chrome) → PNG per page, plus the layout check
+scripts/pptx.py     HTML → PowerPoint, one picture per slide with the slide text as notes
+scripts/animate.sh  an animation page (templates/pitch.html) → looping GIF
 local/              private, gitignored: NOTES.md, branded templates, research (optional)
 ```
 
@@ -61,6 +63,7 @@ local/              private, gitignored: NOTES.md, branded templates, research (
 | mobile app screens | graphic | `templates/mobile.html` | 390x844 `.device` frames on one canvas |
 | social card, OG image, story, announcement | named pages | `templates/social.html` | 1200x630, 1080x1080, 1080x1920, 1600x900 in one file |
 | logo, brand guide, icon sheet, design system | slides | `templates/brand.html` | 1600x1000 per page |
+| short animation, README or launch GIF | animation | `templates/pitch.html` | 1200x675, drawn per instant from `#t=`; export with `scripts/animate.sh` |
 | "which chart?" | n/a | `templates/charts.html` | catalogue with one working call per newer helper |
 
 If the ask doesn't say which, use graphic for a single chart, doc for anything with prose. Ask only
@@ -74,7 +77,7 @@ if it could reasonably be either a deck or a doc.
 2. **Write the words before the layout.** Headline in two clauses (fact, then grey consequence),
    one finding-sentence per figure title, a sub line saying what is plotted, a note saying what
    to take from it. Voice rules are at the end of the style guide.
-3. **Start from a template:** `<skill>/scripts/new.sh <kind> <out.html>` (kind = any file name in
+3. **Start from a template:** `${CLAUDE_SKILL_DIR}/scripts/new.sh <kind> <out.html>` (kind = any file name in
    `templates/` without `.html`)
    into the working folder (the user's named location, else the session scratchpad), named for
    the content (`Repo_Archive_2026-11-12.html`). It rewrites asset links to absolute paths into
@@ -87,8 +90,9 @@ if it could reasonably be either a deck or a doc.
    in signal mode the one mark that carries the claim may take `color: 'signal'`. Icons come from
    `icons.js` only (`<i class="ic" data-i="...">`, add its script tag); never paste SVG from
    another icon set, and never draw a real company's logo.
-5. **Render:** `<skill>/scripts/render.sh <file.html> [outdir] [scale]` (`<skill>` is this
-   skill's folder, usually `~/.claude/skills/palette`)
+5. **Render:** `${CLAUDE_SKILL_DIR}/scripts/render.sh <file.html> [outdir] [scale]`
+   (`${CLAUDE_SKILL_DIR}` is the folder this SKILL.md is in. If you see it written out literally,
+   use that folder's path: usually `~/.claude/skills/palette`, or the plugin's install folder.)
    * It prints `check: data-check="OK"` or a list of problems, writes `<name>.pdf`, and writes
      `<name>.png` (one page) or `<name>-01.png ...` (one per slide or page) at 2x by default.
    * Exit 2 means the layout check failed: content spills off a page or slide, a chart overlaps
@@ -98,7 +102,9 @@ if it could reasonably be either a deck or a doc.
 6. **Look at every PNG** with Read. Check for label collisions, a headline wrapping to an orphan
    word, empty bottom space on a page (fill it or end the page earlier), and text sitting on dark
    marks. The script checks geometry, not taste.
-7. **Deliver** the PDF and PNG paths. Mention anything you couldn't source.
+7. **Deliver** the PDF and PNG paths. Mention anything you couldn't source. If they asked for
+   PowerPoint, Keynote or Google Slides, also run `${CLAUDE_SKILL_DIR}/scripts/pptx.py <file.html>`
+   and say plainly that its slides are pictures (text is in the notes, not editable).
 
 ## Rules that matter most
 
@@ -107,6 +113,14 @@ if it could reasonably be either a deck or a doc.
 * Signal mode: 88 parts paper, 11 parts ink, 1 part signal (`#2b44d9`). One signal mark per view,
   never on a headline, body text, button, background or logo. Change it with `AS.theme({signal})`.
 * One ink block per page (an ink tile, the summary grid's hero cell, or the takeaway bar).
+* A different brand: one line at the top of the page script,
+  `AS.theme({paper: '#eef1f4', ink: '#0e1c2f', signal: '#e4502a'})`. It derives every grey, card
+  and ground from those three and charts follow. Never hard-code a hex in a page: use the tokens
+  (`var(--ink)`, `var(--n3)`) in markup and tone names (`'n1'`..`'n6'`, `'signal'`, `'paper'`) in
+  chart data.
+* Several image sizes in one file: `<body class="social">` with `<div class="canvas og|sq|story|
+  wide|portrait">`. On big canvases scale small labels with `.x15` / `.x2`. Art that is meant to run
+  off the edge gets class `bleed`, or the layout check will flag it.
 * The part that matters is darkest ink; context is light grey.
 * Headlines: numbers first, full stops, second clause in `<em>`.
 * Chart over table. One strong chart beats two.

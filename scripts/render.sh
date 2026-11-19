@@ -35,6 +35,8 @@ prof=$(mktemp -d)
 trap 'rm -rf "$prof"' EXIT
 flags=(--headless=new --disable-gpu --no-first-run --user-data-dir="$prof" --allow-file-access-from-files
        --hide-scrollbars --virtual-time-budget=6000 --run-all-compositor-stages-before-draw)
+# CI containers have no user namespace for Chrome's sandbox
+[[ -n ${CI:-}${PALETTE_NO_SANDBOX:-} ]] && flags+=(--no-sandbox)
 
 # 1. layout check (needs assets/check.js in the page)
 chk=$("$chrome" "${flags[@]}" --dump-dom "file://$in" 2>/dev/null | grep -o 'data-check="[^"]*"' | head -1 || true)

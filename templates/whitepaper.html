@@ -267,14 +267,14 @@
 <script>
 const pct = v => v + '%';
 AS.lines('#c1', {W: 585, H: 425, endW: 128, fmt: pct, max: 60, x: ['2021', '2022', '2023', '2024', '2025', '2026'], series: [
-  {name: 'seats', label: '38% seat-based', color: '#8c8478', values: [58, 55, 51, 47, 43, 38]},
+  {name: 'seats', label: '38% seat-based', color: 'n3', values: [58, 55, 51, 47, 43, 38]},
   {name: 'usage', label: '46% usage-based', values: [21, 25, 29, 34, 39, 46]}]});
 AS.compare('#c2', {W: 403, H: 172, ticks: 2, max: 80, unit: '%', name: 'Bill on usage', hi: 0,
   cats: ['<$1M', '$1–10M', '$10–50M', '$50–250M', '>$250M'], values: [74, 68, 61, 52, 43]});
 AS.hbars('#c3', {W: 461, labelW: 150, rowH: 26, max: 100, rows: [
   {label: 'AI and ML APIs', value: 71, display: '71%'}, {label: 'Infrastructure', value: 64, display: '64%'},
   {label: 'Data platforms', value: 55, display: '55%'}, {label: 'Communications', value: 49, display: '49%'},
-  {label: 'Fintech', value: 37, display: '37%'}, {label: 'Vertical software', value: 18, display: '18%'}].map((r, i) => ({...r, segs: [{v: r.value, color: i < 3 ? '#1c1917' : '#8c8478'}]}))});
+  {label: 'Fintech', value: 37, display: '37%'}, {label: 'Vertical software', value: 18, display: '18%'}].map((r, i) => ({...r, segs: [{v: r.value, color: i < 3 ? 'var(--n1)' : 'var(--n3)'}]}))});
 AS.dumbbell('#c4', {W: 633, labelW: 190, rowH: 54, max: 100, delta: false, fmt: pct, rows: [
   {label: 'Accounts kept at 12 months', a: 86, b: 89},
   {label: 'Invoices paid on time', a: 78, b: 88},
