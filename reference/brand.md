@@ -16,7 +16,7 @@ or brand colour was taken from any of them.
 |---|---|---|
 | about 88% | paper and cards | `--paper`, `--paper-2`, `--ground-2`, `--n6` |
 | about 11% | ink: type, marks, one ink block | `--ink` and the neutrals `--n2`..`--n5` |
-| about 1% | signal | `--signal` (`#e4502a`) |
+| about 1% | signal | `--signal` (`#2b44d9`) |
 
 1. **One signal mark per view.** It goes on the thing that is live, new, over a limit, or the claim:
    one bar, one dot, one tag, one cell of a meter, the "today" line. A chart page may spend up to 5%;
@@ -33,7 +33,7 @@ or brand colour was taken from any of them.
 7. A multi-series chart stays in greys: this period ink, last period mid grey, everyone else pale
    (`.legend4`). Tell series apart by tone and dash before reaching for hue.
 
-Change the signal for a brand with `AS.theme({signal: '#2b44d9'})` at the top of the page script, or
+Change the signal for a brand with `AS.theme({signal: '#e4502a'})` at the top of the page script, or
 set `--signal` on `:root`. Pick one hue and keep it.
 
 ## Shape

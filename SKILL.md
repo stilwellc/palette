@@ -101,7 +101,7 @@ if it could reasonably be either a deck or a doc.
 
 * Severity mode: colour = severity (Critical `#4a2c17`, High `#722f37`, Medium `#8a5d18`, Low
   `#004225`), and nothing else. Ring = fixed, filled = open.
-* Signal mode: 88 parts paper, 11 parts ink, 1 part signal (`#e4502a`). One signal mark per view,
+* Signal mode: 88 parts paper, 11 parts ink, 1 part signal (`#2b44d9`). One signal mark per view,
   never on a headline, body text, button, background or logo. Change it with `AS.theme({signal})`.
 * One ink block per page (an ink tile, the summary grid's hero cell, or the takeaway bar).
 * The part that matters is darkest ink; context is light grey.

@@ -155,7 +155,7 @@ The repo keeps a private layer out of git. Create `local/` (it is in `.gitignore
 
 To change the look itself, edit the tokens at the top of `assets/style.css` (paper, ink, the four
 severity colours) and the matching values in `assets/charts.js` (`SEV`, `N`). The signal colour is
-one line: `AS.theme({signal: '#2b44d9'})`, or `--signal` in the stylesheet. Start a brand from
+one line: `AS.theme({signal: '#e4502a'})`, or `--signal` in the stylesheet. Start a brand from
 `templates/brand.html`: swap the mark, the name and the signal.
 
 ## Layout

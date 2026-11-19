@@ -7,7 +7,7 @@
   const N = ['#1c1917', '#5a5550', '#8c8478', '#b9b1a4', '#d9d2c5', '#e6e1d6'];
   const PAPER = '#fbf8f1', GRID = 'rgba(36,30,21,.10)', AXIS = 'rgba(36,30,21,.35)';
   // Tones that are not severity. 'signal' is the one accent a non-severity piece may use, once.
-  const TONE = { signal: '#e4502a', ink: N[0], mute: N[3], pale: N[5] };
+  const TONE = { signal: '#2b44d9', ink: N[0], mute: N[3], pale: N[5] };
   const col = c => SEV[c] || TONE[c] || c;
 
   function root(el, W, H) {

@@ -328,7 +328,7 @@ body.slides .sums.grow .sum .n{font-size:64px;letter-spacing:-.04em;color:var(--
    colour with a meaning, label plates, model codes, segment and dot-matrix readouts, key glyphs.
    Everything here is optional and additive: a severity piece never needs it. */
 :root{
-  --signal:#e4502a;        /* the one accent for work that is not about severity. Budget: about 1% of a page */
+  --signal:#2b44d9;        /* the one accent for work that is not about severity. Budget: about 1% of a page */
   --ground-2:#efe9dc;      /* one step down from paper: change section by ground, never by hue */
   --r:24px; --pad:26px;    /* concentric rule: a shape inside a rounded shape uses --r-in */
   --r-in:max(calc(var(--r) - var(--pad)),6px);

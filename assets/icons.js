@@ -179,7 +179,7 @@
   };
   function mark(name, o = {}) {
     const f = M[name]; if (!f) return '';
-    const sig = o.sig ? 'fill="var(--signal,#e4502a)"' : '';
+    const sig = o.sig ? 'fill="var(--signal,#2b44d9)"' : '';
     return `<svg viewBox="0 0 8 8" width="${o.size || 28}" height="${o.size || 28}" fill="currentColor" aria-hidden="true">${f(sig)}</svg>`;
   }
   const AS = g.AS = g.AS || {};
