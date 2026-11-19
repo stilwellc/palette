@@ -27,6 +27,13 @@ Get it in one editorial style, as PDF, PNG or live HTML.</p>
 git clone https://github.com/stilwellc/palette ~/.claude/skills/palette
 ```
 
+Or as a plugin, from inside Claude Code (use one or the other, not both):
+
+```
+/plugin marketplace add stilwellc/palette
+/plugin install palette@palette
+```
+
 Then ask Claude Code: *"make a five-slide board deck from this CSV"*, *"a one-page brief as a PDF"*,
 *"an OG image for the launch post"*, *"chart last quarter's numbers"*.
 
@@ -36,8 +43,11 @@ from a template, renders, runs a layout check and looks at the result before han
 
 - **HTML in, PDF and PNG out.** Headless Chrome renders it. A layout check fails the build when
   content spills off a page, a chart hits its caption or colour goes over budget.
-- **No npm, no build step, works offline.** 29 SVG chart helpers and 109 icons in two dependency-free
+- **No npm, no build step, works offline.** 29 SVG chart helpers and 110 icons in two dependency-free
   scripts, fonts embedded.
+- **PowerPoint and GIF too.** `scripts/pptx.py` writes a deck that opens in PowerPoint, Keynote and
+  Google Slides (slides are pictures, with the text in the notes). `scripts/animate.sh` turns an
+  animation page into a looping GIF; the one above is `templates/pitch.html`.
 - **One style across every format.** Cream paper, big two-tone headlines, ink-grey charts, and one
   small signal colour per page.
 
@@ -63,7 +73,7 @@ yourself with `scripts/render.sh examples/poster.html out/`.
 
 ## Templates
 
-Eleven starting points. The skill copies one, replaces the sample words and numbers, and renders.
+Thirteen starting points. The skill copies one, replaces the sample words and numbers, and renders.
 
 <p align="center"><a href="templates/"><img src="docs/templates.png" width="840" alt="Templates: deck, chart catalogue, landing page, A4 report, social image, mobile screens and a three-page brand sheet"></a></p>
 
@@ -79,6 +89,8 @@ Eleven starting points. The skill copies one, replaces the sample words and numb
 | mobile | [`mobile.html`](templates/mobile.html) | 390×844 screens | app screens in a phone frame |
 | social | [`social.html`](templates/social.html) | 1200×630, 1080², 1080×1920, 1600×900 | link previews, square, story, announcement, all in one file |
 | brand | [`brand.html`](templates/brand.html) | 1600×1000 per page | mark and lockup rules, colour, type, icons, labels |
+| brief | [`brief.html`](templates/brief.html) | US letter, one page | decision briefs, memos, proposals, updates |
+| pitch | [`pitch.html`](templates/pitch.html) | 1200×675 animation | README and launch GIFs, exported with `scripts/animate.sh` |
 | charts | [`charts.html`](templates/charts.html) | 1600×1000 | a catalogue with one working call per newer chart |
 
 <details>
@@ -96,7 +108,8 @@ chart and chart marks show tooltips.
 ## Charts and icons
 
 `assets/charts.js` exposes `AS`. Every helper draws plain SVG into an element, with no dependencies.
-[`templates/charts.html`](templates/charts.html) has a working call for each of the newer ones.
+[`reference/charts.md`](reference/charts.md) lists every option and which chart fits which job;
+[`templates/charts.html`](templates/charts.html) has working calls.
 
 <details>
 <summary>All 29 chart helpers</summary>
@@ -136,7 +149,7 @@ chart and chart marks show tooltips.
 
 </details>
 
-`assets/icons.js` holds 109 line icons drawn for this skill on one 24-unit grid (one stroke, round
+`assets/icons.js` holds 110 line icons drawn for this skill on one 24-unit grid (one stroke, round
 caps, one idea each), ten two-shape brand marks to start a logo from, and the painter for orbs:
 soft gradient spheres in six palettes, the one piece of art the style allows.
 
@@ -184,10 +197,16 @@ The repo keeps a private layer out of git. Create `local/` (it is in `.gitignore
 * `local/NOTES.md`: your reference artefact, data sources and team rules. The skill reads it first.
 * `local/templates/<kind>.html`: branded versions of any template. `scripts/new.sh` prefers them.
 
-To change the look itself, edit the tokens at the top of `assets/style.css` (paper, ink, the four
-severity colours) and the matching values in `assets/charts.js` (`SEV`, `N`). The signal colour is
-one line: `AS.theme({signal: '#e4502a'})`, or `--signal` in the stylesheet. Start a brand from
-`templates/brand.html`: swap the mark, the name and the signal.
+To rebrand, put one line at the top of a page's script. It derives every grey, card and ground from
+three colours, and the charts follow:
+
+```js
+AS.theme({paper: '#eef1f4', ink: '#0e1c2f', signal: '#e4502a'})
+```
+
+To change the default for everything, edit the tokens at the top of `assets/style.css`. Nothing else
+holds a colour: charts, icons and components all read those variables. Start a brand from
+`templates/brand.html`: swap the mark, the name and the three colours.
 
 <details>
 <summary>What is in the repo</summary>
@@ -200,11 +219,13 @@ assets/charts.js      chart helpers (AS.*)
 assets/icons.js       icons and brand marks
 assets/check.js       layout check, result on <body data-check>
 assets/fonts/         Inter and Geist Mono (OFL), embedded so renders work offline
-templates/            eleven starting points, fictional data
+templates/            thirteen starting points, fictional data
 examples/             seven finished pieces made with the skill (the showcase above)
-reference/            style guide, brand layer, layouts, UI patterns
+reference/            style guide, brand layer, layouts, chart reference, UI patterns
 scripts/new.sh        start a piece from a template
 scripts/render.sh     HTML to PDF to PNG, plus the layout check
+scripts/pptx.py       HTML to PowerPoint (pictures, text in notes)
+scripts/animate.sh    animation page to looping GIF
 scripts/pdf2png.swift macOS rasteriser, compiled on first run
 docs/                 README screenshots
 ```

@@ -1,5 +1,5 @@
 <!doctype html>
-<!-- Dashboard / app UI. One <div class="screen"> per view; set the size in BOTH body style (--w/--h)
+<!-- Dashboard / app UI. One div.screen per view; set the size in BOTH body style (--w/--h)
      and @page. Opened in a browser it is live: KPI tiles switch the chart, marks show tooltips.
      Printed or rendered, it shows the default state. Screen 1 = overview, screen 2 = queue + drawer.
      ALL NUMBERS ARE SAMPLE DATA: replace every one from a real source before shipping. -->
@@ -203,7 +203,7 @@ AS.kpiSelect('#k', '#p', {
   sev:  el => AS.area(el, {W: 1060, H: 250, x: wk, stack: true, series: [{name: 'Critical', color: 'critical', values: C}, {name: 'High', color: 'high', values: H}]}),
   sla:  el => AS.area(el, {W: 1060, H: 250, x: wk, series: [{name: 'Past SLA', values: [28,30,32,34,36,37,39,42,44,46,49,51,52]}]}),
   age:  el => AS.area(el, {W: 1060, H: 250, x: wk, series: [{name: 'Median age, High (days)', color: 'high', values: [38,39,41,42,44,37,39,41,43,45,46,48,49]}]}),
-  fixed: el => AS.compare(el, {W: 1060, H: 250, cats: wk, values: [1,2,2,0,26,3,1,0,2,4,3,31,4], hi: 11, color: '#1c1917', name: 'Fixed'})
+  fixed: el => AS.compare(el, {W: 1060, H: 250, cats: wk, values: [1,2,2,0,26,3,1,0,2,4,3,31,4], hi: 11, color: 'n1', name: 'Fixed'})
 });
 AS.track('#t', {W: 400, rowH: 50, labelW: 74, numW: 70, numSize: 22, rows: [
   {label: 'Critical', value: 5, of: 7, color: 'critical', display: '5/7'},

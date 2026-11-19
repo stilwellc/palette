@@ -3,6 +3,7 @@ local/
 
 # built on first run by scripts/render.sh
 scripts/pdf2png
+scripts/frames2gif
 
 # render output
 *.pdf

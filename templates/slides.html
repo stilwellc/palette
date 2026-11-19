@@ -1,5 +1,5 @@
 <!doctype html>
-<!-- 16:9 deck. One <section class="slide"> per slide, 1600x900 CSS px, printed at 13.333x7.5in.
+<!-- 16:9 deck. One section.slide per slide, 1600x900 CSS px, printed at 13.333x7.5in.
      Layouts shown: cover, KPI + two figures, one big figure, one number (headline left, stat card
      right), takeaways with an ask band. Sample data: fictional. -->
 <html><head><meta charset="utf-8"><title>Slides</title>
@@ -85,18 +85,18 @@
 </section>
 
 <script>
-AS.lines('#s2a', {W: 760, H: 380, x: ['Q2 (June start)', 'Q3'], grid: false, verticals: true, series: [
+AS.lines('#s2a', {W: 760, H: 318, x: ['Q2 (June start)', 'Q3'], grid: false, verticals: true, series: [
   {name: 'open at quarter end', values: [113, 297]},
   {name: 'opened', values: [121, 263], dash: 'dash'},
   {name: 'fixed', values: [7, 79], dash: 'dot'}]});
-AS.bars('#s2b', {W: 600, H: 380, cats: ['Q2', 'Q3'], segLabels: true, noGrid: true, totals: false, series: [
+AS.bars('#s2b', {W: 600, H: 300, cats: ['Q2', 'Q3'], segLabels: true, noGrid: true, totals: false, series: [
   {name: 'Low', color: 'low', values: [74, 25]},
   {name: 'Medium', color: 'medium', values: [37, 108]},
   {name: 'High', color: 'high', values: [9, 121]},
   {name: 'Critical', color: 'critical', values: [1, 9]}]});
 AS.flow('#s3', {W: 1400, H: 520, nodes: {
     left: [{id:'sa',label:'SAST'},{id:'pt',label:'Pen test'},{id:'sc',label:'SCA'},{id:'se',label:'Secrets scan'},{id:'mt',label:'Manual testing'},{id:'cl',label:'Cloud scan'},{id:'bb',label:'Bug bounty'}],
-    right: [{id:'fp',label:'Ruled out as noise',color:'#b9b1a4'},{id:'op',label:'Verified, still open'},{id:'fx',label:'Verified and fixed',color:'#8c8478'},{id:'tr',label:'Awaiting triage',color:'#d9d2c5'}]},
+    right: [{id:'fp',label:'Ruled out as noise',color:'n4'},{id:'op',label:'Verified, still open'},{id:'fx',label:'Verified and fixed',color:'n3'},{id:'tr',label:'Awaiting triage',color:'n5'}]},
   links: [{s:'sa',t:'fp',v:591},{s:'sa',t:'op',v:18,dark:true},{s:'sa',t:'fx',v:6},
           {s:'pt',t:'op',v:38,dark:true},{s:'pt',t:'fx',v:22},{s:'sc',t:'op',v:43,dark:true},{s:'sc',t:'fx',v:9},
           {s:'se',t:'op',v:26,dark:true},{s:'se',t:'fx',v:19},{s:'mt',t:'op',v:24,dark:true},{s:'mt',t:'fx',v:13},

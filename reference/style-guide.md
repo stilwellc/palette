@@ -1,4 +1,9 @@
-# AppSec house style
+# House style
+
+**Two colour modes.** This guide was written for security reports, so its colour rules up to the
+"v3 additions" say "severity". In signal mode (everything that is not about risk) read "the severity
+colour" as "the one signal mark", skip the severity legend sentence, and take the colour rules from
+`brand.md`. Type, layout, components, chart construction and voice are the same in both modes.
 
 Derived from an internal quarterly security review (a long-form report PDF), then extended with a
 study of a well-made product site and app. Every token below is in `assets/style.css`. If
@@ -63,7 +68,10 @@ rule says what to take from it, with **bold** severity names or key numbers.
 
 ## Components (class names)
 
-- `.mast` masthead: dot mark + team name, centre label, `.pill` "Data as of ...".
+- `.mast` masthead: dot mark + team name, centre label, `.pill` "Data as of ...". With a brand, use a
+  `.lockup` instead of the dot (needs `icons.js`).
+- `.orb.o1/.o2/.o3` are the blurred glows behind a cover. Any block on a page that has them needs
+  class `rel` to sit above them. Delete the orbs on a page whose main thing is a chart.
 - `.tag` black pill above a hero: the period or edition.
 - `.tiles` open KPI strip, ruled top and bottom, hairline dividers. `--cols` sets the count. Each tile:
   `b` number, `span` bold label, `small` context.
@@ -82,8 +90,9 @@ rule says what to take from it, with **bold** severity names or key numbers.
 
 Rules taken from the reference report:
 
-1. **Colour means severity, everywhere, and nothing else.** Say so in a legend line on the first
-   figure: "Colour means severity everywhere in this document, and nothing else."
+1. **Colour means severity, everywhere, and nothing else.** Say so once, in the first figure's
+   legend or the method line: "Colour means severity, and nothing else." Rank severity bars by
+   severity first, then by value.
 2. Anything that is not severity is ink greys. The part that matters is darkest (verified, open,
    opened); context is light (noise, fixed, the rest).
 3. **Filled = still open, ring = fixed** for dot marks.
@@ -95,6 +104,7 @@ Rules taken from the reference report:
 7. Annotate one thing per chart with a thin curved leader and a 15px label (`AS.annotate`), e.g.
    "four in ten findings are one kind of bug".
 8. One dot per item when counts are small enough (dot clusters, strip plots): the reader can count.
+   Under about 30 items clusters look empty: use one row of dots or `AS.waffle`.
 9. Prefer a chart to a table; prefer one strong chart to two weak ones.
 
 Helpers in `assets/charts.js` (all draw SVG into an element; `W`/`H` are viewBox units, so set `W`
@@ -168,7 +178,7 @@ eyebrows and "FIGURE 3"; everything else stays sentence case.
 ## v3 additions (general design)
 
 The brand layer (colour ratio, shape, marks, icons, labels) is in `brand.md`; page and slide layouts
-are in `layouts.md`. Chart additions, all in `assets/charts.js`, working calls in
+are in `layouts.md`; every chart's options, sizing and a pick-by-job table are in `charts.md`. Chart additions, all in `assets/charts.js`, working calls in
 `templates/charts.html`:
 
 | Call | Draws | Use it when |

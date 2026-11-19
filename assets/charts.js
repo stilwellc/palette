@@ -3,11 +3,14 @@
    Colour carries severity only; everything else is ink greys. See reference/style-guide.md. */
 (function (g) {
   const NS = 'http://www.w3.org/2000/svg';
-  const SEV = { critical: '#4a2c17', high: '#722f37', medium: '#8a5d18', low: '#004225' };
-  const N = ['#1c1917', '#5a5550', '#8c8478', '#b9b1a4', '#d9d2c5', '#e6e1d6'];
-  const PAPER = '#fbf8f1', GRID = 'rgba(36,30,21,.10)', AXIS = 'rgba(36,30,21,.35)';
+  // Every colour is a CSS variable from style.css, so a theme is set in one place (the :root tokens,
+  // or AS.theme below) and charts follow it.
+  const SEV = { critical: 'var(--crit)', high: 'var(--high)', medium: 'var(--med)', low: 'var(--low)' };
+  const N = ['var(--n1)', 'var(--n2)', 'var(--n3)', 'var(--n4)', 'var(--n5)', 'var(--n6)'];
+  const PAPER = 'var(--paper-2)', GRID = 'var(--line)', AXIS = 'var(--axis)';
   // Tones that are not severity. 'signal' is the one accent a non-severity piece may use, once.
-  const TONE = { signal: '#2b44d9', ink: N[0], mute: N[3], pale: N[5] };
+  const TONE = { signal: 'var(--signal)', ink: N[0], mute: N[3], pale: N[5], paper: PAPER, ground: 'var(--paper)',
+    n1: N[0], n2: N[1], n3: N[2], n4: N[3], n5: N[4], n6: N[5] };
   const col = c => SEV[c] || TONE[c] || c;
 
   function root(el, W, H) {
@@ -61,7 +64,7 @@
       const live = o.series.map((se, j) => [se, j]).filter(([se]) => (se.values[i] || 0) > 0);
       live.forEach(([se], idx) => {
         const v = se.values[i], y0 = y(acc + v), h = y(acc) - y0, top = idx === live.length - 1;
-        if (top) bar(s, x, y0, bw, h, col(se.color)); else n(s, 'rect', { x, y: y0, width: bw, height: h, fill: col(se.color) });
+        if (top) bar(s, x, y0, bw, h, col(se.color || N[0])); else n(s, 'rect', { x, y: y0, width: bw, height: h, fill: col(se.color || N[0]) });
         if (acc > 0) n(s, 'line', { x1: x, x2: x + bw, y1: y(acc), y2: y(acc), stroke: PAPER, 'stroke-width': 2 });
         if (o.segLabels && i === k - 1 && h > 14)
           n(s, 'text', { x: x + bw + 10, y: y0 + h / 2 + 4, class: 'val' }, `${se.name} ${Math.round(v / tot[i] * 100)}%`);
@@ -89,9 +92,9 @@
     const slot = (R - L) / k, bw = slot * 0.56;
     o.cats.forEach((c, i) => {
       const x = L + slot * i + (slot - bw) / 2, u = o.up[i] || 0, d = o.down[i] || 0;
-      if (u) { bar(s, x, yu(u), bw, zero - yu(u), o.upColor || N[0], true); n(s, 'text', { x: x + bw / 2, y: yu(u) - 8, 'text-anchor': 'middle', class: 'val' }, u); }
-      if (d) { bar(s, x, zero, bw, yd(d) - zero, o.downColor || N[3], false); n(s, 'text', { x: x + bw / 2, y: yd(d) + 15, 'text-anchor': 'middle', class: 'val' }, d); }
-      if (o.notes && o.notes[i]) n(s, 'text', { x: x + bw / 2, y: yd(d) + 31, 'text-anchor': 'middle', class: 'axl', style: 'fill:#1c1917' }, o.notes[i]);
+      if (u) { bar(s, x, yu(u), bw, zero - yu(u), col(o.upColor || N[0]), true); n(s, 'text', { x: x + bw / 2, y: yu(u) - 8, 'text-anchor': 'middle', class: 'val' }, u); }
+      if (d) { bar(s, x, zero, bw, yd(d) - zero, col(o.downColor || N[3]), false); n(s, 'text', { x: x + bw / 2, y: yd(d) + 15, 'text-anchor': 'middle', class: 'val' }, d); }
+      if (o.notes && o.notes[i]) n(s, 'text', { x: x + bw / 2, y: yd(d) + 31, 'text-anchor': 'middle', class: 'axl', style: 'fill:var(--ink)' }, o.notes[i]);
       n(s, 'text', { x: x + bw / 2, y: H - 8, 'text-anchor': 'middle', class: 'ax' }, c);
     });
     n(s, 'line', { x1: L, x2: R, y1: zero, y2: zero, stroke: AXIS });
@@ -133,11 +136,11 @@
     o.rows.forEach((r, i) => {
       const cy = 6 + i * rh + rh / 2, bh = Math.min(14, rh * .45);
       n(s, 'text', { x: LW - 14, y: cy + 4.5, 'text-anchor': 'end', class: 'lab' }, r.label);
-      n(s, 'rect', { x: LW, y: cy - bh / 2, width: R - LW, height: bh, rx: bh / 2, fill: 'rgba(36,30,21,.06)' });
+      n(s, 'rect', { x: LW, y: cy - bh / 2, width: R - LW, height: bh, rx: bh / 2, fill: 'var(--line)' });
       let acc = 0;
       (r.segs || [{ v: r.value, color: o.color || N[0] }]).forEach((sg, j, arr) => {
         const w = x(acc + sg.v) - x(acc);
-        n(s, 'rect', { x: x(acc) + (j ? 1 : 0), y: cy - bh / 2, width: Math.max(0, w - (j ? 1 : 0)), height: bh, rx: (j === 0 || j === arr.length - 1) ? bh / 2 : 0, fill: col(sg.color) });
+        n(s, 'rect', { x: x(acc) + (j ? 1 : 0), y: cy - bh / 2, width: Math.max(0, w - (j ? 1 : 0)), height: bh, rx: (j === 0 || j === arr.length - 1) ? bh / 2 : 0, fill: col(sg.color || N[0]) });
         acc += sg.v;
       });
       n(s, 'text', { x: R + 12, y: cy + 4.5, class: 'lab' }, r.display || r.value);
@@ -153,7 +156,7 @@
     o.groups.forEach((gr, gi) => {
       const cx = slot * gi + slot / 2;
       // severe first in the middle, fixed rings outside
-      const items = gr.items.slice().sort((a, b) => (a.fixed - b.fixed) || (['critical', 'high', 'medium', 'low'].indexOf(a.sev) - ['critical', 'high', 'medium', 'low'].indexOf(b.sev)));
+      const items = gr.items.slice().sort((a, b) => ((a.fixed ? 1 : 0) - (b.fixed ? 1 : 0)) || (['critical', 'high', 'medium', 'low'].indexOf(a.sev) - ['critical', 'high', 'medium', 'low'].indexOf(b.sev)));
       items.forEach((it, i) => {
         const a = i * 2.39996, d = gap * 0.55 * Math.sqrt(i + .5);
         const px = cx + d * Math.cos(a), py = cy + d * Math.sin(a), c = col(it.sev || it.color || N[0]);
@@ -211,8 +214,8 @@
       o.cols.forEach((_, j) => {
         const v = o.values[i][j], x = LW + j * (cw + 6);
         if (!v) { n(s, 'rect', { x, y, width: cw, height: ch, rx: 7, fill: 'none', stroke: GRID }); return; }
-        const t = Math.sqrt(v / max), l = Math.round(214 - t * 186);
-        n(s, 'rect', { x, y, width: cw, height: ch, rx: 7, fill: `rgb(${l},${l - 4},${l - 9})` });
+        const t = Math.sqrt(v / max);
+        n(s, 'rect', { x, y, width: cw, height: ch, rx: 7, fill: N[0], 'fill-opacity': (.14 + t * .86).toFixed(2) });
         n(s, 'text', { x: x + cw / 2, y: y + ch / 2 + 4.5, 'text-anchor': 'middle', class: t > .45 ? 'inv' : 'lab', style: 'font-weight:500' }, v);
       });
     });
@@ -238,7 +241,7 @@
     });
     if (o.median) {
       n(s, 'line', { x1: x(o.median.v), x2: x(o.median.v), y1: 10, y2: B, stroke: N[0], 'stroke-dasharray': '3 3' });
-      n(s, 'text', { x: x(o.median.v) - 8, y: 16, 'text-anchor': 'end', class: 'axl', style: 'fill:#1c1917;font-weight:500' }, o.median.label);
+      n(s, 'text', { x: x(o.median.v) - 8, y: 16, 'text-anchor': 'end', class: 'axl', style: 'fill:var(--ink);font-weight:500' }, o.median.label);
     }
     return s;
   }
@@ -252,6 +255,7 @@
 
 
   /* ===================== v2: dashboard and comparison charts ===================== */
+  const fmtN = v => Number(v).toLocaleString('en-US');   // 2680 -> 2,680
   const fmtK = v => Math.abs(v) >= 1e6 ? +(v / 1e6).toFixed(1) + 'M' : Math.abs(v) >= 1e3 ? +(v / 1e3).toFixed(1) + 'K' : '' + v;
 
   // Shared hover layer: any mark with data-tip='{"h":"Sep 2","rows":[["High","#722f37",12]]}' gets a tooltip.
@@ -295,7 +299,7 @@
     n(s, 'text', { x: R, y: H - 6, 'text-anchor': 'end', class: 'ax' }, o.x[k - 1]);
     if (o.mark) { const i = o.mark.i, v = o.stack ? cum[cum.length - 1][i] : ser[0].values[i];
       n(s, 'line', { x1: x(i), x2: x(i), y1: T, y2: B, stroke: N[0], 'stroke-dasharray': '3 3', 'stroke-width': 1 });
-      if (o.mark.label) n(s, 'text', { x: x(i) + 6, y: T + 10, class: 'axl', style: 'fill:#1c1917;font-weight:500' }, o.mark.label);
+      if (o.mark.label) n(s, 'text', { x: x(i) + 6, y: T + 10, class: 'axl', style: 'fill:var(--ink);font-weight:500' }, o.mark.label);
       n(s, 'circle', { cx: x(i), cy: y(v), r: 4.5, fill: N[0], stroke: PAPER, 'stroke-width': 2 }); }
     // hover columns
     const cw = (R - L) / (k - 1), cross = n(s, 'line', { x1: 0, x2: 0, y1: T, y2: B, stroke: N[3], opacity: 0 });
@@ -317,7 +321,7 @@
     const s = root(el, W, H), k = o.cats.length, fmt = o.fmt || (v => v + (o.unit || ''));
     const his = [].concat(o.hi ?? k - 1), tk = ticks(o.max || Math.max(...o.values), o.ticks || 3), max = tk[tk.length - 1];
     const y = v => B - (v / max) * (B - T);
-    tk.forEach(v => { if (v) n(s, 'line', { x1: L, x2: R, y1: y(v), y2: y(v), stroke: 'rgba(36,30,21,.22)', 'stroke-dasharray': '1 4', 'stroke-linecap': 'round' });
+    tk.forEach(v => { if (v) n(s, 'line', { x1: L, x2: R, y1: y(v), y2: y(v), stroke: 'var(--line-2)', 'stroke-dasharray': '1 4', 'stroke-linecap': 'round' });
       n(s, 'text', { x: L - 10, y: y(v) + 4, 'text-anchor': 'end', class: 'ax' }, fmt(v)); });
     const slot = (R - L) / k, bw = Math.min(o.barW || slot * .34, 64);
     o.cats.forEach((c, i) => {
@@ -325,7 +329,7 @@
       const bm = bar(s, cx - bw / 2, y(v), bw, B - y(v), on ? col(o.color || N[0]) : N[5], true, Math.min(bw / 2, 10)); if (bm) bm.setAttribute('data-tip', JSON.stringify({ h: c, rows: [[o.name || 'Value', on ? (o.color || N[0]) : N[4], fmt(v)]] }));
       const t = fmt(v), tw = t.length * 7 + 16;
       n(s, 'rect', { x: cx - tw / 2, y: y(v) - 30, width: tw, height: 21, rx: 10.5, fill: PAPER, stroke: on ? N[0] : N[3], 'stroke-width': on ? 1.2 : 1 });
-      n(s, 'text', { x: cx, y: y(v) - 15.5, 'text-anchor': 'middle', class: 'val', style: on ? 'fill:#1c1917;font-weight:500' : '' }, t);
+      n(s, 'text', { x: cx, y: y(v) - 15.5, 'text-anchor': 'middle', class: 'val', style: on ? 'fill:var(--ink);font-weight:500' : '' }, t);
       n(s, 'text', { x: cx, y: B + 20, 'text-anchor': 'middle', class: on ? 'lab' : 'ax', style: on ? 'font-size:12px' : '' }, c);
     });
     hover(s); return s;
@@ -342,7 +346,7 @@
       n(s, 'rect', { x: LW, y: cy - bh / 2, width: R - LW - 24, height: bh, rx: bh / 2, fill: N[5], 'fill-opacity': .55 });
       n(s, 'rect', { x: LW, y: cy - bh / 2, width: Math.max(w, bh), height: bh, rx: bh / 2, fill: col(r.color || N[0]), 'data-tip': JSON.stringify({ h: r.label, rows: [[r.label, r.color || N[0], r.display || `${r.value} of ${of}`]] }) });
       n(s, 'line', { x1: R - 14, x2: R + 4, y1: cy, y2: cy, stroke: N[3], 'stroke-dasharray': '1 4', 'stroke-linecap': 'round' });
-      n(s, 'text', { x: W, y: cy + 9, 'text-anchor': 'end', style: `font:600 ${o.numSize || 26}px var(--f-sans);letter-spacing:-.03em;fill:#1c1917` }, r.display || Math.round(r.value / of * 100) + '%');
+      n(s, 'text', { x: W, y: cy + 9, 'text-anchor': 'end', style: `font:600 ${o.numSize || 26}px var(--f-sans);letter-spacing:-.03em;fill:var(--ink)` }, r.display || Math.round(r.value / of * 100) + '%');
     });
     hover(s); return s;
   }
@@ -365,7 +369,7 @@
       const c = col(p.color || N[0]);
       n(s, 'path', { d: 'M' + p.values.map((v, i) => `${x(i).toFixed(1)},${y(v).toFixed(1)}`).join('L'), fill: 'none', stroke: c, 'stroke-width': 1.6, 'stroke-linejoin': 'round' });
       n(s, 'circle', { cx: x(k - 1), cy: y(p.values[k - 1]), r: 3.4, fill: c, stroke: PAPER, 'stroke-width': 1.5 });
-      n(s, 'text', { x: ox + pw, y: oy + 10, 'text-anchor': 'end', class: 'val', style: 'fill:#1c1917;font-weight:500' }, p.display ?? p.values[k - 1]);
+      n(s, 'text', { x: ox + pw, y: oy + 10, 'text-anchor': 'end', class: 'val', style: 'fill:var(--ink);font-weight:500' }, p.display ?? p.values[k - 1]);
     });
     if (o.event && o.event.label) n(s, 'text', { x: W, y: H - 2, 'text-anchor': 'end', class: 'sml' }, '┆ ' + o.event.label);
     return s;
@@ -410,7 +414,7 @@
         'stroke-dasharray': `${Math.max(0, len - gap)} ${C}`, 'stroke-dashoffset': -acc, transform: `rotate(-90 ${c} ${c})` });
       acc += len;
     });
-    if (o.label != null) txt(s, c, c + (o.sub ? S * .03 : S * .075), o.label, null, { 'text-anchor': 'middle', style: `font:600 ${S * .22}px var(--f-sans);letter-spacing:-.04em;fill:#1c1917` });
+    if (o.label != null) txt(s, c, c + (o.sub ? S * .03 : S * .075), o.label, null, { 'text-anchor': 'middle', style: `font:600 ${S * .22}px var(--f-sans);letter-spacing:-.04em;fill:var(--ink)` });
     if (o.sub) txt(s, c, c + S * .15, o.sub, 'axl', { 'text-anchor': 'middle' });
     return s;
   }
@@ -472,7 +476,7 @@
       if (g2.total) bar(s, cx - bw / 2, y(top), bw, y(bot) - y(top), fill, true, 6);
       else n(s, 'rect', { x: cx - bw / 2, y: y(top), width: bw, height: Math.max(2, y(bot) - y(top)), rx: 4, fill });
       if (i < k - 1) n(s, 'line', { x1: cx + bw / 2, x2: cx + slot - bw / 2, y1: y(g2.to), y2: y(g2.to), stroke: N[3], 'stroke-dasharray': '1 4', 'stroke-linecap': 'round' });
-      txt(s, cx, y(top) - 9, (g2.total ? '' : up ? '+' : '−') + fmt(Math.abs(g2.total ? g2.to : g2.value)), 'val', { 'text-anchor': 'middle', style: g2.total ? 'fill:#1c1917;font-weight:500' : '' });
+      txt(s, cx, y(top) - 9, (g2.total ? '' : up ? '+' : '−') + fmt(Math.abs(g2.total ? g2.to : g2.value)), 'val', { 'text-anchor': 'middle', style: g2.total ? 'fill:var(--ink);font-weight:500' : '' });
       txt(s, cx, B + 20, g2.label, g2.total ? 'lab' : 'ax', { 'text-anchor': 'middle', style: g2.total ? 'font-size:12px' : '' });
     });
     return s;
@@ -489,7 +493,7 @@
       n(s, 'rect', { x: LW, y: cy - bh / 2, width: R - LW, height: bh, rx: 7, fill: N[5], 'fill-opacity': .45 });
       n(s, 'rect', { x: LW, y: cy - bh / 2, width: w, height: bh, rx: 7, fill: on ? col(o.color || N[0]) : N[3] });
       const inside = w > 70;
-      txt(s, inside ? LW + w - 10 : LW + w + 10, cy + 4, fmt(st.value), 'val', { 'text-anchor': inside ? 'end' : 'start', style: `font-weight:500;fill:${inside && on ? PAPER : '#1c1917'}` });
+      txt(s, inside ? LW + w - 10 : LW + w + 10, cy + 4, fmt(st.value), 'val', { 'text-anchor': inside ? 'end' : 'start', style: `font-weight:500;fill:${inside && on ? PAPER : 'var(--ink)'}` });
       txt(s, W, cy + 4, i ? Math.round(st.value / o.steps[i - 1].value * 100) + '% of prev' : 'start', 'sml', { 'text-anchor': 'end' });
     });
     return s;
@@ -505,7 +509,7 @@
       if (LW) txt(s, 0, cy + 4.5, r.label, 'lab', { style: 'font-weight:500' });
       for (let c = 0; c < cells; c++) n(s, 'rect', { x: LW + c * (cw + g2), y: cy - ch / 2, width: cw, height: ch, rx: Math.min(2, cw / 3),
         fill: c < lit ? (c === lit - 1 && (r.color || o.color) ? col(r.color || o.color) : N[0]) : N[5], 'fill-opacity': c < lit ? 1 : .7 });
-      txt(s, W, cy + 4, r.display ?? r.value, 'val', { 'text-anchor': 'end', style: 'fill:#1c1917;font-weight:500;font-size:12px' });
+      txt(s, W, cy + 4, r.display ?? r.value, 'val', { 'text-anchor': 'end', style: 'fill:var(--ink);font-weight:500;font-size:12px' });
     });
     return s;
   }
@@ -546,16 +550,18 @@
     s.style.width = W + 'px'; return s;
   }
 
-  /* Bullet rows: value on a pale track with a target tick. rows:[{label, value, target, of, display, color}] */
+  /* Bullet rows: value on a pale track with a target tick. rows:[{label, value, target, of, display, color, lower}]
+     lower:true (on a row or on o) means lower is better: the row is met when value <= target. */
   function bullet(el, o) {
-    const W = o.W || 800, rh = o.rowH || 46, LW = o.labelW || 180, NW = o.numW || 80, R = W - NW, bh = o.barH || 12, s = root(el, W, o.rows.length * rh);
+    const W = o.W || 800, rh = o.rowH || 46, LW = o.labelW ?? 180, NW = o.numW || 80, R = W - NW, bh = o.barH || 12, s = root(el, W, o.rows.length * rh);
     o.rows.forEach((r, i) => {
-      const cy = i * rh + rh / 2, of = r.of || o.of || 100, x = v => LW + (R - LW) * Math.min(1, v / of), met = r.target == null || r.value >= r.target;
+      const cy = i * rh + rh / 2, of = r.of || o.of || 100, x = v => LW + (R - LW) * Math.min(1, v / of), lower = r.lower ?? o.lower;
+      const met = r.target == null || (lower ? r.value <= r.target : r.value >= r.target);
       txt(s, 0, cy + 4.5, r.label, 'lab', { style: 'font-weight:500' });
       n(s, 'rect', { x: LW, y: cy - bh / 2, width: R - LW, height: bh, rx: bh / 2, fill: N[5], 'fill-opacity': .55 });
       n(s, 'rect', { x: LW, y: cy - bh / 2, width: Math.max(bh, x(r.value) - LW), height: bh, rx: bh / 2, fill: col(r.color || (met ? N[0] : o.missColor || N[2])) });
       if (r.target != null) n(s, 'line', { x1: x(r.target), x2: x(r.target), y1: cy - bh / 2 - 6, y2: cy + bh / 2 + 6, stroke: N[0], 'stroke-width': 1.5, 'stroke-linecap': 'round' });
-      txt(s, W, cy + 4, r.display ?? r.value, 'val', { 'text-anchor': 'end', style: 'fill:#1c1917;font-weight:500;font-size:12px' });
+      txt(s, W, cy + 4, r.display ?? r.value, 'val', { 'text-anchor': 'end', style: 'fill:var(--ink);font-weight:500;font-size:12px' });
     });
     return s;
   }
@@ -578,7 +584,7 @@
       n(s, 'circle', { cx: x(r.b), cy, r: 6, fill: c, stroke: PAPER, 'stroke-width': 1.5 });
       const halo = `paint-order:stroke;stroke:${PAPER};stroke-width:4px;stroke-linejoin:round;`;
       txt(s, x(r.a) + (aRight ? 11 : -11), cy + 4, fmt(r.a), 'ax', { 'text-anchor': aRight ? 'start' : 'end', style: halo });
-      txt(s, x(r.b) + (aRight ? -12 : 12), cy + 4, fmt(r.b), 'val', { 'text-anchor': aRight ? 'end' : 'start', style: halo + 'fill:#1c1917;font-weight:500' });
+      txt(s, x(r.b) + (aRight ? -12 : 12), cy + 4, fmt(r.b), 'val', { 'text-anchor': aRight ? 'end' : 'start', style: halo + 'fill:var(--ink);font-weight:500' });
       if (o.delta !== false && r.a) { const d = Math.round((r.b - r.a) / r.a * 100);
         txt(s, W, cy + 4.5, (d > 0 ? '+' : d < 0 ? '\u2212' : '') + Math.abs(d) + '%', 'lab', { 'text-anchor': 'end' }); }
     });
@@ -595,7 +601,7 @@
       txt(s, 0, oy + 15, r.label, r.hi ? 'lab' : 'axl', { style: r.hi ? '' : 'font-size:13px' });
       if (r.sub) txt(s, R, oy + 15, r.sub, 'sml', { 'text-anchor': 'end' });
       n(s, 'rect', { x: 0, y: oy + 26, width: w, height: bh, rx: Math.min(8, bh / 2), fill: r.hi ? col(r.color || o.color || N[0]) : N[4] });
-      txt(s, w + 14, oy + 26 + bh / 2 + (r.hi ? 10 : 7), r.display ?? r.value, null, { style: `font:600 ${r.hi ? 30 : 20}px var(--f-sans);letter-spacing:-.035em;fill:${r.hi ? '#1c1917' : '#8c8478'}` });
+      txt(s, w + 14, oy + 26 + bh / 2 + (r.hi ? 10 : 7), r.display ?? r.value, null, { style: `font:600 ${r.hi ? 30 : 20}px var(--f-sans);letter-spacing:-.035em;fill:${r.hi ? 'var(--ink)' : 'var(--n3)'}` });
     });
     return s;
   }
@@ -619,7 +625,9 @@
   function waffle(el, o) {
     const cols = o.cols || 10, total = o.total || 100, rowsN = Math.ceil(total / cols), c = o.cell || 16, g2 = o.gap ?? 5, p = c + g2;
     const s = root(el, cols * p - g2, rowsN * p - g2), fill = col(o.color || N[0]);
-    for (let i = 0; i < total; i++) { const on = i < Math.round(o.value), a = { fill: on ? fill : N[5], 'fill-opacity': on ? 1 : .75 };
+    // segs:[{v, color}] fills several tones in order; otherwise value cells take the one colour
+    const tone = []; (o.segs || [{ v: o.value, color: fill }]).forEach(sg => { for (let k = 0; k < Math.round(sg.v); k++) tone.push(col(sg.color || N[0])); });
+    for (let i = 0; i < total; i++) { const on = i < tone.length, a = { fill: on ? tone[i] : N[5], 'fill-opacity': on ? 1 : .75 };
       const cx = (i % cols) * p, cy = Math.floor(i / cols) * p;
       if (o.round) n(s, 'circle', { cx: cx + c / 2, cy: cy + c / 2, r: c / 2, ...a }); else n(s, 'rect', { x: cx, y: cy, width: c, height: c, rx: c * .22, ...a }); }
     s.style.maxWidth = cols * p - g2 + 'px'; return s;
@@ -637,22 +645,46 @@
       l.bars.forEach(b => {
         const bx = x(b.from) + 3, bw = x(b.to) - x(b.from) - 6, fill = b.hi ? col(b.color || o.color || N[0]) : b.ghost ? 'none' : N[4];
         n(s, 'rect', { x: bx, y: cy - bh / 2, width: bw, height: bh, rx: 8, fill, stroke: b.ghost ? N[3] : 'none', 'stroke-dasharray': b.ghost ? '3 3' : null });
-        if (b.label) txt(s, bx + 12, cy + 4.5, b.label, null, { style: `font:500 12.5px var(--f-sans);fill:${b.hi ? PAPER : '#1c1917'}` });
+        if (b.label) txt(s, bx + 12, cy + 4.5, b.label, null, { style: `font:500 12.5px var(--f-sans);fill:${b.hi ? PAPER : 'var(--ink)'}` });
       });
     });
     if (o.today != null) { n(s, 'line', { x1: x(o.today), x2: x(o.today), y1: T - 10, y2: T + o.lanes.length * rh, stroke: col('signal'), 'stroke-width': 1.5 });
       n(s, 'circle', { cx: x(o.today), cy: T - 10, r: 3.5, fill: col('signal') });
-      if (o.todayLabel) txt(s, x(o.today) + 8, T - 6, o.todayLabel, 'sml', { style: 'fill:#1c1917' }); }
+      if (o.todayLabel) txt(s, x(o.today) + 8, T - 6, o.todayLabel, 'sml', { style: 'fill:var(--ink)' }); }
     return s;
   }
 
-  /* Set the signal colour (and nothing else) for every chart drawn after the call, and for the CSS. */
+  /* Theme in one call. Give it any of {paper, ink, signal} as hex and it derives the rest (card
+     paper, the six greys, text greys, grounds, the cover glows, the cells and the orb palette) and sets them as CSS variables, which the stylesheet
+     and every chart read. Call it once at the top of the page script, before drawing.
+     AS.theme({paper: '#f4f6f8', ink: '#0f1b2d', signal: '#e4502a'}). Any other token can be passed
+     by its CSS name without the dashes: AS.theme({crit: '#7a1f1f', 'cell-dawn': 'linear-gradient(...)'}). */
   function theme(t = {}) {
-    if (t.signal) { TONE.signal = t.signal; if (typeof document !== 'undefined') document.documentElement.style.setProperty('--signal', t.signal); }
-    return { ...TONE };
+    if (typeof document === 'undefined') return t;
+    const root = document.documentElement, cs = getComputedStyle(root), set = (k, v) => root.style.setProperty('--' + k, v);
+    const rgb = h => { const v = parseInt(h.replace('#', '').replace(/^(.)(.)(.)$/, '$1$1$2$2$3$3'), 16); return [v >> 16, (v >> 8) & 255, v & 255]; };
+    const mix = (a, b, k) => '#' + rgb(a).map((c, i) => Math.round(c + (rgb(b)[i] - c) * k).toString(16).padStart(2, '0')).join('');
+    if (t.paper || t.ink) {
+      const paper = t.paper || cs.getPropertyValue('--paper').trim(), ink = t.ink || cs.getPropertyValue('--ink').trim();
+      set('paper', paper); set('ink', ink); set('paper-2', mix(paper, '#ffffff', .5));
+      set('ground-2', mix(paper, ink, .035)); set('tray', mix(paper, ink, .05));
+      [['n1', 0], ['n2', .28], ['n3', .5], ['n4', .7], ['n5', .85], ['n6', .92], ['ink-2', .27], ['ink-3', .36], ['ink-soft', .52]].forEach(([k, m]) => set(k, mix(ink, paper, m)));
+    }
+    if (t.signal) set('signal', t.signal);
+    if (t.paper || t.ink || t.signal) {   // atmosphere, cells and orbs follow the brand too
+      const p = cs.getPropertyValue('--paper').trim() && (t.paper || cs.getPropertyValue('--paper').trim()), i = t.ink || cs.getPropertyValue('--ink').trim();
+      const sg = t.signal || cs.getPropertyValue('--signal').trim(), p2 = mix(p, '#ffffff', .5), g = (a, b, c) => `linear-gradient(135deg,${a} 0%,${b} 58%,${c} 100%)`;
+      set('a1', mix(p, sg, .30)); set('a2', mix(p, sg, .16)); set('a3', mix(p, i, .16)); set('a4', mix(p, i, .09)); set('a5', mix(p, sg, .10));
+      set('b1', mix(p, sg, .38)); set('b2', mix(p, '#ffffff', .65)); set('b3', mix(p, sg, .78)); set('b4', mix(p, i, .32));
+      set('cell-dawn', g(mix(p, sg, .22), mix(p, sg, .10), mix(p, i, .10))); set('cell-mist', g(mix(p, i, .14), mix(p, i, .07), mix(p, sg, .08)));
+      set('cell-sand', g(mix(p, sg, .12), mix(p, i, .05), p2)); set('cell-moss', g(mix(p, i, .10), mix(p, sg, .06), p2));
+      root.classList.add('themed');
+    }
+    for (const k in t) if (k !== 'paper' && k !== 'ink' && k !== 'signal') set(k, t[k]);
+    return t;
   }
 
-  g.AS = { SEV, N, bars, diverging, lines, hbars, dots, flow, heat, strip, annotate, area, compare, track, multiples, kpiSelect, mix, hover, fmtK, el: n, root,
+  g.AS = { SEV, N, bars, diverging, lines, hbars, dots, flow, heat, strip, annotate, area, compare, track, multiples, kpiSelect, mix, hover, fmtK, fmtN, el: n, root,
     donut, scatter, slope, waterfall, funnel, meter, matrix, spark, bullet, dumbbell, bench, stepgrid, waffle, gantt, theme, TONE,
     ...(g.AS || {}) };
 })(window);

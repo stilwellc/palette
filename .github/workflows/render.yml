@@ -1,0 +1,34 @@
+# Renders every template and example and fails if any layout check fails.
+# Also proves the Linux path of scripts/render.sh (Chrome + pdftoppm).
+name: render
+on:
+  push:
+    branches: [main]
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install poppler
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq poppler-utils
+      - name: Render everything
+        run: |
+          fail=0
+          for f in templates/*.html examples/*.html; do
+            case "$(basename "$f")" in pitch.html) continue;; esac   # animation page, rendered by animate.sh
+            out=$(scripts/render.sh "$f" out 1 2>&1) && code=0 || code=$?
+            line=$(printf '%s\n' "$out" | grep '^check:' || true)
+            echo "$f  ${line:-no check line}  (exit $code)"
+            [ "$code" -eq 0 ] || { fail=1; printf '%s\n' "$out"; }
+          done
+          exit $fail
+      - name: Upload renders
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: renders
+          path: out/*.png
+          retention-days: 7

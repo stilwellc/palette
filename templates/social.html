@@ -97,7 +97,7 @@ body{width:auto}
 <script src="../assets/icons.js"></script>
 <script src="../assets/check.js"></script>
 </head>
-<body>
+<body class="social">
 
 <!-- 1. og 1200 x 630: link-preview card -->
 <div class="canvas og">
@@ -184,6 +184,8 @@ body{width:auto}
 </div>
 
 <script>
+// A different brand: uncomment and set three colours. Everything else is derived.
+// AS.theme({paper: '#eef1f4', ink: '#0e1c2f', signal: '#e4502a'});
 // og: card inner width 320px, scale 1.33
 AS.bench('#og1', {W: 240, numW: 76, rowH: 70, rows: [
   {label: 'With Halden', value: 4, display: '4 h', hi: true, color: 'signal'},
@@ -196,7 +198,7 @@ AS.compare('#st1', {W: 412, H: 178, cats: ['June', 'July', 'August', 'September'
   unit: ' h', max: 75, ticks: 3, color: 'signal'});
 // wide: card inner width about 716px, scale 1.5
 AS.lines('#wd1', {W: 452, H: 300, endW: 96, x: ['1k', '5k', '10k', '25k', '50k'], fmt: v => v + ' ms', series: [
-  {name: 'v1.4', values: [120, 160, 210, 260, 410], color: '#8c8478', dash: 'dash', label: '410 ms'},
+  {name: 'v1.4', values: [120, 160, 210, 260, 410], color: 'n3', dash: 'dash', label: '410 ms'},
   {name: 'v2.0', values: [38, 39, 40, 41, 44], label: '44 ms'}]});
 </script>
 </body></html>

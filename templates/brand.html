@@ -88,11 +88,11 @@
       <p class="cap" style="margin-top:auto">Inter and Geist Mono, both open licensed. Tracking tightens as size grows: about −0.01em at 15 px, −0.045em at 72 px and up.</p></div>
     <div class="bx"><span class="micro">Tokens</span><h3>Six greys, one signal, four cells.</h3>
       <div class="sws" style="--cols:7;margin-top:14px">
-        <div><i style="background:#1c1917"></i>ink<br>#1c1917</div><div><i style="background:#5a5550"></i>n2<br>#5a5550</div><div><i style="background:#8c8478"></i>n3<br>#8c8478</div>
-        <div><i style="background:#b9b1a4"></i>n4<br>#b9b1a4</div><div><i style="background:#d9d2c5"></i>n5<br>#d9d2c5</div><div><i style="background:#e6e1d6"></i>n6<br>#e6e1d6</div>
-        <div><i style="background:var(--signal)"></i>signal<br>#2b44d9</div></div>
+        <div><i style="background:var(--n1)"></i>ink<br><span data-tok="--n1"></span></div><div><i style="background:var(--n2)"></i>n2<br><span data-tok="--n2"></span></div><div><i style="background:var(--n3)"></i>n3<br><span data-tok="--n3"></span></div>
+        <div><i style="background:var(--n4)"></i>n4<br><span data-tok="--n4"></span></div><div><i style="background:var(--n5)"></i>n5<br><span data-tok="--n5"></span></div><div><i style="background:var(--n6)"></i>n6<br><span data-tok="--n6"></span></div>
+        <div><i style="background:var(--signal)"></i>signal<br><span data-tok="--signal"></span></div></div>
       <div class="sws" style="--cols:7;margin-top:14px">
-        <div><i style="background:var(--paper)"></i>paper<br>#f5f0e6</div><div><i style="background:var(--paper-2)"></i>paper-2<br>#fbf8f1</div><div><i style="background:var(--ground-2)"></i>ground-2<br>#efe9dc</div>
+        <div><i style="background:var(--paper)"></i>paper<br><span data-tok="--paper"></span></div><div><i style="background:var(--paper-2)"></i>paper-2<br><span data-tok="--paper-2"></span></div><div><i style="background:var(--ground-2)"></i>ground-2<br><span data-tok="--ground-2"></span></div>
         <div><i style="background:var(--cell-dawn)"></i>cell<br>dawn</div><div><i style="background:var(--cell-mist)"></i>cell<br>mist</div><div><i style="background:var(--cell-sand)"></i>cell<br>sand</div><div><i style="background:var(--cell-moss)"></i>cell<br>moss</div></div>
       <div class="row" style="margin-top:22px;gap:18px;align-items:center"><i class="orbx dawn" style="--o:96px"></i><i class="orbx mist" data-seed="4" style="--o:72px"></i><i class="orbx sand" data-seed="9" style="--o:56px"></i><i class="orbx moss" style="--o:56px"></i><i class="orbx tide" data-seed="5" style="--o:56px"></i><i class="orbx ink" data-seed="2" style="--o:56px"></i>
         <p class="cap" style="flex:1;margin:0 0 0 10px"><b style="color:var(--ink)">Orbs.</b> A soft sphere is the one piece of art: a cover object, or the face of an agent, a voice or a product with no picture. One large orb per page. It never holds text.</p></div>
@@ -112,7 +112,7 @@
       <p class="cap">24 grid, live area 3 to 21. Stroke 1.5, round caps and joins. Lines, arcs and rounded rectangles only.</p></div>
     <div class="bx"><span class="micro">The set</span><h3 id="icount"></h3><div class="icons" id="icons" style="margin-top:18px"></div>
       <p class="cap" style="margin-top:auto">Sizes 16, 20 and 24. The stroke thickens as the icon shrinks. In a disc the glyph is half the disc:
-        <span class="row" style="display:inline-flex;margin-left:10px;gap:8px;vertical-align:middle"><span class="idisc" style="--d:32px"><i class="ic" data-i="bell"></i></span><span class="idisc ink" style="--d:32px"><i class="ic" data-i="bolt"></i></span><span class="idisc ring" style="--d:32px"><i class="ic" data-i="key"></i></span><span class="idisc sq" style="--d:32px"><i class="ic" data-i="wave"></i></span></span></p></div>
+        <span class="row" style="display:inline-flex;margin-left:10px;gap:8px;vertical-align:middle"><span class="idisc" style="--d:32px"><i class="ic" data-i="bell"></i></span><span class="idisc ink" style="--d:32px"><i class="ic" data-i="bolt"></i></span><span class="idisc ring" style="--d:32px"><i class="ic" data-i="key"></i></span><span class="idisc sq" style="--d:32px"><i class="ic" data-i="waveform"></i></span></span></p></div>
     <div class="bx" style="grid-row:span 2"><span class="micro">Labels</span><h3>Small type that says exactly what a thing is.</h3>
       <div style="display:grid;gap:18px;margin-top:18px">
         <div class="row"><span class="tagx">Live</span><span class="tagx line">Beta</span><span class="tagx sigc">Hold</span><span class="spill">Draft</span><span class="code">HD–04<sup>2.5</sup></span></div>
@@ -131,11 +131,15 @@
 </section>
 
 <script>
+// A different brand: uncomment and set three colours. Everything else is derived.
+// AS.theme({paper: '#eef1f4', ink: '#0e1c2f', signal: '#e4502a'});
 document.getElementById('marks').innerHTML = AS.marks.map(m => '<i class="mk" data-m="' + m + '" style="--m:20px"></i>').join('');
 const names = Object.keys(AS.icons);
 document.getElementById('icount').textContent = names.length + ' icons, drawn on one grid.';
 document.getElementById('icons').innerHTML = names.map(k => '<i class="ic" data-i="' + k + '"></i>').join('');
 AS.hydrateIcons();
+// swatch labels read the live tokens, so a re-themed sheet never prints a stale hex
+document.querySelectorAll('[data-tok]').forEach(e => { let v = getComputedStyle(document.documentElement).getPropertyValue(e.dataset.tok).trim(); if (e.dataset.tok === '--n1') v = getComputedStyle(document.documentElement).getPropertyValue('--ink').trim(); e.textContent = v; });
 AS.matrix('#r1', '118%', {dot: 9, off: true});
 AS.meter('#r2', {W: 520, labelW: 90, rows: [{label: 'Compute', value: 61, display: '61%'}, {label: 'Storage', value: 94, display: '94%', color: 'signal'}, {label: 'Egress', value: 38, display: '38%'}]});
 AS.donut('#r3', {value: 67, label: '67%', size: 150});
