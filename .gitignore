@@ -8,5 +8,6 @@ scripts/pdf2png
 *.pdf
 *.png
 !docs/*.png
+!docs/**/*.png
 
 .DS_Store
