@@ -12,19 +12,36 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Install poppler
-        run: sudo apt-get update -qq && sudo apt-get install -y -qq poppler-utils
+      - name: Install poppler, ImageMagick, ffmpeg
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq poppler-utils imagemagick ffmpeg
       - name: Render everything
         run: |
           fail=0
           for f in templates/*.html examples/*.html; do
-            case "$(basename "$f")" in pitch.html) continue;; esac   # animation page, rendered by animate.sh
+            grep -q 'name="palette-animation"' "$f" && continue   # animation pages are exported by animate.sh
             out=$(scripts/render.sh "$f" out 1 2>&1) && code=0 || code=$?
             line=$(printf '%s\n' "$out" | grep '^check:' || true)
             echo "$f  ${line:-no check line}  (exit $code)"
             [ "$code" -eq 0 ] || { fail=1; printf '%s\n' "$out"; }
           done
           exit $fail
+      - name: Visual regression against tests/snapshots
+        run: scripts/snapshot.sh
+      - name: Animation export (Linux path)
+        run: |
+          scripts/animate.sh templates/pitch.html out/pitch.gif --seconds 1 --fps 4 --width 480
+          test -s out/pitch.gif
+      - name: PowerPoint export
+        run: |
+          python3 scripts/pptx.py examples/talk.html out --from out
+          test -s out/talk.pptx
+      - name: Upload snapshots (to accept a change, copy new/ over tests/snapshots/)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: snapshots
+          path: snap-out
+          retention-days: 14
       - name: Upload renders
         if: always()
         uses: actions/upload-artifact@v4

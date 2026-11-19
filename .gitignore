@@ -6,9 +6,11 @@ scripts/pdf2png
 scripts/frames2gif
 
 # render output
+snap-out/
 *.pdf
 *.png
 !docs/*.png
 !docs/**/*.png
+!tests/snapshots/*.png
 
 .DS_Store

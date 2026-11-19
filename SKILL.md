@@ -154,7 +154,10 @@ if it could reasonably be either a deck or a doc.
 * Headlines: numbers first, full stops, second clause in `<em>`.
 * Chart over table. One strong chart beats two.
 * Plain human voice: no em dashes, no middle dots, no filler, only provable claims.
-* No dark page backgrounds. Paper is always cream; emphasis comes from ink weight, the tile ramp
+* Dark is a whole-piece mode, `AS.theme('dark')` (or `{dark: true, signal: ...}`), used only when
+  asked for or when the piece will sit on a dark surface (a stage screen, a dark app). Never a dark
+  section inside a light piece, or the reverse.
+* In a light piece paper is always cream; emphasis comes from ink weight, the tile ramp
   (ink, stone, grey), the part band gradient, one colour cell and soft orbs.
 * Shapes nest: inside a 24px card, inner corners are 6 to 8px or full pills. Controls are pills,
   tags are square. Icons are one line weight, one idea each.

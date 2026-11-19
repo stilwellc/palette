@@ -24,13 +24,17 @@ or brand colour was taken from any of them.
 2. **Signal never colours** a headline, body text, the logo, a button or a background.
 3. **Signal and severity never share a page.** In a severity piece the four severity colours are the
    only colour and `--signal` is not used. Everywhere else severity colours are not used.
-4. **Emphasis without colour is a tile ramp:** ink tile (the hero), stone tile `--n6` (supporting),
+4. **Dark mode** is `AS.theme('dark')`: near-black paper, warm white ink, a lighter signal, and
+   severity colours lifted to read on dark. Everything inverts through the tokens, so the "ink" tile
+   becomes the light block. It is a mode for the whole piece. A cream piece never gets a dark
+   section and a dark piece never gets a cream one.
+5. **Emphasis without colour is a tile ramp:** ink tile (the hero), stone tile `--n6` (supporting),
    grey tile `--n5` (third). One ink block per page: an ink `.tile`, the `.bc.hero` cell or the
-   `.takeaway` bar. Never a dark page.
-5. **Sections change by ground, never by hue:** paper to `--ground-2` (`.sect.alt`).
-6. **Cells** (`--cell-dawn`, `-mist`, `-sand`, `-moss`) are soft gradient fields that hold one card
+   `.takeaway` bar.
+6. **Sections change by ground, never by hue:** paper to `--ground-2` (`.sect.alt`).
+7. **Cells** (`--cell-dawn`, `-mist`, `-sand`, `-moss`) are soft gradient fields that hold one card
    (`.cellx > .card`) or one statement (`.bc.dawn`). Background only. One cell per page, no data on it.
-7. A multi-series chart stays in greys: this period ink, last period mid grey, everyone else pale
+8. A multi-series chart stays in greys: this period ink, last period mid grey, everyone else pale
    (`.legend4`). Tell series apart by tone and dash before reaching for hue.
 
 **A different brand** is one line, first in the page's bottom script:

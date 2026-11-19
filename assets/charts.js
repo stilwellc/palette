@@ -661,26 +661,33 @@
      by its CSS name without the dashes: AS.theme({crit: '#7a1f1f', 'cell-dawn': 'linear-gradient(...)'}). */
   function theme(t = {}) {
     if (typeof document === 'undefined') return t;
+    // 'dark' (or {dark: true}) is the dark preset: near-black paper, warm white ink, a lighter signal,
+    // and severity colours lifted so they read on a dark ground. Any of them can still be passed.
+    if (t === 'dark') t = { dark: true };
+    if (t.dark) t = { paper: '#171513', ink: '#f2ede3', signal: '#8ea0ff', crit: '#d19a6e', high: '#e0808b', med: '#dfae55', low: '#62c493', ...t };
     const root = document.documentElement, cs = getComputedStyle(root), set = (k, v) => root.style.setProperty('--' + k, v);
     const rgb = h => { const v = parseInt(h.replace('#', '').replace(/^(.)(.)(.)$/, '$1$1$2$2$3$3'), 16); return [v >> 16, (v >> 8) & 255, v & 255]; };
     const mix = (a, b, k) => '#' + rgb(a).map((c, i) => Math.round(c + (rgb(b)[i] - c) * k).toString(16).padStart(2, '0')).join('');
     if (t.paper || t.ink) {
       const paper = t.paper || cs.getPropertyValue('--paper').trim(), ink = t.ink || cs.getPropertyValue('--ink').trim();
-      set('paper', paper); set('ink', ink); set('paper-2', mix(paper, '#ffffff', .5));
-      set('ground-2', mix(paper, ink, .035)); set('tray', mix(paper, ink, .05));
+      const dark = t.dark ?? (rgb(paper)[0] * .3 + rgb(paper)[1] * .59 + rgb(paper)[2] * .11 < 110);   // dark paper flips the lift
+      root.classList.toggle('dark', !!dark);
+      set('paper', paper); set('ink', ink); set('paper-2', dark ? mix(paper, ink, .055) : mix(paper, '#ffffff', .5));
+      set('ground-2', mix(paper, ink, dark ? .03 : .035)); set('tray', mix(paper, ink, dark ? .1 : .05));
+      set('band', `linear-gradient(120deg,${mix(paper, ink, .08)} 0%,${mix(paper, ink, .05)} 45%,${mix(paper, t.signal || ink, .12)} 100%)`);
       [['n1', 0], ['n2', .28], ['n3', .5], ['n4', .7], ['n5', .85], ['n6', .92], ['ink-2', .27], ['ink-3', .36], ['ink-soft', .52]].forEach(([k, m]) => set(k, mix(ink, paper, m)));
     }
     if (t.signal) set('signal', t.signal);
     if (t.paper || t.ink || t.signal) {   // atmosphere, cells and orbs follow the brand too
       const p = cs.getPropertyValue('--paper').trim() && (t.paper || cs.getPropertyValue('--paper').trim()), i = t.ink || cs.getPropertyValue('--ink').trim();
-      const sg = t.signal || cs.getPropertyValue('--signal').trim(), p2 = mix(p, '#ffffff', .5), g = (a, b, c) => `linear-gradient(135deg,${a} 0%,${b} 58%,${c} 100%)`;
+      const sg = t.signal || cs.getPropertyValue('--signal').trim(), isDark = root.classList.contains('dark'), p2 = isDark ? mix(p, i, .055) : mix(p, '#ffffff', .5), g = (a, b, c) => `linear-gradient(135deg,${a} 0%,${b} 58%,${c} 100%)`;
       set('a1', mix(p, sg, .30)); set('a2', mix(p, sg, .16)); set('a3', mix(p, i, .16)); set('a4', mix(p, i, .09)); set('a5', mix(p, sg, .10));
-      set('b1', mix(p, sg, .38)); set('b2', mix(p, '#ffffff', .65)); set('b3', mix(p, sg, .78)); set('b4', mix(p, i, .32));
+      set('b1', mix(p, sg, .38)); set('b2', isDark ? mix(p, i, .45) : mix(p, '#ffffff', .65)); set('b3', mix(p, sg, .78)); set('b4', mix(p, i, .32));
       set('cell-dawn', g(mix(p, sg, .22), mix(p, sg, .10), mix(p, i, .10))); set('cell-mist', g(mix(p, i, .14), mix(p, i, .07), mix(p, sg, .08)));
       set('cell-sand', g(mix(p, sg, .12), mix(p, i, .05), p2)); set('cell-moss', g(mix(p, i, .10), mix(p, sg, .06), p2));
       root.classList.add('themed');
     }
-    for (const k in t) if (k !== 'paper' && k !== 'ink' && k !== 'signal') set(k, t[k]);
+    for (const k in t) if (k !== 'paper' && k !== 'ink' && k !== 'signal' && k !== 'dark') set(k, t[k]);
     return t;
   }
 
