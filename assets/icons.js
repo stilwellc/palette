@@ -100,7 +100,7 @@
     record: '<circle cx="12" cy="12" r="8.5"/><circle class="f" fill="currentColor" stroke="none" cx="12" cy="12" r="3.5"/>',
     mic: '<rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21"/>',
     volume: '<path d="M4 9.5h3l5-4v13l-5-4H4zM16 9a4 4 0 0 1 0 6M18.5 6.5a8 8 0 0 1 0 11"/>',
-    wave: '<path d="M4 10v4M8 6v12M12 9v6M16 4v16M20 10v4"/>',
+    waveform: '<path d="M4 10v4M8 6v12M12 9v6M16 4v16M20 10v4"/>',
     headphones: '<path d="M4.5 14v-2a7.5 7.5 0 0 1 15 0v2"/><rect x="4.5" y="13.5" width="3.5" height="6.5" rx="1.5"/><rect x="16" y="13.5" width="3.5" height="6.5" rx="1.5"/>',
     image: '<rect x="4" y="5" width="16" height="14" rx="2"/><circle cx="9" cy="10" r="1.5"/><path d="M4.5 17l4.5-4 3 2.5 3.5-3.5 4 4"/>',
 
@@ -210,6 +210,7 @@
     x.putImageData(im, 0, 0);
     el.textContent = ''; el.appendChild(cv); el.dataset.done = '1';
   }
+  P.wave = P.waveform;   // old name, kept so existing pages still hydrate
   const AS = g.AS = g.AS || {};
   AS.marks = Object.keys(M); AS.mark = mark; AS.orb = orb;
   AS.icons = P; AS.icon = icon; AS.iconInto = iconInto; AS.hydrateIcons = hydrate;

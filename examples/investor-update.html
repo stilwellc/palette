@@ -138,7 +138,7 @@ body.doc .wma .tile.ink p{font-size:11.5px;line-height:1.4;margin-top:auto;paddi
 
 <script>
 const M = v => '$' + (v / 1000).toFixed(2) + 'M';
-AS.waterfall('#c1', {W: 500, H: 124, fmt: M, max: 8000, steps: [
+AS.waterfall('#c1', {W: 500, H: 108, fmt: M, max: 8000, steps: [
   {label: 'Sep 30', value: 7800, total: true},
   {label: 'Receipts', value: 1690},
   {label: 'Materials', value: -1180},
@@ -146,12 +146,12 @@ AS.waterfall('#c1', {W: 500, H: 124, fmt: M, max: 8000, steps: [
   {label: 'Opex', value: -270},
   {label: 'Capex', value: -120},
   {label: 'Oct 31', total: true}]});
-AS.bullet('#c2', {W: 270, labelW: 104, numW: 44, rowH: 25, barH: 9, rows: [
+AS.bullet('#c2', {W: 270, labelW: 104, numW: 44, rowH: 23, barH: 9, rows: [
   {label: 'Units shipped', value: 1120, target: 1000, of: 1400, display: '1,120'},
   {label: 'Gross margin', value: 31, target: 30, of: 40, display: '31%'},
   {label: 'New partners', value: 14, target: 12, of: 20, display: '14'},
   {label: 'On-time installs', value: 82, target: 90, of: 100, display: '82%', color: 'signal'}]});
-AS.dumbbell('#c3', {W: 340, labelW: 62, rowH: 23, max: 40, rows: [
+AS.dumbbell('#c3', {W: 340, labelW: 62, rowH: 21, max: 40, rows: [
   {label: 'Pacific', a: 36, b: 20},
   {label: 'Northeast', a: 31, b: 18},
   {label: 'Midwest', a: 27, b: 16},

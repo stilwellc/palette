@@ -1,0 +1,89 @@
+<!doctype html>
+<!--
+  palette pitch: the animated template. Export it with
+    scripts/animate.sh templates/pitch.html out.gif
+
+  The contract for any palette animation (copy this file to start a new one):
+  1. Read the time `t`, in seconds, from the URL hash: page.html#t=2.48 (see the first line of the script).
+  2. Draw that one instant and stop. Every position, opacity and line of text is a pure function of t,
+     so the same hash always gives the same picture and frames can be captured in any order, in parallel.
+  3. No CSS transitions, no CSS animations, no setTimeout / setInterval / requestAnimationFrame.
+     animate.sh loads the page once per frame and screenshots it; nothing gets a chance to "play".
+  4. Declare the canvas and the default export in the meta tag below:
+       width, height  the page size in CSS px (html and body are fixed to it)
+       seconds        the length of the animation
+       fps            frames per second (12.5 = 0.08 s per frame, which every GIF player honours)
+     animate.sh flags (--seconds, --fps, --width) override it.
+
+  Storyboard: a prompt types "make me anything.", nine pieces cut through at SPEED-scaled 0.4 s each,
+  then the closing card. Timings in the script are written at full speed and SPEED slows the lot,
+  so 5.76 s of storyboard plays in about 7.7 s.
+
+  The nine pieces are PNGs under docs/pitch/, rendered at scale 2 from the repo's own files.
+  A static page cannot render them on the fly, so regenerate them when a source changes:
+    scripts/render.sh templates/deck.html            docs/pitch 2   ->  deck-06.png  (slide 6 of 12)
+    scripts/render.sh examples/poster.html           docs/pitch 2   ->  poster.png
+    scripts/render.sh examples/spec-sheet.html       docs/pitch 2   ->  spec-sheet.png
+    scripts/render.sh templates/mobile.html          docs/pitch 2   ->  mobile.png
+    scripts/render.sh examples/menu.html             docs/pitch 2   ->  menu.png
+    scripts/render.sh examples/year-recap.html       docs/pitch 2   ->  year-recap-01.png
+    scripts/render.sh examples/investor-update.html  docs/pitch 2   ->  investor-update.png
+    scripts/render.sh templates/landing.html         docs/pitch 2   ->  landing-01.png
+    scripts/render.sh examples/talk.html             docs/pitch 2   ->  talk-01.png
+  render.sh also drops the PDFs and the other pages in docs/pitch; delete those and keep the nine.
+-->
+<html><head><meta charset="utf-8">
+<meta name="palette-animation" content="width=1200,height=675,seconds=7.7,fps=12.5">
+<link rel="stylesheet" href="../assets/style.css">
+<script src="../assets/icons.js"></script>
+<style>
+html,body{margin:0;width:1200px;height:675px;overflow:hidden;background:var(--paper)}
+.st{position:absolute;inset:0;display:none}
+.ask{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);display:flex;align-items:center;gap:18px;height:92px;padding:0 34px 0 28px;border-radius:999px;background:var(--paper-2);box-shadow:0 0 0 1px rgba(28,25,23,.16);font:500 40px/1 var(--f-sans);letter-spacing:-.03em;white-space:nowrap}
+.ask .mk{--m:38px}.ask em{font-style:normal;color:var(--ink-soft)}
+.cur{display:inline-block;width:3px;height:44px;background:var(--signal);margin-left:4px;vertical-align:-8px}
+.lead{position:absolute;left:0;right:0;top:188px;text-align:center;font:500 22px/1 var(--f-sans);color:var(--ink-3)}
+.top{position:absolute;left:44px;top:34px;right:44px;display:flex;justify-content:space-between;align-items:center}
+.pill2{display:flex;align-items:center;gap:12px;height:48px;padding:0 22px 0 16px;border-radius:999px;background:var(--paper-2);box-shadow:0 0 0 1px rgba(28,25,23,.16);font:500 21px/1 var(--f-sans);letter-spacing:-.02em}
+.pill2 .mk{--m:20px}.pill2 em{font-style:normal;color:var(--ink-soft)}
+.fmt{font:500 15px/1 var(--f-mono);color:var(--ink-3)}
+.shot{position:absolute;left:50%;top:372px;border-radius:18px;box-shadow:0 0 0 1px rgba(28,25,23,.14);overflow:hidden;background:var(--paper-2)}
+.shot img{display:block;width:100%;height:100%;object-fit:cover}
+.ports{position:absolute;left:50%;bottom:24px;transform:translateX(-50%)}
+.end h1{position:absolute;left:84px;top:232px;font:600 104px/.96 var(--f-sans);letter-spacing:-.045em;margin:0}
+.end h1 em{font-style:normal;color:var(--ink-soft)}
+.end .lk{position:absolute;left:88px;top:70px;--m:40px}
+.end p{position:absolute;left:88px;top:478px;font:400 25px/1.4 var(--f-sans);color:var(--ink-2);letter-spacing:-.018em;margin:0}
+.end .out{position:absolute;left:88px;top:574px;display:flex;gap:10px}
+.end .orbx{position:absolute}
+</style></head><body>
+<div class="st" id="s0"><div class="lead">One Claude Code skill.</div><div class="ask"><i class="mk sig" data-m="dab"></i><span id="ty"></span><span class="cur" id="cur"></span></div></div>
+<div class="st" id="s1"><div class="top"><span class="pill2"><i class="mk sig" data-m="dab"></i><em>make me</em><span id="what"></span></span><span class="fmt" id="fmt"></span></div>
+  <div class="shot" id="shot"><img id="im"></div><span class="ports" id="pp"></span></div>
+<div class="st end" id="s2"><span class="lockup one lk"><i class="mk sig" data-m="dab"></i><span class="nm">palette</span></span>
+  <h1>One style.<br><em>Every format<span class="sdot"></span></em></h1>
+  <p>Charts, decks, reports, UI, images and brand sheets.</p>
+  <div class="out"><span class="tagx">PDF</span><span class="tagx">PNG</span><span class="tagx line">HTML</span></div>
+  <i class="orbx dawn" id="orb" data-seed="3" style="--o:400px"></i></div>
+<script>
+const D='../docs/pitch/';
+const shots=[['a board deck','deck-06.png','1600 x 900  PDF',1200,675],['an event poster','poster.png','1080 x 1350  PNG',810,1013],['a spec sheet','spec-sheet.png','1600 x 1000  PNG',1200,750],
+ ['three app screens','mobile.png','390 x 844  PNG',1200,825],['a dinner menu','menu.png','A4  PDF',595,842],['a year in review','year-recap-01.png','1080 x 1080  PNG',810,810],
+ ['an investor update','investor-update.png','Letter  PDF',612,792],['a landing page','landing-01.png','1440 wide  HTML',1080,810],['a keynote','talk-01.png','1600 x 900  PDF',1200,675]];
+const SPEED=.75, t=(parseFloat(location.hash.replace(/^#(t=)?/,''))||0)*SPEED, T0=1.15, DUR=.4, T1=T0+shots.length*DUR;
+const ease=x=>1-Math.pow(1-Math.min(1,Math.max(0,x)),3), show=id=>document.getElementById(id).style.display='block';
+if(t<T0){show('s0');const txt='make me anything.';const n=Math.min(txt.length,Math.floor(t/.8*txt.length));
+  document.getElementById('ty').innerHTML=txt.slice(0,n).replace('make me','<em>make me</em>');document.getElementById('cur').style.opacity=(n<txt.length||Math.floor(t*5)%2)?1:0;}
+else if(t<T1){show('s1');const i=Math.min(shots.length-1,Math.floor((t-T0)/DUR)),u=((t-T0)-i*DUR)/DUR,[w,f,fm,iw,ih]=shots[i],e=ease(u*1.6);
+  document.getElementById('what').textContent=w;document.getElementById('fmt').textContent=fm;
+  const H=Math.min(520,1080*ih/iw),W=H*iw/ih,sh=document.getElementById('shot');
+  // tall pages: show the top of the page in a 520px window, sliding down a little
+  const boxW=Math.max(W,ih>iw?620:W),boxH=520,sc=1.05-.05*e;
+  sh.style.width=boxW+'px';sh.style.height=Math.min(boxH,boxW*ih/iw)+'px';
+  sh.style.transform='translate(-50%,-50%) translateY('+(26*(1-e))+'px) scale('+sc+')';sh.style.opacity=.25+.75*ease(u*3);
+  const im=document.getElementById('im');im.src=D+f;im.style.objectPosition='50% '+(ih>iw?(8+10*u):50)+'%';
+  document.getElementById('pp').innerHTML=shots.map((_,k)=>'<i class="'+(k<i?'on':k===i?'s':'')+'"></i>').join('');}
+else{show('s2');const u=t-T1,e=ease(u/.7),o=document.getElementById('orb');o.style.left=(748+40*(1-e))+'px';o.style.top="138px";o.style.transform='scale('+(.82+.18*e)+')';o.style.opacity=ease(u/.35);
+  document.querySelector('.end h1').style.opacity=ease(u/.3);document.querySelector('.end h1').style.transform='translateY('+(18*(1-e))+'px)';
+  document.querySelector('.end p').style.opacity=ease((u-.25)/.3);document.querySelector('.end .out').style.opacity=ease((u-.45)/.3);}
+</script></body></html>

@@ -11,7 +11,10 @@
   --crit:#4a2c17; --high:#722f37; --med:#8a5d18; --low:#004225;
   /* neutral data marks */
   --n1:var(--ink); --n2:#5a5550; --n3:#8c8478; --n4:#b9b1a4; --n5:#d9d2c5; --n6:#e6e1d6;
-  /* atmosphere */
+  /* atmosphere: the blurred glows behind a cover (--a*) and the brand orb palette (--b*).
+     AS.theme() re-derives both, and the cells, from paper, ink and signal. */
+  --a1:#f2c9a8; --a2:#e8b4c8; --a3:#c9d6ee; --a4:#d7cdea; --a5:#efe0b8;
+  --b1:#f1c4a6; --b2:#f8e3b8; --b3:#e79fb8; --b4:#b9aaea;
   --band:linear-gradient(120deg,#ecdfcb 0%,#efe3d6 45%,#e6e2ee 100%);
   --f-sans:'Inter',-apple-system,BlinkMacSystemFont,system-ui,sans-serif;
   --f-mono:'Geist Mono',ui-monospace,SFMono-Regular,monospace;
@@ -25,9 +28,9 @@ b,strong{font-weight:600}
 
 /* ---------- atmosphere ---------- */
 .orb{position:absolute;border-radius:50%;filter:blur(70px);opacity:.55;pointer-events:none;z-index:0}
-.orb.o1{width:520px;height:520px;right:-120px;top:-60px;background:radial-gradient(circle at 30% 30%,#f2c9a8,#e8b4c8 60%,transparent 70%)}
-.orb.o2{width:460px;height:460px;right:220px;top:180px;background:radial-gradient(circle,#c9d6ee,#d7cdea 55%,transparent 70%)}
-.orb.o3{width:380px;height:380px;left:-160px;top:320px;background:radial-gradient(circle,#efe0b8,transparent 70%)}
+.orb.o1{width:520px;height:520px;right:-120px;top:-60px;background:radial-gradient(circle at 30% 30%,var(--a1),var(--a2) 60%,transparent 70%)}
+.orb.o2{width:460px;height:460px;right:220px;top:180px;background:radial-gradient(circle,var(--a3),var(--a4) 55%,transparent 70%)}
+.orb.o3{width:380px;height:380px;left:-160px;top:320px;background:radial-gradient(circle,var(--a5),transparent 70%)}
 .rel{position:relative;z-index:1}
 
 /* ---------- masthead ---------- */
@@ -547,7 +550,10 @@ body.doc .vs::after{width:32px;height:32px;margin:-16px 0 0 -16px;font-size:10px
 .orbx.mist{--o1:#bcd0f0;--o2:#eef1f7;--o3:#c5b6ea;--o4:#93b4e8}
 .orbx.sand{--o1:#ecd09c;--o2:#f8efd6;--o3:#e3a981;--o4:#eadbb4}
 .orbx.moss{--o1:#c4d8a8;--o2:#f1efd2;--o3:#94bd97;--o4:#e6dca0}
-.orbx.tide{--o1:#9fb0f2;--o2:#e3e8fb;--o3:#2b44d9;--o4:#c9c2ee}
+.orbx.tide{--o1:#9fb0f2;--o2:#e3e8fb;--o3:var(--signal);--o4:#c9c2ee}
+/* after AS.theme(), every orb except ink takes the brand palette */
+.orbx.brand,html.themed .orbx:not(.ink){--o1:var(--b1);--o2:var(--b2);--o3:var(--b3);--o4:var(--b4)}
+html.themed .orbx.ink{--o1:var(--n3);--o2:var(--n6);--o3:var(--ink);--o4:var(--n4)}
 .orbx.ink{--o1:#8c8478;--o2:#e6e1d6;--o3:#1c1917;--o4:#b9b1a4}
 .author .orbx{--o:46px} body.doc .author .orbx{--o:36px}
 
@@ -567,12 +573,19 @@ body.doc .vs::after{width:32px;height:32px;margin:-16px 0 0 -16px;font-size:10px
 @page og{size:1200px 630px;margin:0} @page sq{size:1080px 1080px;margin:0}
 @page story{size:1080px 1920px;margin:0} @page wide{size:1600px 900px;margin:0} @page portrait{size:1080px 1350px;margin:0}
 body.social{width:auto}
-body.social .canvas{position:relative;overflow:hidden;display:flex;flex-direction:column;break-after:page;background:var(--paper)}
-body.social .canvas:last-child{break-after:auto}
-body.social .canvas>*{flex-shrink:0}
+:where(body.social) .canvas{position:relative;overflow:hidden;display:flex;flex-direction:column;break-after:page;background:var(--paper)}
+:where(body.social) .canvas:last-child{break-after:auto}
 .canvas.og{page:og;width:1200px;height:630px;padding:48px 56px}
 .canvas.sq{page:sq;width:1080px;height:1080px;padding:64px}
 .canvas.story{page:story;width:1080px;height:1920px;padding:250px 64px 300px}      /* platform chrome covers top and bottom */
 .canvas.wide{page:wide;width:1600px;height:900px;padding:56px 72px}
 .canvas.portrait{page:portrait;width:1080px;height:1350px;padding:64px}
-body.social .canvas .card{box-shadow:var(--ring);border:0}
+:where(body.social) .canvas .card{box-shadow:var(--ring);border:0}
+
+/* a caption row directly under a KPI strip would double the rule */
+.tiles+.chead{border-top:0}
+.cols.fit{flex:none}                                   /* a card row that must not shrink under its content */
+.tiles>div:first-child{padding-left:0}                 /* the first number sits on the page's left edge */
+.legend4 i.ring{background:transparent;border-radius:50%;box-shadow:inset 0 0 0 1.5px var(--n2)}
+.legend4 i.tick{width:2px;height:11px;border-radius:1px;background:var(--ink)}
+body.doc .fcard .plot{margin-top:6px}

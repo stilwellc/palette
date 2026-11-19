@@ -1,5 +1,5 @@
 <!doctype html>
-<!-- Letter-size report. One <section class="page"> per sheet; content must fit (render.sh checks).
+<!-- Letter-size report. One section.page per sheet; content must fit (render.sh checks).
      Page 1 = cover (hero, KPI strip, dot figure, summary cards). Later pages = part band or chapter
      head, then figure cards, stat cards, lessons. Page 3 = a brief: crumbs, meta, summary, stat cards,
      numbered figure, comparison table, callout, footnotes. Sample data: fictional. -->
@@ -78,7 +78,6 @@
     <tr><th>Scanner</th><th>Findings confirmed</th><th>Median fix</th><th>Fixed in SLA</th></tr>
     <tr><td>SAST<small>weekly, 120 repos</small></td><td>17</td><td class="best">3 d</td><td class="best">84%</td></tr>
     <tr><td>SCA<small>reachable only</small></td><td class="best">38</td><td>16 d<small>waits on upstream</small></td><td>58%</td></tr>
-    <tr><td>Secrets scan<small>verified only</small></td><td>24</td><td>5 d</td><td>76%</td></tr>
   </table>
   <div class="callout high"><div class="micro">Ask</div><p>Assign owners to the two payments-gateway Highs this sprint.</p><small>Both are past SLA by 6 days. Fix PRs are open and passing CI.</small></div>
   <ol class="fns"><li>Findings export: severity High, resolved in the quarter. The clock starts when a finding is confirmed, not when the scanner first saw it.</li></ol>
@@ -100,15 +99,15 @@ AS.dots('#d1', {W: 690, H: 170, r: 2.6, groups: [
   {label: 'Mobile', items: mk(27, {medium: .12}, .07)},
   {label: 'Availability', items: mk(17, {}, .06)},
   {label: 'Exposure', items: mk(12, {high: .25, medium: .25}, .17)}]});
-AS.bars('#d2', {W: 640, H: 190, cats: ['<2w', '2w–1m', '1–2m', '2–3m', '3–4m'], xLabel: 'age of the open finding', series: [
+AS.bars('#d2', {W: 640, H: 174, cats: ['<2w', '2w–1m', '1–2m', '2–3m', '3–4m'], xLabel: 'age of the open finding', series: [
   {name: 'Low', color: 'low', values: [4, 6, 3, 7, 73]},
   {name: 'Medium', color: 'medium', values: [19, 8, 47, 18, 35]},
   {name: 'High', color: 'high', values: [10, 16, 22, 25, 2]},
   {name: 'Critical', color: 'critical', values: [0, 1, 0, 0, 0]}]});
-AS.strip('#d3', {W: 640, H: 140, r: 4, log: true, min: 1, max: 4500, color: 'high',
+AS.strip('#d3', {W: 640, H: 128, r: 4, log: true, min: 1, max: 4500, color: 'high',
   values: [1,1,1,1,2,25,55,80,140,300,410,590,760,880,990,1090,1150,1240,1330,1420,1510,1580,1650,1760,1900,2050,2200,2400,2650,3700,4100],
   ticks: [{v:1,label:'1 day'},{v:7,label:'1 week'},{v:30,label:'1 month'},{v:365,label:'1 year'},{v:1095,label:'3 years'},{v:3650,label:'10 years'}],
   median: {v: 1090, label: 'median 3 years in Git before we found it'}});
-AS.compare('#d4', {W: 690, H: 100, ticks: 2, cats: ['Apr','May','Jun','Jul','Aug','Sep'], values: [2,1,4,7,9,18], hi: 5, color: 'high', name: 'Highs fixed'});
+AS.compare('#d4', {W: 690, H: 86, ticks: 2, cats: ['Apr','May','Jun','Jul','Aug','Sep'], values: [2,1,4,7,9,18], hi: 5, color: 'high', name: 'Highs fixed'});
 </script>
 </body></html>

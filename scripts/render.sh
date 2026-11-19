@@ -39,10 +39,15 @@ flags=(--headless=new --disable-gpu --no-first-run --user-data-dir="$prof" --all
 [[ -n ${CI:-}${PALETTE_NO_SANDBOX:-} ]] && flags+=(--no-sandbox)
 
 # 1. layout check (needs assets/check.js in the page)
-chk=$("$chrome" "${flags[@]}" --dump-dom "file://$in" 2>/dev/null | grep -o 'data-check="[^"]*"' | head -1 || true)
+dom=$("$chrome" "${flags[@]}" --dump-dom "file://$in" 2>/dev/null || true)
+chk=$(printf '%s' "$dom" | grep -o 'data-check="[^"]*"' | head -1 || true)
+notes=$(printf '%s' "$dom" | grep -o 'data-check-notes="[^"]*"' | head -1 || true)
 echo "check: ${chk:-no data-check (add assets/check.js to the page)}"
+[[ -n $notes ]] && echo "note:  ${notes#data-check-notes=}"
 
-# 2. PDF at the page's own @page size
+# 2. PDF at the page's own @page size (clear earlier renders first, so a 3-page run cannot leave
+#    -02/-03 PNGs beside a later 1-page run)
+rm -f "$out/$name.png" "$out/$name"-[0-9][0-9].png
 "$chrome" "${flags[@]}" --no-pdf-header-footer --print-to-pdf="$out/$name.pdf" "file://$in" 2>/dev/null
 echo "pdf:   $out/$name.pdf"
 

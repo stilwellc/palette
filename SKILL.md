@@ -10,15 +10,16 @@ Read `reference/style-guide.md` before building anything. Then read what the job
 | Job | Also read |
 |---|---|
 | anything that is not a security or severity report | `reference/brand.md` (the 88 / 11 / 1 colour rule, shape, marks, icons, labels) |
-| deck, white paper, social image, product page, mobile screen | `reference/layouts.md` |
+| deck, white paper, brief, social image, product page, mobile screen | `reference/layouts.md` |
+| any chart | `reference/charts.md` (which chart, every option, sizing). Do not read `charts.js` for this |
 | dashboard, console, product page, mobile, any UI | `reference/ui-patterns.md` |
 
 **Two colour modes. Pick one per piece and never mix them.**
 * **Severity** (security findings, risk, SLAs): colour means Critical, High, Medium, Low and nothing
   else. This is the original mode; `graphic`, `slides`, `doc`, `dashboard` templates show it.
 * **Signal** (everything else): ink greys plus one signal colour, about 1% of the page, on the one
-  mark that is live, new or the claim. `deck`, `whitepaper`, `landing`, `mobile`, `social`, `brand`,
-  `charts` templates show it.
+  mark that is live, new or the claim. `brief`, `deck`, `whitepaper`, `landing`, `mobile`, `social`,
+  `brand`, `charts` templates show it.
 
 **Private layer.** If `local/NOTES.md` exists, read it first: it holds this install's private
 context (reference artefact, branded templates, data sources, team rules). `local/` is gitignored
@@ -38,10 +39,11 @@ assets/icons.js     109 original line icons (<i class="ic" data-i="name">), AS.m
 assets/check.js     layout check (overflow, chart over note, unknown icon, signal over budget)
 assets/fonts/       Inter, Geist Mono (embedded, works offline)
 templates/          severity: graphic, slides, doc, dashboard
-                    signal: deck, whitepaper, landing, mobile, social, brand, charts (catalogue)
+                    signal: brief, deck, whitepaper, landing, mobile, social, brand, charts (catalogue),
+                    pitch (animation)
 examples/           finished pieces for range: poster, menu, résumé, investor update, talk, spec sheet,
                     year recap. Look at one when a job has no template (do not copy its content)
-reference/          style-guide.md (read first), brand.md, layouts.md, ui-patterns.md
+reference/          style-guide.md (read first), brand.md, layouts.md, charts.md, ui-patterns.md
 scripts/new.sh      copy a template to a working file with absolute asset paths
 scripts/render.sh   HTML → PDF (headless Chrome) → PNG per page, plus the layout check
 scripts/pptx.py     HTML → PowerPoint, one picture per slide with the slide text as notes
@@ -55,7 +57,8 @@ local/              private, gitignored: NOTES.md, branded templates, research (
 |---|---|---|---|
 | one chart / image / Slack graphic / social card | graphic | `templates/graphic.html` | 1600x1000 px by default; set `--w/--h` on body AND `@page` |
 | deck, slides, presentation | slides | `templates/slides.html` | 1600x900 per `<section class="slide">` |
-| report, doc, one-pager, brief | doc | `templates/doc.html` | US letter per `<section class="page">` |
+| one-page brief, memo, proposal, update (not security) | doc | `templates/brief.html` | US letter, one page, signal mode |
+| security or risk report, findings summary | doc | `templates/doc.html` | US letter per page; severity mode. For one page keep page 1 (cover) or page 3 (brief) |
 | dashboard, console, app screen, UI mock-up | dash | `templates/dashboard.html` | 1440 wide per `<div class="screen">`; set `--w/--h` on body AND `@page` |
 | pitch, board or product deck, all-hands | slides | `templates/deck.html` | 1600x900; 12 layouts incl. agenda, summary grid, versus, roadmap |
 | white paper, industry report, A4 anything | doc a4 | `templates/whitepaper.html` | A4 per `<section class="page">` |
@@ -66,14 +69,22 @@ local/              private, gitignored: NOTES.md, branded templates, research (
 | short animation, README or launch GIF | animation | `templates/pitch.html` | 1200x675, drawn per instant from `#t=`; export with `scripts/animate.sh` |
 | "which chart?" | n/a | `templates/charts.html` | catalogue with one working call per newer helper |
 
+`graphic.html` works in either colour mode: it has no severity marks until you add them.
+
 If the ask doesn't say which, use graphic for a single chart, doc for anything with prose. Ask only
 if it could reasonably be either a deck or a doc.
 
 ## Steps
 
 1. **Get the numbers first.** Every figure comes from a source you actually read (query, file,
-   pasted data). Write down the source per number. No invented or "illustrative" values in a real
+   pasted data, the user's own message). Say where each came from in the piece itself: the
+   `.method` line under a chart, or the footer. Figures you derive (a sum, a percent change) are
+   fine when their inputs are on the page. No invented or "illustrative" values in a real
    deliverable; the templates' data is fictional and must be replaced.
+   * No team or brand name given? Use the document's title in the masthead. Never leave "Acme" or
+     "Halden": the layout check fails on them.
+   * Nothing in the data supports a recommendation? Then the closing bar is the one thing to watch,
+     not an ask, and it has no button.
 2. **Write the words before the layout.** Headline in two clauses (fact, then grey consequence),
    one finding-sentence per figure title, a sub line saying what is plotted, a note saying what
    to take from it. Voice rules are at the end of the style guide.
@@ -81,30 +92,39 @@ if it could reasonably be either a deck or a doc.
    `templates/` without `.html`)
    into the working folder (the user's named location, else the session scratchpad), named for
    the content (`Repo_Archive_2026-11-12.html`). It rewrites asset links to absolute paths into
-   this skill, so the copy renders from anywhere. Templates in the repo use `../assets/` and open
-   in place.
-4. **Build.** Use the component classes; don't restyle them. Pick the chart by the data's job
-   (style guide, Charts). Set each chart's `W` near its rendered width in CSS px (doc cover about
-   690, doc card about 640, slide half-card about 760, full slide card about 1400). Severity
+   this skill (the real path, if the skill folder is a symlink), so the copy renders from
+   anywhere. Templates in the repo use `../assets/` and open in place.
+   * A template is several sample pages. Delete the pages, blocks and chart calls you do not use.
+     A short deck is five slides: cover, hero stat with chart, one chart, a chart pair, close.
+   * One request can need two files (a social card and a logo sheet). Make two.
+   * "Make us a logo": page 1 of `brand.html` (mark and lockup). Add page 2 only for a full guide.
+4. **Build.** Use the component classes; don't restyle them. Pick the chart by the data's job and
+   copy its call from `reference/charts.md`. Set each chart's `W` near its rendered width in CSS px (doc cover about
+   690, doc card about 640, doc half card about 300, slide half-card about 690, full slide card
+   about 1400; heights and the rest are in `reference/charts.md`). Severity
    always goes through `color: 'high'` etc. Anything that isn't severity stays in the neutrals;
    in signal mode the one mark that carries the claim may take `color: 'signal'`. Icons come from
    `icons.js` only (`<i class="ic" data-i="...">`, add its script tag); never paste SVG from
    another icon set, and never draw a real company's logo.
+   * `AS.theme({...})` goes on the first line of the page's bottom `<script>`, before any chart.
 5. **Render:** `${CLAUDE_SKILL_DIR}/scripts/render.sh <file.html> [outdir] [scale]`
    (`${CLAUDE_SKILL_DIR}` is the folder this SKILL.md is in. If you see it written out literally,
    use that folder's path: usually `~/.claude/skills/palette`, or the plugin's install folder.)
    * It prints `check: data-check="OK"` or a list of problems, writes `<name>.pdf`, and writes
      `<name>.png` (one page) or `<name>-01.png ...` (one per slide or page) at 2x by default.
-   * Exit 2 means the layout check failed: content spills off a page or slide, a chart overlaps
-     its note, an icon name does not exist, or the signal colour covers more than 5% of a page. Fix it: shorten the text, lower a chart's `H`, or move a block to the next page.
+   * Exit 2 means the layout check failed: content spills off a page or slide (it says by how
+     much), two blocks overlap, a chart overlaps its note, an icon name does not exist, sample
+     names are left in, or the signal colour covers more than 5% of a page. Fix it: shorten the text, lower a chart's `H`, or move a block to the next page.
      Don't shrink type below the doc scale.
    * Don't pipe its output into `head`: that kills the script before the PNG step.
 6. **Look at every PNG** with Read. Check for label collisions, a headline wrapping to an orphan
-   word, empty bottom space on a page (fill it or end the page earlier), and text sitting on dark
-   marks. The script checks geometry, not taste.
+   word, empty bottom space on a page (fill it or end the page earlier), a chart floating in a
+   half-empty card (raise its `H` or `rowH`; render.sh prints a `note:` line when it sees one), and
+   text sitting on dark marks. The script checks geometry, not taste.
 7. **Deliver** the PDF and PNG paths. Mention anything you couldn't source. If they asked for
    PowerPoint, Keynote or Google Slides, also run `${CLAUDE_SKILL_DIR}/scripts/pptx.py <file.html>`
-   and say plainly that its slides are pictures (text is in the notes, not editable).
+   and say plainly that its slides are pictures (text is in the notes, not editable). It needs
+   only Python 3, and re-renders into a temp folder, so ignore the temp paths it prints.
 
 ## Rules that matter most
 
@@ -113,6 +133,8 @@ if it could reasonably be either a deck or a doc.
 * Signal mode: 88 parts paper, 11 parts ink, 1 part signal (`#2b44d9`). One signal mark per view,
   never on a headline, body text, button, background or logo. Change it with `AS.theme({signal})`.
 * One ink block per page (an ink tile, the summary grid's hero cell, or the takeaway bar).
+* What counts as the signal mark: a bar, dot, tag, cell or line in a chart or layout. A legend
+  swatch explaining it and the dot in the cover logo do not count.
 * A different brand: one line at the top of the page script,
   `AS.theme({paper: '#eef1f4', ink: '#0e1c2f', signal: '#e4502a'})`. It derives every grey, card
   and ground from those three and charts follow. Never hard-code a hex in a page: use the tokens

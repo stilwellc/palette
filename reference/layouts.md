@@ -31,9 +31,27 @@ label of five words or fewer (the number pinned to the bottom, a micro label at 
 with a label, one small chart, or one statement (`.st`). No body copy. At most one cell on a colour
 cell, at most one on stone. Nine to fourteen cells.
 
-**Footer.** Left: a `.ports` strip showing the part of the deck, then the deck name. Right: the number.
+**Footer.** Left: a `.ports` strip showing the part of the deck (or, in a short deck, the slide), then
+the deck name. Right: the number.
+
+**A short deck** is five slides: cover, hero stat with chart, one chart, a chart pair, close.
+
+**Sizes that fit.** Two-thirds card: chart about 940 x 470. Half card: about 690 x 440 with a
+one-line title. Full card: about 1400 x 520. The hero number in an ink tile: 168px for up to four
+characters, about 128px for five. A `.plot` centres its chart and does not stretch it.
+
+**Glue classes the templates use.** `.fcard` (a card laid out as a chart card), `.chd` (its top row:
+label left, legend right), `.plot` (the box the chart is drawn in), `.method` (the grey line under a
+hairline), `.rel` (sits above the cover glows), `.tile > b > small` (the unit after a big number),
+`.tile .bar` (a thin progress bar), `.low` (pins what follows to the bottom).
 
 ## Report (`templates/whitepaper.html`, A4; `templates/doc.html`, letter)
+
+**One page** (`templates/brief.html`, signal mode): running header, headline, a meta row, three
+summary bullets, two chart cards, a strip of four numbers, the takeaway bar, a method line. That is
+what a letter page holds. If it does not fit, cut a block; never shrink type. A row of cards on a
+full page needs `style="flex:none"`, or it shrinks under its content and overlaps what follows (the
+layout check reports it).
 
 A4 is `<body class="doc a4">` with `@page{size:210mm 297mm}`. Every page after the cover starts with
 a `.rhead` running header (lockup, section, page).
@@ -52,7 +70,9 @@ Notes can sit in a right rail (`.withrail` > content + `.rail`) on data pages in
 
 ## Social images (`templates/social.html`)
 
-One file, four page sizes, using named pages (`@page og{size:1200px 630px}` and `page:og` on the canvas).
+One file, several page sizes: `<body class="social">` holds `<div class="canvas og">`, `sq`, `story`,
+`wide` or `portrait` (1080x1350). Each is a named page, so render.sh writes one PNG per canvas. Delete
+the canvases you do not need.
 
 | Canvas | Size | Type floor |
 |---|---|---|

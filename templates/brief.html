@@ -1,0 +1,114 @@
+<!doctype html>
+<!-- One-page decision brief, US letter, signal mode. One section.page inside body.doc.
+     Blocks, top to bottom:
+       1. rhead     lockup with a mark, the document type, the date
+       2. h-hero    two clauses, numbers first, the second clause grey
+       3. meta      Owner, Team, Window, Decision by, then a dotted drule
+       4. summary   three bullets. Exec readers stop here
+       5. cols      two chart cards (card fcard: chd with a micro label and a legend4, a finding
+                    sentence, the plot, a method line). Left: before and after. Right: against a target
+       6. tiles     four baseline numbers, each with a context line
+       7. takeaway  the page's one ink block: the ask and the decision date
+       8. fns       numbered footnotes: source, window, n, how the saving is worked out
+       9. foot
+     One page: if content does not fit, cut a block, do not shrink type.
+     The cols row carries flex:none so it keeps its content height. Without it a cols row shrinks on
+     a full page and the cards run over the block below.
+     Signal mode: ink greys and one signal mark (the on-time row in the targets chart). No severity
+     classes anywhere. One icon, in the takeaway.
+     Sample data: everything here is invented. Marlow is not a real company, and every figure, date
+     and name is fictional. The numbers are internally consistent:
+       stops a day by zone 420 + 380 + 400 + 320 = 1,520; 1,520 / 40 vans = 38 stops per van
+       miles today 420 x 3.4 + 380 x 2.7 + 400 x 3.1 + 320 x 2.3 = 4,430; 4,430 / 1,520 = 2.9 a stop
+       miles batched 420 x 2.6 + 380 x 2.3 + 400 x 2.4 + 320 x 2.1 = 3,598; down 832, which is 19%
+       4,430 x $0.70 = $3,101 a day; 832 x $0.70 x 250 delivery days = $145,600 a year
+       13 weeks x 5 days = 65 delivery days; 65 x 1,520 = 98,800 stops
+       pilot zones North 11 vans + West 8 vans = 19 of 40 vans
+     Replace all of it with numbers from a source you have read. -->
+<html><head><meta charset="utf-8"><title>Decision brief</title>
+<link rel="stylesheet" href="../assets/style.css">
+<style>@page{size:8.5in 11in;margin:0}
+/* legend swatches the core legend4 does not have: a ring (the before dot) and a tick (the target) */
+.legend4 i.ringsw{background:transparent;box-shadow:inset 0 0 0 1.5px var(--n3)}
+.legend4 i.tick{width:1.5px;height:11px;border-radius:1px}
+.takeaway .micro .ic{--ic:13px;margin-right:5px}
+/* the first tile starts on the page margin, in line with the headline */
+body.doc .tiles>div:first-child{padding-left:0}
+/* air between the finding and the plot: a dumbbell draws its first row at the very top of its box */
+.fcard .plot{margin-top:6px}
+</style>
+<script src="../assets/charts.js"></script>
+<script src="../assets/icons.js"></script>
+<script src="../assets/check.js"></script>
+</head>
+<body class="doc">
+
+<section class="page">
+  <div class="rhead"><span class="lockup one" style="--m:16px"><i class="mk" data-m="stack"></i><span class="nm">Marlow</span></span><span>Decision brief</span><span>November 19, 2026</span></div>
+
+  <h1 class="h-hero" style="font-size:60px">19% fewer miles.<br><em>Same 1,520 stops.</em></h1>
+
+  <div class="meta">
+    <div><small>Owner</small><span>Dana Okafor, VP Operations</span></div>
+    <div><small>Team</small><span>Fleet and dispatch, Columbus depot</span></div>
+    <div><small>Window</small><span>Jan 11 to Mar 5, 2027</span></div>
+    <div><small>Decision by</small><span>Dec 4, 2026</span></div>
+  </div>
+  <div class="drule"></div>
+
+  <div class="summary" style="border:0;padding:0"><h2>Summary</h2><ul>
+    <li><b>Batching routes would cut daily miles from 4,430 to 3,598</b> with the same 1,520 stops. That comes from replaying 13 weeks of real orders, not from live driving.<sup class="fn">1</sup></li>
+    <li><b>We ask for an 8-week pilot on 19 of 40 vans,</b> in the North and West zones. They are the best and the worst zone in the replay, so the result will not flatter the plan.</li>
+    <li><b>The pilot costs $24K.</b> A full rollout would save about $146K a year in mileage if the replay holds on the road.<sup class="fn">2</sup></li>
+  </ul></div>
+
+  <div class="cols" style="flex:none;gap:14px">
+    <div class="card fcard">
+      <div class="chd"><span class="micro">Miles per stop</span>
+        <div class="legend4 dot"><span><i class="ringsw"></i>today</span><span><i></i>batched</span></div></div>
+      <h3>Batching cut miles per stop in all four zones. West moved least.</h3>
+      <div class="plot" id="c1"></div>
+      <p class="method"><b>Method.</b> Replay of orders from Aug 3 to Oct 30, 2026, n = 98,800 stops. Axis starts at zero.</p>
+    </div>
+    <div class="card fcard">
+      <div class="chd"><span class="micro">Today against target</span>
+        <div class="legend4"><span><i class="g2"></i>today</span><span><i class="tick"></i>target</span></div></div>
+      <h3>The depot is under all four pilot targets. On-time delivery decides.</h3>
+      <div class="plot" id="c2"></div>
+      <p class="method"><b>Method.</b> Medians, Aug 3 to Oct 30, 2026. Each row has its own scale from zero. Colour marks the deciding row.</p>
+    </div>
+  </div>
+
+  <div class="tiles" style="--cols:4">
+    <div><b>1,520</b><span>Stops a day</span><small>40 vans, 38 stops per van</small></div>
+    <div><b>4,430</b><span>Miles a day</span><small>2.9 miles per stop</small></div>
+    <div><b>87%</b><span>Delivered on time</span><small>Inside the 2-hour window</small></div>
+    <div><b>$3,101</b><span>Mileage cost a day</span><small>At $0.70 a mile</small></div>
+  </div>
+
+  <div class="takeaway"><span class="micro"><i class="ic" data-i="calendar"></i>The ask</span>
+    <p>Approve an 8-week route batching pilot on 19 vans, starting January 11, 2027.
+      <small>Decide by December 4, 2026. Cost $24K. We report against the four targets on March 12, 2027.</small></p></div>
+
+  <ol class="fns">
+    <li>Replay: all orders from Aug 3 to Oct 30, 2026 (65 delivery days) planned again in batches, with the same vans, shifts and windows.</li>
+    <li>Saving: 832 fewer miles a day at $0.70 a mile, over 250 delivery days. Mileage only. Driver hours and headcount do not change.</li>
+  </ol>
+
+  <div class="foot"><span>Marlow. Decision brief, route batching pilot. Sample data: fictional.</span><span>1 of 1</span></div>
+</section>
+
+<script>
+/* W is the plot box in CSS px: a doc half card is about 300 wide, so chart text is 1:1. */
+AS.dumbbell('#c1', {W: 300, labelW: 44, rowH: 24, max: 4, fmt: v => Number.isInteger(v) ? v : v.toFixed(1), rows: [
+  {label: 'North', a: 3.4, b: 2.6},
+  {label: 'South', a: 3.1, b: 2.4},
+  {label: 'East', a: 2.7, b: 2.3},
+  {label: 'West', a: 2.3, b: 2.1}]});
+AS.bullet('#c2', {W: 300, labelW: 116, numW: 42, rowH: 30, barH: 9, rows: [
+  {label: 'On-time delivery', value: 87, target: 92, of: 100, display: '87%', color: 'signal'},
+  {label: 'Stops per van', value: 38, target: 42, of: 50, display: '38'},
+  {label: 'Back by 6 pm', value: 71, target: 85, of: 100, display: '71%'},
+  {label: 'Van fill at start', value: 64, target: 75, of: 100, display: '64%'}]});
+</script>
+</body></html>

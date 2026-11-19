@@ -64,7 +64,7 @@
       const live = o.series.map((se, j) => [se, j]).filter(([se]) => (se.values[i] || 0) > 0);
       live.forEach(([se], idx) => {
         const v = se.values[i], y0 = y(acc + v), h = y(acc) - y0, top = idx === live.length - 1;
-        if (top) bar(s, x, y0, bw, h, col(se.color)); else n(s, 'rect', { x, y: y0, width: bw, height: h, fill: col(se.color) });
+        if (top) bar(s, x, y0, bw, h, col(se.color || N[0])); else n(s, 'rect', { x, y: y0, width: bw, height: h, fill: col(se.color || N[0]) });
         if (acc > 0) n(s, 'line', { x1: x, x2: x + bw, y1: y(acc), y2: y(acc), stroke: PAPER, 'stroke-width': 2 });
         if (o.segLabels && i === k - 1 && h > 14)
           n(s, 'text', { x: x + bw + 10, y: y0 + h / 2 + 4, class: 'val' }, `${se.name} ${Math.round(v / tot[i] * 100)}%`);
@@ -92,8 +92,8 @@
     const slot = (R - L) / k, bw = slot * 0.56;
     o.cats.forEach((c, i) => {
       const x = L + slot * i + (slot - bw) / 2, u = o.up[i] || 0, d = o.down[i] || 0;
-      if (u) { bar(s, x, yu(u), bw, zero - yu(u), o.upColor || N[0], true); n(s, 'text', { x: x + bw / 2, y: yu(u) - 8, 'text-anchor': 'middle', class: 'val' }, u); }
-      if (d) { bar(s, x, zero, bw, yd(d) - zero, o.downColor || N[3], false); n(s, 'text', { x: x + bw / 2, y: yd(d) + 15, 'text-anchor': 'middle', class: 'val' }, d); }
+      if (u) { bar(s, x, yu(u), bw, zero - yu(u), col(o.upColor || N[0]), true); n(s, 'text', { x: x + bw / 2, y: yu(u) - 8, 'text-anchor': 'middle', class: 'val' }, u); }
+      if (d) { bar(s, x, zero, bw, yd(d) - zero, col(o.downColor || N[3]), false); n(s, 'text', { x: x + bw / 2, y: yd(d) + 15, 'text-anchor': 'middle', class: 'val' }, d); }
       if (o.notes && o.notes[i]) n(s, 'text', { x: x + bw / 2, y: yd(d) + 31, 'text-anchor': 'middle', class: 'axl', style: 'fill:var(--ink)' }, o.notes[i]);
       n(s, 'text', { x: x + bw / 2, y: H - 8, 'text-anchor': 'middle', class: 'ax' }, c);
     });
@@ -140,7 +140,7 @@
       let acc = 0;
       (r.segs || [{ v: r.value, color: o.color || N[0] }]).forEach((sg, j, arr) => {
         const w = x(acc + sg.v) - x(acc);
-        n(s, 'rect', { x: x(acc) + (j ? 1 : 0), y: cy - bh / 2, width: Math.max(0, w - (j ? 1 : 0)), height: bh, rx: (j === 0 || j === arr.length - 1) ? bh / 2 : 0, fill: col(sg.color) });
+        n(s, 'rect', { x: x(acc) + (j ? 1 : 0), y: cy - bh / 2, width: Math.max(0, w - (j ? 1 : 0)), height: bh, rx: (j === 0 || j === arr.length - 1) ? bh / 2 : 0, fill: col(sg.color || N[0]) });
         acc += sg.v;
       });
       n(s, 'text', { x: R + 12, y: cy + 4.5, class: 'lab' }, r.display || r.value);
@@ -156,7 +156,7 @@
     o.groups.forEach((gr, gi) => {
       const cx = slot * gi + slot / 2;
       // severe first in the middle, fixed rings outside
-      const items = gr.items.slice().sort((a, b) => (a.fixed - b.fixed) || (['critical', 'high', 'medium', 'low'].indexOf(a.sev) - ['critical', 'high', 'medium', 'low'].indexOf(b.sev)));
+      const items = gr.items.slice().sort((a, b) => ((a.fixed ? 1 : 0) - (b.fixed ? 1 : 0)) || (['critical', 'high', 'medium', 'low'].indexOf(a.sev) - ['critical', 'high', 'medium', 'low'].indexOf(b.sev)));
       items.forEach((it, i) => {
         const a = i * 2.39996, d = gap * 0.55 * Math.sqrt(i + .5);
         const px = cx + d * Math.cos(a), py = cy + d * Math.sin(a), c = col(it.sev || it.color || N[0]);
@@ -214,8 +214,8 @@
       o.cols.forEach((_, j) => {
         const v = o.values[i][j], x = LW + j * (cw + 6);
         if (!v) { n(s, 'rect', { x, y, width: cw, height: ch, rx: 7, fill: 'none', stroke: GRID }); return; }
-        const t = Math.sqrt(v / max), l = Math.round(214 - t * 186);
-        n(s, 'rect', { x, y, width: cw, height: ch, rx: 7, fill: `rgb(${l},${l - 4},${l - 9})` });
+        const t = Math.sqrt(v / max);
+        n(s, 'rect', { x, y, width: cw, height: ch, rx: 7, fill: N[0], 'fill-opacity': (.14 + t * .86).toFixed(2) });
         n(s, 'text', { x: x + cw / 2, y: y + ch / 2 + 4.5, 'text-anchor': 'middle', class: t > .45 ? 'inv' : 'lab', style: 'font-weight:500' }, v);
       });
     });
@@ -549,11 +549,13 @@
     s.style.width = W + 'px'; return s;
   }
 
-  /* Bullet rows: value on a pale track with a target tick. rows:[{label, value, target, of, display, color}] */
+  /* Bullet rows: value on a pale track with a target tick. rows:[{label, value, target, of, display, color, lower}]
+     lower:true (on a row or on o) means lower is better: the row is met when value <= target. */
   function bullet(el, o) {
-    const W = o.W || 800, rh = o.rowH || 46, LW = o.labelW || 180, NW = o.numW || 80, R = W - NW, bh = o.barH || 12, s = root(el, W, o.rows.length * rh);
+    const W = o.W || 800, rh = o.rowH || 46, LW = o.labelW ?? 180, NW = o.numW || 80, R = W - NW, bh = o.barH || 12, s = root(el, W, o.rows.length * rh);
     o.rows.forEach((r, i) => {
-      const cy = i * rh + rh / 2, of = r.of || o.of || 100, x = v => LW + (R - LW) * Math.min(1, v / of), met = r.target == null || r.value >= r.target;
+      const cy = i * rh + rh / 2, of = r.of || o.of || 100, x = v => LW + (R - LW) * Math.min(1, v / of), lower = r.lower ?? o.lower;
+      const met = r.target == null || (lower ? r.value <= r.target : r.value >= r.target);
       txt(s, 0, cy + 4.5, r.label, 'lab', { style: 'font-weight:500' });
       n(s, 'rect', { x: LW, y: cy - bh / 2, width: R - LW, height: bh, rx: bh / 2, fill: N[5], 'fill-opacity': .55 });
       n(s, 'rect', { x: LW, y: cy - bh / 2, width: Math.max(bh, x(r.value) - LW), height: bh, rx: bh / 2, fill: col(r.color || (met ? N[0] : o.missColor || N[2])) });
@@ -622,7 +624,9 @@
   function waffle(el, o) {
     const cols = o.cols || 10, total = o.total || 100, rowsN = Math.ceil(total / cols), c = o.cell || 16, g2 = o.gap ?? 5, p = c + g2;
     const s = root(el, cols * p - g2, rowsN * p - g2), fill = col(o.color || N[0]);
-    for (let i = 0; i < total; i++) { const on = i < Math.round(o.value), a = { fill: on ? fill : N[5], 'fill-opacity': on ? 1 : .75 };
+    // segs:[{v, color}] fills several tones in order; otherwise value cells take the one colour
+    const tone = []; (o.segs || [{ v: o.value, color: fill }]).forEach(sg => { for (let k = 0; k < Math.round(sg.v); k++) tone.push(col(sg.color || N[0])); });
+    for (let i = 0; i < total; i++) { const on = i < tone.length, a = { fill: on ? tone[i] : N[5], 'fill-opacity': on ? 1 : .75 };
       const cx = (i % cols) * p, cy = Math.floor(i / cols) * p;
       if (o.round) n(s, 'circle', { cx: cx + c / 2, cy: cy + c / 2, r: c / 2, ...a }); else n(s, 'rect', { x: cx, y: cy, width: c, height: c, rx: c * .22, ...a }); }
     s.style.maxWidth = cols * p - g2 + 'px'; return s;
@@ -650,7 +654,7 @@
   }
 
   /* Theme in one call. Give it any of {paper, ink, signal} as hex and it derives the rest (card
-     paper, the six greys, text greys, grounds) and sets them as CSS variables, which the stylesheet
+     paper, the six greys, text greys, grounds, the cover glows, the cells and the orb palette) and sets them as CSS variables, which the stylesheet
      and every chart read. Call it once at the top of the page script, before drawing.
      AS.theme({paper: '#f4f6f8', ink: '#0f1b2d', signal: '#e4502a'}). Any other token can be passed
      by its CSS name without the dashes: AS.theme({crit: '#7a1f1f', 'cell-dawn': 'linear-gradient(...)'}). */
@@ -665,7 +669,17 @@
       set('ground-2', mix(paper, ink, .035)); set('tray', mix(paper, ink, .05));
       [['n1', 0], ['n2', .28], ['n3', .5], ['n4', .7], ['n5', .85], ['n6', .92], ['ink-2', .27], ['ink-3', .36], ['ink-soft', .52]].forEach(([k, m]) => set(k, mix(ink, paper, m)));
     }
-    for (const k in t) if (k !== 'paper' && k !== 'ink') set(k, t[k]);
+    if (t.signal) set('signal', t.signal);
+    if (t.paper || t.ink || t.signal) {   // atmosphere, cells and orbs follow the brand too
+      const p = cs.getPropertyValue('--paper').trim() && (t.paper || cs.getPropertyValue('--paper').trim()), i = t.ink || cs.getPropertyValue('--ink').trim();
+      const sg = t.signal || cs.getPropertyValue('--signal').trim(), p2 = mix(p, '#ffffff', .5), g = (a, b, c) => `linear-gradient(135deg,${a} 0%,${b} 58%,${c} 100%)`;
+      set('a1', mix(p, sg, .30)); set('a2', mix(p, sg, .16)); set('a3', mix(p, i, .16)); set('a4', mix(p, i, .09)); set('a5', mix(p, sg, .10));
+      set('b1', mix(p, sg, .38)); set('b2', mix(p, '#ffffff', .65)); set('b3', mix(p, sg, .78)); set('b4', mix(p, i, .32));
+      set('cell-dawn', g(mix(p, sg, .22), mix(p, sg, .10), mix(p, i, .10))); set('cell-mist', g(mix(p, i, .14), mix(p, i, .07), mix(p, sg, .08)));
+      set('cell-sand', g(mix(p, sg, .12), mix(p, i, .05), p2)); set('cell-moss', g(mix(p, i, .10), mix(p, sg, .06), p2));
+      root.classList.add('themed');
+    }
+    for (const k in t) if (k !== 'paper' && k !== 'ink' && k !== 'signal') set(k, t[k]);
     return t;
   }
 
