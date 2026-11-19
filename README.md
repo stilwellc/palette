@@ -22,6 +22,10 @@ security team's report style and now covers general design work.
 |---|---|---|
 | ![Social](docs/social.png) | ![Charts 2](docs/charts-2.png) | ![Mark](docs/brand-mark.png) |
 
+| Section opener with an orb | Colour, type and orbs |
+|---|---|
+| ![Opener](docs/opener.png) | ![Colour](docs/brand-colour.png) |
+
 The original severity mode, where colour means Critical, High, Medium or Low and nothing else:
 
 ![Graphic](docs/graphic.png)
@@ -119,11 +123,13 @@ tooltips. The PDF and PNG show its default state.
 ## Icons and marks
 
 `assets/icons.js` holds 109 line icons drawn for this skill on one 24-unit grid (one stroke, round
-caps, one idea each) and ten two-shape brand marks to start a logo from.
+caps, one idea each), ten two-shape brand marks to start a logo from, and the painter for orbs:
+soft gradient spheres in six palettes, the one piece of art the style allows.
 
 ```html
 <i class="ic" data-i="shield-check"></i>
 <span class="lockup"><i class="mk" data-m="split"></i><span class="nm">halden<small>billing</small></span></span>
+<i class="orbx dawn" style="--o:300px"></i>
 ```
 
 ## The rules, briefly

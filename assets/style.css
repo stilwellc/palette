@@ -530,3 +530,23 @@ body.doc .bc.hero h2{font-size:28px} body.doc .pullq{font-size:16px;padding-left
 body.doc .logos{--lh:20px;gap:20px 16px}
 body.doc .vs::after{width:32px;height:32px;margin:-16px 0 0 -16px;font-size:10px}
 @media print{.tile.paper,.idisc.paper,.idisc.ring{box-shadow:0 0 0 .5px rgba(28,25,23,.16)}}
+
+/* ---------- orb: a soft gradient sphere. An object, not a background. ----------
+   Use it as the one piece of "art" on a cover or opener, as the face of an agent, a voice or a
+   product with no picture, or small beside a name. <i class="orbx dawn" style="--o:220px"></i>
+   Palettes: dawn mist sand moss tide (the signal family) ink. data-seed="7" picks another swirl, so
+   two orbs on one page need not match. One large orb per page; it never holds text or data.
+   icons.js paints it on a canvas (soft blobs, a highlight, a little grain) because layered
+   transparent CSS gradients and blur filters print with seams. Without the script it is a flat
+   two-tone disc. */
+.orbx{--o:120px;--o1:#f1c4a6;--o2:#f8e3b8;--o3:#e79fb8;--o4:#b9aaea;
+  position:relative;display:inline-block;width:var(--o);height:var(--o);border-radius:50%;overflow:hidden;flex:none;vertical-align:middle;
+  background:linear-gradient(140deg,var(--o2),var(--o1) 45%,var(--o3))}
+.orbx canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+.orbx::after{content:"";position:absolute;inset:0;border-radius:50%;box-shadow:inset 0 0 0 .5px rgba(28,25,23,.16)}
+.orbx.mist{--o1:#bcd0f0;--o2:#eef1f7;--o3:#c5b6ea;--o4:#93b4e8}
+.orbx.sand{--o1:#ecd09c;--o2:#f8efd6;--o3:#e3a981;--o4:#eadbb4}
+.orbx.moss{--o1:#c4d8a8;--o2:#f1efd2;--o3:#94bd97;--o4:#e6dca0}
+.orbx.tide{--o1:#9fb0f2;--o2:#e3e8fb;--o3:#2b44d9;--o4:#c9c2ee}
+.orbx.ink{--o1:#8c8478;--o2:#e6e1d6;--o3:#1c1917;--o4:#b9b1a4}
+.author .orbx{--o:46px} body.doc .author .orbx{--o:36px}

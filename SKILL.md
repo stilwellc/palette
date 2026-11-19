@@ -33,7 +33,8 @@ assets/charts.js    AS.bars, diverging, lines, hbars, dots, flow, heat, strip, a
                     area, compare, track, multiples, mix, kpiSelect (+ hover tooltips),
                     bench, dumbbell, slope, scatter, waterfall, funnel, bullet, donut, waffle,
                     meter, stepgrid, matrix, spark, gantt, theme
-assets/icons.js     109 original line icons (<i class="ic" data-i="name">) and AS.mark brand marks
+assets/icons.js     109 original line icons (<i class="ic" data-i="name">), AS.mark brand marks,
+                    and the painter for orbs (<i class="orbx dawn">)
 assets/check.js     layout check (overflow, chart over note, unknown icon, signal over budget)
 assets/fonts/       Inter, Geist Mono (embedded, works offline)
 templates/          severity: graphic, slides, doc, dashboard
@@ -112,6 +113,8 @@ if it could reasonably be either a deck or a doc.
   (ink, stone, grey), the part band gradient, one colour cell and soft orbs.
 * Shapes nest: inside a 24px card, inner corners are 6 to 8px or full pills. Controls are pills,
   tags are square. Icons are one line weight, one idea each.
+* Art is one orb (`.orbx`): a soft gradient sphere on a cover, opener or quote, or as the face of
+  something with no picture. One large orb per page, nothing on top of it. No stock imagery.
 * The mark appears once per page, in one ink. Other people's logos: one ink, one height, in a grid.
 
 ## Dashboards and UI

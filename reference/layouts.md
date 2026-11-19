@@ -10,7 +10,7 @@ their size, and only `.cols`, `.split`-style grids or an element with `.grow` ta
 |---|---|---|
 | Cover | `.mast` with a `.lockup`, `.tag`, `.h-hero`, `.lede`, orbs | the only slide with orbs besides an opener or quote |
 | Agenda | `.agenda.grow`, `li.on` for the current part | at most five rows |
-| Section opener | `.slide.opener`: eyebrow + `.h-part` at the top, `.low` with a lede and a `.spec` list | the middle of the slide stays empty |
+| Section opener | `.slide.opener`: eyebrow + `.h-part` at the top, an `.orbx` top right, `.low` with a lede and a `.spec` list | the middle of the slide stays empty |
 | Hero stat + chart | grid `1fr 2fr`: `.tile.ink` with one number beside a chart card | the tile is the slide's ink block |
 | Benchmark | headline left, `.cellx` holding a card with `AS.bench` right | the hero bar is the slide's signal mark |
 | Summary grid | `.bento` of `.bc` cells (`.c2`..`.c12`, `.r2`, `.r3`) | below |
