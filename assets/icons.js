@@ -156,6 +156,7 @@
       el.innerHTML = icon(el.dataset.i, { size: +el.dataset.size || px, stroke: +el.dataset.stroke || 0 });
       el.dataset.done = P[el.dataset.i] ? '1' : 'missing';
     });
+    scope.querySelectorAll('.orbx:not([data-done])').forEach(orb);
     scope.querySelectorAll('i.mk[data-m]:not([data-done])').forEach(el => {
       el.innerHTML = mark(el.dataset.m, { sig: el.classList.contains('sig') }); el.dataset.done = M[el.dataset.m] ? '1' : 'missing';
     });
@@ -182,8 +183,34 @@
     const sig = o.sig ? 'fill="var(--signal,#2b44d9)"' : '';
     return `<svg viewBox="0 0 8 8" width="${o.size || 28}" height="${o.size || 28}" fill="currentColor" aria-hidden="true">${f(sig)}</svg>`;
   }
+
+  /* ---- orbs: <i class="orbx dawn" data-seed="3"></i> is painted on a canvas at load ----
+     Colours come from the element's --o1..--o4, so palettes stay in the stylesheet. */
+  function orb(el) {
+    const px = Math.round(el.getBoundingClientRect().width) || 120, S = Math.max(160, Math.min(1200, px * 2));
+    const cs = getComputedStyle(el), c = ['--o1', '--o2', '--o3', '--o4'].map(k => cs.getPropertyValue(k).trim() || '#d9d2c5');
+    let seed = (+el.dataset.seed || 1) * 9301 + 49297; const rnd = () => (seed = (seed * 9301 + 49297) % 233280) / 233280;
+    const cv = document.createElement('canvas'); cv.width = cv.height = S; const x = cv.getContext('2d');
+    x.fillStyle = c[0]; x.fillRect(0, 0, S, S);
+    const clear = h => { const v = parseInt(h.slice(1), 16); return h[0] === '#' && h.length === 7 ? `rgba(${v >> 16},${(v >> 8) & 255},${v & 255},0)` : 'rgba(255,255,255,0)'; };
+    const blob = (cx, cy, r, colour, a) => { const g = x.createRadialGradient(cx, cy, 0, cx, cy, r);
+      g.addColorStop(0, colour); g.addColorStop(.45, colour); g.addColorStop(1, clear(colour)); x.globalAlpha = a; x.fillStyle = g; x.beginPath(); x.arc(cx, cy, r, 0, 7); x.fill(); };
+    x.filter = `blur(${S * .045}px)`;
+    const t0 = rnd() * 6.28;
+    for (let k = 0; k < 9; k++) { const t = t0 + k * 2.4 + rnd() * .8, d = S * (.16 + rnd() * .3);   // blobs walk round the centre: a slow swirl
+      blob(S / 2 + Math.cos(t) * d, S / 2 + Math.sin(t) * d, S * (.26 + rnd() * .22), c[1 + k % 3], .55 + rnd() * .4); }
+    x.filter = 'none'; x.globalAlpha = 1;
+    let g = x.createRadialGradient(S * .33, S * .24, 0, S * .33, S * .24, S * .34);               // highlight
+    g.addColorStop(0, 'rgba(255,255,255,.6)'); g.addColorStop(1, 'rgba(255,255,255,0)'); x.fillStyle = g; x.fillRect(0, 0, S, S);
+    g = x.createRadialGradient(S / 2, S / 2, S * .3, S / 2, S / 2, S * .5);                        // edge shade
+    g.addColorStop(0, 'rgba(28,25,23,0)'); g.addColorStop(1, 'rgba(28,25,23,.13)'); x.fillStyle = g; x.fillRect(0, 0, S, S);
+    const im = x.getImageData(0, 0, S, S), d = im.data;                                           // grain
+    for (let k = 0; k < d.length; k += 4) { const n = (rnd() - .5) * 14; d[k] += n; d[k + 1] += n; d[k + 2] += n; }
+    x.putImageData(im, 0, 0);
+    el.textContent = ''; el.appendChild(cv); el.dataset.done = '1';
+  }
   const AS = g.AS = g.AS || {};
-  AS.marks = Object.keys(M); AS.mark = mark;
+  AS.marks = Object.keys(M); AS.mark = mark; AS.orb = orb;
   AS.icons = P; AS.icon = icon; AS.iconInto = iconInto; AS.hydrateIcons = hydrate;
   if (typeof document !== 'undefined') {
     if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', () => hydrate());

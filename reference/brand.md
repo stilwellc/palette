@@ -36,6 +36,21 @@ or brand colour was taken from any of them.
 Change the signal for a brand with `AS.theme({signal: '#e4502a'})` at the top of the page script, or
 set `--signal` on `:root`. Pick one hue and keep it.
 
+## Orbs
+
+An orb is a soft gradient sphere: `<i class="orbx dawn" style="--o:300px"></i>`. It is the one piece
+of art the style allows, an object and never a background.
+
+- Use it large on a cover, opener or quote slide, or as the face of an agent, a voice or a product
+  that has no picture. Use it small (`.author .orbx`, 46px) beside a name that has no photo.
+- Palettes: `dawn` (default), `mist`, `sand`, `moss`, `tide` (the signal family), `ink`.
+  `data-seed="7"` picks a different swirl so two orbs on a page do not match.
+- One large orb per page. It never holds text, an icon or data, and nothing overlaps it.
+- `tide` counts as the page's signal mark.
+- It is painted on a canvas by `icons.js` (soft blobs, a highlight, a little grain), so the page
+  needs that script. Do not rebuild it from CSS gradients or blur filters: those print with seams.
+- The blurred `.orb.o1/.o2/.o3` fields are a different thing: page atmosphere behind a cover headline.
+
 ## Shape
 
 - **Concentric radii.** A shape inside a rounded shape uses `outer radius - padding`, with a floor of
