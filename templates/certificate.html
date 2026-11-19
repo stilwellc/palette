@@ -1,0 +1,98 @@
+<!doctype html>
+<!-- Course-completion certificate, landscape US letter (11 x 8.5 in), one page, signal mode.
+     One section.page inside body.doc. The local style turns the letter page on its side.
+     Blocks:
+       1. frame     a thin ruled frame set in from the edge, drawn as an absolutely placed box
+       2. top       lockup on the left, the issue date as a micro label on the right
+       3. name      micro eyebrow "Certificate of completion", the recipient's name very large in
+                    one ink, one sentence saying what was completed and when. A small orb sits to
+                    the right as the seal: the one piece of art, nothing on top of it
+       4. facts     three meta facts (guided hours, cohort, credential id as a code) under a drule
+       5. sign      two signature lines with a name and a role each, then a plate with the
+                    verification details. The dot beside "Verified" is the page's one signal mark
+     There is no ink block on this page, and no foot: the frame closes it.
+     Mail merge fields: recipient name, course, completion date, hours, cohort, credential id.
+     A long name: lower the font size on the h1 in steps of 8px until it sits on one line.
+     Template-local style is page setup and layout glue only. Colours and faces come from the tokens.
+     Sample data: everything here is invented. Fieldnotes Academy is not a real school, and every
+     name, date, course, credential id and web address is fictional. The numbers agree with each
+     other: 12 weeks x 8 guided hours = 96 hours; September 21 to December 11, 2026 is 12 weeks.
+     Replace all of it. Replace this comment with a one-line source note. -->
+<html><head><meta charset="utf-8"><title>Certificate of completion</title>
+<link rel="stylesheet" href="../assets/style.css">
+<style>@page{size:11in 8.5in;margin:0}
+/* page setup: a letter page on its side, with generous margins inside the frame */
+body.doc{width:11in}
+body.doc .page{width:11in;height:8.5in;padding:.95in 1.1in;gap:0}
+.frame{position:absolute;inset:.42in;box-shadow:inset 0 0 0 1px var(--ink);border-radius:2px;pointer-events:none}
+.frame::after{content:"";position:absolute;inset:5px;box-shadow:inset 0 0 0 .5px var(--line-2)}
+.top{display:flex;justify-content:space-between;align-items:center}
+/* name block: text left, seal right, centred in the space between top and facts */
+.who{flex:1;display:flex;justify-content:space-between;align-items:center;gap:48px}
+.who h1{white-space:nowrap;margin-top:18px}
+.who .lede{margin-top:22px;max-width:560px}
+.who .lede b{color:var(--ink)}
+.seal{display:grid;justify-items:center;gap:12px;flex:none}
+/* facts and signatures share one three-column grid, so every left edge lines up */
+.facts,.sign{display:grid;grid-template-columns:1fr 1fr 1.35fr;gap:0 40px}
+.facts{padding-top:18px}
+.facts .code{display:inline;font-size:12.5px;line-height:inherit}
+/* signatures: a rule to sign on, then name and role */
+.sign{align-items:end;margin-top:44px}
+.sig1{border-top:1px solid var(--ink);padding-top:9px;font-size:11px;line-height:1.45;color:var(--ink-3)}
+.sig1 b{display:block;font-size:13px;color:var(--ink);letter-spacing:-.012em}
+.sign .plate .ph b{font-size:15px;display:inline-flex;align-items:center;gap:7px}
+.sign .plate .ph .sdot{font-size:17px;margin:0}
+.sign .plate{display:grid;gap:9px;padding:12px 14px 11px}
+.sign .plate .pc{grid-template-columns:auto auto;justify-content:space-between}
+</style>
+<script src="../assets/charts.js"></script>
+<script src="../assets/icons.js"></script>
+<script src="../assets/check.js"></script>
+</head>
+<body class="doc">
+
+<section class="page">
+  <div class="frame"></div>
+
+  <div class="top">
+    <span class="lockup" style="--m:30px"><i class="mk" data-m="orbit"></i><span class="nm">Fieldnotes<small>Academy</small></span></span>
+    <span class="micro">Issued December 11, 2026</span>
+  </div>
+
+  <div class="who">
+    <div>
+      <span class="micro">Certificate of completion</span>
+      <!-- merge field: recipient name -->
+      <h1 class="h-hero" style="font-size:116px">Priya Raman</h1>
+      <!-- merge fields: course, length, completion date -->
+      <p class="lede">has completed <b>Field research methods</b>, a twelve-week course in interviewing, observation and synthesis, on December 11, 2026.</p>
+    </div>
+    <div class="seal"><i class="orbx sand" data-seed="6" style="--o:132px"></i></div>
+  </div>
+
+  <div class="drule"></div>
+  <div class="meta facts">
+    <div><small>Guided hours</small><span>96 hours over 12 weeks</span></div>
+    <div><small>Cohort</small><span>Autumn 2026, cohort 14</span></div>
+    <div><small>Credential id</small><span><span class="code">FA–140277</span></span></div>
+  </div>
+
+  <div class="sign">
+    <div class="sig1"><b>Marguerite Oyelaran</b>Course director</div>
+    <div class="sig1"><b>Tobias Lindqvist</b>Head of school, Fieldnotes Academy</div>
+    <div class="plate">
+      <div class="ph"><b>Verified<span class="sdot"></span></b><span>public record</span></div>
+      <div class="pc">
+        <span><b>check it at</b>fieldnotes.example/verify</span>
+        <span><b>level</b>practitioner</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+// A different brand: uncomment and set three colours. Everything else is derived.
+// AS.theme({paper: '#eef1f4', ink: '#0e1c2f', signal: '#e4502a'});
+</script>
+</body></html>

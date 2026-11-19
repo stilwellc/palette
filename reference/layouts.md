@@ -86,6 +86,21 @@ up with the image. Social cards keep the cover glows even with a chart. If the c
 `color:'signal'`, the tag must not also be `.sigc`: one signal mark per canvas. With no domain or
 study to cite, the foot holds the tagline left and the date right. One claim per image. Lockup once. Close a square or wide card with a `.takeaway`.
 
+## Print pieces
+
+| Piece | Template | Notes |
+|---|---|---|
+| Invoice | `invoice.html` | line items in `table.tbl` with `.n` numeric cells and a grey `small` sub-line; the total is the page's ink block; the due tag is the signal mark. The sums must add up |
+| Certificate | `certificate.html` | `body.doc.wide` (landscape letter), a ruled frame, the name very large, one small orb as the seal |
+| Badges | `badge.html` | four identical badges per sheet with crop hairlines; the repeated fields are marked in comments for a mail merge |
+| Posters | `poster.html` | A3 portrait and A4 landscape as named pages sized in mm; body type 19px or more on A3 |
+| Thumbnails | `thumbnail.html` | 1280x720; at most seven words; type 44px or more; keep the bottom right 220x90 clear |
+| Email headers | `email-header.html` | nothing important within 24px of an edge. Do not name a canvas `mast`, `sig` or `meta`: those are core classes |
+
+An orb may run off the top or right edge (class `bleed` on its wrapper). Never off the bottom: it
+prints with a second disc behind it. A `.bignum` with a comma at 380px or more needs about 60px of
+extra space below it.
+
 ## Product page (`templates/landing.html`, 1440 wide)
 
 `<body class="dash">` with `<div class="screen bare"><div class="web">`. Width comes from `.wrap`

@@ -1,0 +1,124 @@
+<!doctype html>
+<!-- Email and newsletter headers: three images in one file, each its own named page.
+       1  masthead   1200 x 400   newsletter masthead: lockup, issue code, date, two-clause headline, one stat
+       2  announce   1200 x 300   slim announcement banner: one line, one tag, one picture of a button
+       3  signature  600 x 200    footer signature strip: mark, name, three plain-text lines
+     render.sh writes email-header.pdf plus email-header-01.png ... email-header-03.png.
+     Type floor: 16px on the two 1200 wide images, 13px on the 600 strip. The strip is drawn at
+     600 x 200 and exported at 2x, so it stays sharp on a retina screen when placed at 600 wide.
+     Safe zone: nothing that matters within 24px of an edge, because mail clients crop and round
+     the corners of images.
+     The button on the banner is a picture. The whole image is the link, so write the alt text
+     as the sentence and the action together.
+     Signal mode: one signal mark at most per image (the last dot of the sparkline on 1, the tag
+     on 2, none on 3). The small orb is the strip's one piece of art. The button is the banner's one ink block.
+     "Ferrymoor" is a fictional home energy company and every name, price, date, address and
+     phone number here is invented. Replace all of it. -->
+<html><head><meta charset="utf-8"><title>Email headers</title>
+<link rel="stylesheet" href="../assets/style.css">
+<style>
+/* page setup: one named page per image, the way core names og and wide. The canvas names are
+   long on purpose: core already uses .mast, .sig and .meta for other things. */
+@page masthead{size:1200px 400px;margin:0}
+@page announce{size:1200px 300px;margin:0}
+@page signature{size:600px 200px;margin:0}
+.canvas.masthead{page:masthead;width:1200px;height:400px;padding:38px 48px 38px}
+.canvas.announce{page:announce;width:1200px;height:300px;padding:38px 48px 40px}
+.canvas.signature{page:signature;width:600px;height:200px;padding:0 36px}
+/* layout glue */
+.row{display:flex;align-items:center;justify-content:space-between;flex:none}
+
+/* 1 masthead */
+.masthead .lockup{--m:40px}
+.masthead .issue{display:flex;align-items:center;gap:16px}
+.masthead .code{font-size:17px}
+.masthead .pill{font-size:16px;line-height:1;padding:9px 16px}
+.masthead .mid{flex:1;min-height:0;display:grid;grid-template-columns:1fr 316px;gap:48px;align-items:end;margin-top:22px}
+.masthead .h-hero{font-size:60px;line-height:.98;white-space:nowrap}
+.masthead .lede{font-size:19px;line-height:1.38;margin-top:16px;max-width:600px}
+.masthead .card{padding:20px 24px 18px;border-radius:22px;align-self:stretch;display:flex;flex-direction:column}
+.masthead .card .eyebrow{font-size:16px}
+.masthead .card b{font:600 68px/1 var(--f-sans);letter-spacing:-.045em;font-variant-numeric:tabular-nums;margin-top:12px}
+.masthead .card .plotx{margin-top:auto}
+.masthead .card .plotx svg{display:block}
+.masthead .card .cap{font-size:16px;line-height:1.3;color:var(--ink-3);margin-top:10px}
+
+/* 2 banner */
+.announce{justify-content:space-between}
+.announce .lockup{--m:38px}
+.announce .tagx{height:32px;padding:0 10px;border-radius:4px;font-size:17px}
+.announce .h-hero{font-size:68px;line-height:1;white-space:nowrap;margin-left:-3px}
+.announce .low{display:flex;align-items:flex-end;justify-content:space-between;gap:32px}
+.announce .btn{height:60px;padding:0 28px;gap:12px;font-size:21px;flex:none;margin-bottom:4px}
+.announce .btn .ic{--ic:22px}
+.announce .btn svg{width:22px;height:22px}
+
+/* 3 signature strip */
+.signature{flex-direction:row;align-items:center;gap:26px}
+.signature .orbx{--o:104px;margin-left:auto}
+.signature .lockup{--m:56px}
+.signature .lockup .nm{font-size:22px}
+.signature .lockup .nm small{font-size:14px;line-height:1.3;margin-top:3px}
+.signature .bar{width:1px;align-self:stretch;margin:36px 0;background:var(--line-2)}
+.signature .who b{display:block;font:600 19px/1.15 var(--f-sans);letter-spacing:-.02em;margin-bottom:7px}
+.signature .who span{display:block;font-size:14px;line-height:1.5;color:var(--ink-2)}
+</style>
+<script src="../assets/charts.js"></script>
+<script src="../assets/icons.js"></script>
+<script src="../assets/check.js"></script>
+</head>
+<body class="social">
+
+<!-- 1. masthead 1200 x 400 -->
+<div class="canvas masthead">
+  <div class="row">
+    <span class="lockup"><i class="mk" data-m="quarter"></i><span class="nm">ferrymoor<small>The meter reading</small></span></span>
+    <span class="issue"><span class="code">NL–048</span><span class="pill">Thursday 19 November 2026</span></span>
+  </div>
+  <div class="mid">
+    <div>
+      <h1 class="h-hero">Heat pumps cost 18% less.<br><em>The wait doubled.</em></h1>
+      <p class="lede">This issue reads 1,310 quotes from the autumn and lists what to ask before you sign one.</p>
+    </div>
+    <div class="card">
+      <p class="eyebrow">Median quote, fitted</p>
+      <b>£9,400</b>
+      <div class="plotx" id="m1"></div>
+      <p class="cap">Down from £11,460 a year ago</p>
+    </div>
+  </div>
+</div>
+
+<!-- 2. banner 1200 x 300. The button is part of the picture. -->
+<div class="canvas announce">
+  <div class="row">
+    <span class="lockup one"><i class="mk" data-m="quarter"></i><span class="nm">ferrymoor</span></span>
+    <span class="tagx sigc">Until 1 Dec</span>
+  </div>
+  <div class="low">
+    <h1 class="h-hero">Winter tariffs <em>are open.</em></h1>
+    <span class="btn ink">See the tariffs<i class="ic" data-i="arrow-right"></i></span>
+  </div>
+</div>
+
+<!-- 3. signature strip 600 x 200 -->
+<div class="canvas signature">
+  <span class="lockup"><i class="mk" data-m="quarter"></i><span class="nm">ferrymoor<small>Home energy</small></span></span>
+  <i class="bar"></i>
+  <div class="who">
+    <b>Ines Calloway</b>
+    <span>Editor, The meter reading</span>
+    <span>ines@ferrymoor.example</span>
+    <span>020 7946 0148</span>
+  </div>
+  <i class="orbx dawn" data-seed="5"></i>
+</div>
+
+<script>
+// A different brand: uncomment and set three colours. Everything else is derived.
+// AS.theme({paper: '#eef1f4', ink: '#0e1c2f', signal: '#e4502a'});
+// masthead: median quote by month, November 2025 to November 2026. The last dot is the signal mark.
+AS.spark('#m1', [11460, 11380, 11420, 11150, 10900, 10840, 10510, 10260, 10180, 9890, 9720, 9510, 9400],
+  {W: 268, H: 58, fill: true, dotColor: 'signal'});
+</script>
+</body></html>

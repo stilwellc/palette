@@ -147,7 +147,7 @@ is hydrated on load and sized by `--ic` or the font size; `AS.icon(name, {size})
 |---|---|
 | `.tagx` | square inverse tag for a state word (`LIVE`). `.line` outlined, `.sigc` the one signal tag |
 | `.code` | model code in mono: two letters, en dash, number (`HD–04`). `<sup>` is a version, in signal |
-| `.plate` | label plate: 1px outline, code, descriptor, version, three micro spec columns |
+| `.plate` | label plate: 1px outline, code, descriptor, version (`<em>`, grey; `<em class="sig">` makes it the page's signal mark), micro spec columns (`--cols`, default 3). It lowercases its text; wrap a unit or code in `.keep` |
 | `.vers` | version table: code, dotted leader, value. The current row's value is `<em>` |
 | `.legend4` | up to four swatches with lowercase mono labels, top right of a card: `<span class="legend4"><span><i></i>this year</span><span><i class="g2"></i>last year</span></span>`. Swatches: `i` ink, `i.g2` mid grey, `i.g3` pale, `i.s` signal. `.legend4.dot` makes them round. Keep it under about 300px in a half card |
 | `.ports` | port strip: equal cells, some filled. Progress through a deck or a process |
