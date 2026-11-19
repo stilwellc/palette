@@ -35,19 +35,24 @@ assets/charts.js    AS.bars, diverging, lines, hbars, dots, flow, heat, strip, a
                     area, compare, track, multiples, mix, kpiSelect (+ hover tooltips),
                     bench, dumbbell, slope, scatter, waterfall, funnel, bullet, donut, waffle,
                     meter, stepgrid, matrix, spark, gantt, theme
+assets/data.js      AS.col, AS.labels, AS.rowsFor, AS.pairs, AS.change: chart straight from a data file
+assets/motion.js    AS.reveal, AS.countUp, AS.fadeUp: animate any drawn chart for the GIF export
 assets/icons.js     110 original line icons (<i class="ic" data-i="name">), AS.mark brand marks,
                     and the painter for orbs (<i class="orbx dawn">)
 assets/check.js     layout check (overflow, chart over note, unknown icon, signal over budget)
 assets/fonts/       Inter, Geist Mono (embedded, works offline)
 templates/          severity: graphic, slides, doc, dashboard
                     signal: brief, deck, whitepaper, landing, mobile, social, brand, charts (catalogue),
-                    pitch (animation)
+                    invoice, certificate, badge, thumbnail, email-header, print-poster
+                    animation: pitch, chart-reveal
 examples/           finished pieces for range: poster, menu, résumé, investor update, talk, spec sheet,
                     year recap. Look at one when a job has no template (do not copy its content)
 reference/          style-guide.md (read first), brand.md, layouts.md, charts.md, ui-patterns.md
 scripts/new.sh      copy a template to a working file with absolute asset paths
 scripts/render.sh   HTML → PDF (headless Chrome) → PNG per page, plus the layout check
-scripts/pptx.py     HTML → PowerPoint, one picture per slide with the slide text as notes
+scripts/pptx.py     HTML → PowerPoint / Google Slides. --editable: real text boxes over a text-free picture
+scripts/data.py     CSV, TSV, JSON or .xlsx → a data file the page charts from, plus a summary of the numbers
+scripts/snapshot.sh visual regression against tests/snapshots (CI)
 scripts/animate.sh  an animation page (templates/pitch.html) → looping GIF
 local/              private, gitignored: NOTES.md, branded templates, research (optional)
 ```
@@ -67,6 +72,13 @@ local/              private, gitignored: NOTES.md, branded templates, research (
 | mobile app screens | graphic | `templates/mobile.html` | 390x844 `.device` frames on one canvas |
 | social card, OG image, story, announcement | named pages | `templates/social.html` | 1200x630, 1080x1080, 1080x1920, 1600x900 in one file |
 | logo, brand guide, icon sheet, design system | slides | `templates/brand.html` | 1600x1000 per page |
+| invoice, quote, receipt | doc | `templates/invoice.html` | US letter, one page |
+| certificate, award, diploma | doc wide | `templates/certificate.html` | landscape letter |
+| event badges, name tags | doc wide | `templates/badge.html` | four 4x3in badges per sheet, crop marks |
+| video thumbnail | named pages | `templates/thumbnail.html` | 1280x720, three compositions |
+| email or newsletter header, signature | named pages | `templates/email-header.html` | 1200x400, 1200x300, 600x200 |
+| print poster, sign | named pages | `templates/print-poster.html` | A3 portrait, A4 landscape |
+| animated chart for a post or slide | animation | `templates/chart-reveal.html` | 1200x675; `AS.reveal` from `assets/motion.js`; export with `scripts/animate.sh` |
 | short animation, README or launch GIF | animation | `templates/pitch.html` | 1200x675, drawn per instant from `#t=`; export with `scripts/animate.sh` |
 | "which chart?" | n/a | `templates/charts.html` | catalogue with one working call per newer helper |
 
@@ -78,7 +90,11 @@ if it could reasonably be either a deck or a doc.
 ## Steps
 
 1. **Get the numbers first.** Every figure comes from a source you actually read (query, file,
-   pasted data, the user's own message). Say where each came from in the piece itself: the
+   pasted data, the user's own message). Given a CSV, TSV, JSON or .xlsx, run
+   `${CLAUDE_SKILL_DIR}/scripts/data.py <file>`: it prints the figures you will quote (first, last,
+   min, max, sum, change) and writes `<file>.data.js`. Load that and `assets/data.js` with script
+   tags and chart from it (`AS.pairs(DATA, {label, a, b})`, `AS.rowsFor`, `AS.col`), so no value is
+   typed by hand. Say where each came from in the piece itself: the
    `.method` line under a chart, or the footer. Figures you derive (a sum, a percent change) are
    fine when their inputs are on the page. No invented or "illustrative" values in a real
    deliverable; the templates' data is fictional and must be replaced.
@@ -129,8 +145,11 @@ if it could reasonably be either a deck or a doc.
    half-empty card (raise its `H` or `rowH`; render.sh prints a `note:` line when it sees one), and
    text sitting on dark marks. The script checks geometry, not taste.
 7. **Deliver** the PDF and PNG paths. Mention anything you couldn't source. If they asked for
-   PowerPoint, Keynote or Google Slides, also run `${CLAUDE_SKILL_DIR}/scripts/pptx.py <file.html>`
-   and say plainly that its slides are pictures (text is in the notes, not editable). It needs
+   PowerPoint, Keynote or Google Slides, also run `${CLAUDE_SKILL_DIR}/scripts/pptx.py <file.html>
+   --editable`: text becomes real, editable text boxes over a picture of everything else. Say
+   plainly what is not editable (shapes, charts and chart labels) and that the HTML stays the
+   source. For Google Slides the user uploads the .pptx to Drive and opens it. Without
+   `--editable` every slide is one picture with its text in the notes. It needs
    only Python 3, and re-renders into a temp folder, so ignore the temp paths it prints.
 
 ## Rules that matter most
@@ -154,7 +173,10 @@ if it could reasonably be either a deck or a doc.
 * Headlines: numbers first, full stops, second clause in `<em>`.
 * Chart over table. One strong chart beats two.
 * Plain human voice: no em dashes, no middle dots, no filler, only provable claims.
-* No dark page backgrounds. Paper is always cream; emphasis comes from ink weight, the tile ramp
+* Dark is a whole-piece mode, `AS.theme('dark')` (or `{dark: true, signal: ...}`), used only when
+  asked for or when the piece will sit on a dark surface (a stage screen, a dark app). Never a dark
+  section inside a light piece, or the reverse.
+* In a light piece paper is always cream; emphasis comes from ink weight, the tile ramp
   (ink, stone, grey), the part band gradient, one colour cell and soft orbs.
 * Shapes nest: inside a 24px card, inner corners are 6 to 8px or full pills. Controls are pills,
   tags are square. Icons are one line weight, one idea each.

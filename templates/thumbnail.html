@@ -1,0 +1,82 @@
+<!doctype html>
+<!-- Video thumbnails: three compositions in one file, each a 1280 x 720 named page ("thumb").
+       1  thumb  1280 x 720   claim and orb: a four-word claim stacked left, one large orb right
+       2  thumb  1280 x 720   big number: one enormous number, a five-word claim, an episode tag
+       3  thumb  1280 x 720   versus: two tiles and a vs badge
+     render.sh writes thumbnail.pdf plus thumbnail-01.png ... thumbnail-03.png, one per canvas.
+     Type floor: 44px for anything that must read when the image is shown 320px wide (the claim,
+     the number, the tile words). The lockup and the episode tag are furniture and may be smaller.
+     Word budget: at most 7 words per canvas outside a tag, the lockup included.
+     Safe zone: the bottom right 220 x 90 px stays clear, because the player puts the duration
+     stamp there. Nothing sits on the orb.
+     Signal mode: one signal mark at most per canvas (here only the tag on canvas 2), one ink block
+     at most per canvas (here only the ink tile on canvas 3).
+     "Pinewake" is a fictional woodworking channel and every name, price and number here is
+     invented. Replace all of it. -->
+<html><head><meta charset="utf-8"><title>Video thumbnails</title>
+<link rel="stylesheet" href="../assets/style.css">
+<style>
+/* page setup: core has no 1280 x 720 page, so it is named here the way core names og and wide */
+@page thumb{size:1280px 720px;margin:0}
+.canvas.thumb{page:thumb;width:1280px;height:720px;padding:44px 56px}
+/* layout glue shared by the three */
+.row{display:flex;align-items:center;justify-content:space-between;flex:none}
+.thumb .lockup{--m:42px}
+.thumb .tagx{height:50px;padding:0 16px;border-radius:6px;font-size:27px}
+
+/* 1 claim and orb */
+.t1 .h-hero{font-size:144px;line-height:.98;letter-spacing:-.055em;margin:auto 0 0 -8px;white-space:nowrap}
+.t1 .orbx{--o:560px;position:absolute;right:60px;top:64px}
+
+/* 2 big number */
+.t2 .bignum{font-size:440px;line-height:.88;margin:auto 0 0 -26px;white-space:nowrap}
+.t2 .claim{font:600 82px/1 var(--f-sans);letter-spacing:-.045em;margin-top:58px;white-space:nowrap}
+.t2 .claim em{font-style:normal;color:var(--ink-soft)}
+
+/* 3 versus: the tiles stop above the stamp zone, the tag sits bottom left. The wide left
+   padding keeps both numbers clear of the badge, which reaches 48px into each tile. */
+.t3 .vs{flex:1;min-height:0;gap:20px;margin:24px 0 22px}
+.t3 .vs::after{width:116px;height:116px;margin:-58px 0 0 -58px;font-size:46px;color:var(--ink)}
+.t3 .tile{padding:34px 36px 38px 74px;border-radius:36px;justify-content:flex-end}
+.t3 .tile b{font-size:190px;line-height:.86;letter-spacing:-.055em;margin-left:-6px}
+.t3 .tile p{font:600 64px/1 var(--f-sans);letter-spacing:-.04em;margin-top:14px;color:var(--ink-2)}
+.t3 .tile.ink p{color:var(--n4)}
+</style>
+<script src="../assets/charts.js"></script>
+<script src="../assets/icons.js"></script>
+<script src="../assets/check.js"></script>
+</head>
+<body class="social">
+
+<!-- 1. claim and orb. Five words with the lockup. -->
+<div class="canvas thumb t1">
+  <i class="orbx sand" data-seed="4"></i>
+  <div class="row"><span class="lockup one"><i class="mk" data-m="notch"></i><span class="nm">pinewake</span></span></div>
+  <h1 class="h-hero">One<br>plane.<br><em>Every<br>joint.</em></h1>
+</div>
+
+<!-- 2. big number. Seven words with the lockup and the number. The tag is the signal mark. -->
+<div class="canvas thumb t2">
+  <div class="row">
+    <span class="lockup one"><i class="mk" data-m="notch"></i><span class="nm">pinewake</span></span>
+    <span class="tagx sigc">EP–112</span>
+  </div>
+  <div class="bignum">1,204</div>
+  <p class="claim">hand cuts. <em>One oak table.</em></p>
+</div>
+
+<!-- 3. versus. Five words with the lockup, plus the badge. The ink tile is the ink block. -->
+<div class="canvas thumb t3">
+  <div class="row"><span class="lockup one"><i class="mk" data-m="notch"></i><span class="nm">pinewake</span></span></div>
+  <div class="vs">
+    <div class="tile ink"><b>£40</b><p>chisel</p></div>
+    <div class="tile"><b>£400</b><p>chisel</p></div>
+  </div>
+  <div class="row"><span class="tagx line">EP–113</span></div>
+</div>
+
+<script>
+// A different brand: uncomment and set three colours. Everything else is derived.
+// AS.theme({paper: '#eef1f4', ink: '#0e1c2f', signal: '#e4502a'});
+</script>
+</body></html>

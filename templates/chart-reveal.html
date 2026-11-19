@@ -1,0 +1,85 @@
+<!doctype html>
+<!--
+  palette chart reveal: an animated chart card for a README, a launch post or a slide. Export it with
+    scripts/animate.sh templates/chart-reveal.html out.gif
+
+  It follows the animation contract in templates/pitch.html: the page reads the time t, in seconds,
+  from the URL hash (chart-reveal.html#t=2.48), draws that one instant and stops. No CSS transitions,
+  no CSS animations, no timers, no requestAnimationFrame. The chart is drawn in full by charts.js and
+  assets/motion.js then sets it to its state at t, so the last frame is the finished graphic.
+
+  Storyboard (5 s at 12.5 fps, 1200 x 675):
+    0.0 to 0.8 s   the hero number counts up to 96% and the two-clause headline fades up
+    0.6 to 3.0 s   the card arrives, then the bars grow left to right, each value chip after its bar;
+                   the last bar is the one signal mark
+    3.0 to 4.0 s   the key and the method line arrive under the chart
+    4.0 to 5.0 s   the takeaway bar (the one ink block) fades up as the closing line, then holds
+
+  To make it yours: change the words and the AS.compare call (or swap in AS.dumbbell, or any other
+  helper: AS.reveal works on what is drawn, not on which helper drew it). Keep every block in the
+  layout from the first frame so nothing shifts, and keep the timings in the script at the bottom.
+
+  "Wrenfield" is a fictional brand and every number here is invented. Replace both.
+-->
+<html><head><meta charset="utf-8"><title>Chart reveal</title>
+<meta name="palette-animation" content="width=1200,height=675,seconds=5,fps=12.5">
+<link rel="stylesheet" href="../assets/style.css">
+<script src="../assets/charts.js"></script>
+<script src="../assets/motion.js"></script>
+<script src="../assets/icons.js"></script>
+<style>
+html,body{margin:0;width:1200px;height:675px;overflow:hidden;background:var(--paper)}
+.stage{position:absolute;inset:0;padding:38px 56px 36px;display:flex;flex-direction:column}
+.top{display:flex;justify-content:space-between;align-items:center}
+.top .lockup{--m:30px}
+.top .pill{font-size:13px;line-height:1}
+.mid{flex:1;min-height:0;display:grid;grid-template-columns:470px 1fr;gap:44px;align-items:center}
+.num{font:600 188px/.84 var(--f-sans);letter-spacing:-.06em;font-variant-numeric:tabular-nums;margin-left:-8px;white-space:nowrap}
+.num small{font-size:.5em;font-weight:600;letter-spacing:-.04em;color:var(--ink-soft);margin-left:6px}
+h1{font:600 37px/1.06 var(--f-sans);letter-spacing:-.04em;margin-top:28px;white-space:nowrap}
+h1 em{font-style:normal;color:var(--ink-soft)}
+.card{padding:22px 26px 18px;border-radius:24px;border:0;box-shadow:var(--ring)}
+.card h3{margin:0 0 4px;font-size:19px}
+.card .sub{margin:0 0 6px;font-size:14px}
+.card .key{margin-top:8px;font-size:13px}
+.card .method{margin-top:8px;font-size:12px}
+.takeaway{margin-top:0;padding:17px 24px;border-radius:18px}
+.takeaway p{font-size:21px}
+</style></head><body>
+<div class="stage">
+  <div class="top">
+    <span class="lockup one"><i class="mk" data-m="quarter"></i><span class="nm">Wrenfield</span></span>
+    <span class="pill">Sample data, Q4 2026</span>
+  </div>
+  <div class="mid">
+    <div>
+      <div class="num" id="num"><span id="n">96</span><small>%</small></div>
+      <h1 id="head">Almost always on time.<br><em>Up 25 points in two years.</em></h1>
+    </div>
+    <div class="card" id="card">
+      <h3>The on-time rate rose every quarter after the hub opened</h3>
+      <p class="sub">Orders delivered inside the promised window, by quarter</p>
+      <div id="chart"></div>
+      <div class="key" id="key"><span><i style="background:var(--n6)"></i>earlier quarters</span><em>Q4 2026, the latest quarter, is the one in colour.</em></div>
+      <p class="method" id="method"><b>Method.</b> On time means delivered on or before the promised day.</p>
+    </div>
+  </div>
+  <div class="takeaway" id="take"><span class="micro">Takeaway</span><p>The Leeds sort hub opened in Q4 2025. Every quarter since has beaten the one before.</p></div>
+</div>
+<script>
+// 1. Draw the finished graphic. Nothing below adds or removes an element.
+const svg = AS.compare('#chart', {W: 522, H: 250, max: 100, ticks: 2, fmt: v => v + '%', name: 'On time',
+  cats: ["Q1 '25", "Q2 '25", "Q3 '25", "Q4 '25", "Q1 '26", "Q2 '26", "Q3 '26", "Q4 '26"],
+  values: [71, 73, 72, 78, 83, 88, 92, 96], hi: 7, color: 'signal'});
+
+// 2. Set it to the instant t. Every line is a pure function of t.
+const t = AS.t();
+AS.countUp('#n', 96, AS.span(t, 0, .8));              // 0.0 to 0.8  hero number
+AS.fadeUp('#num', AS.span(t, 0, .4));
+AS.fadeUp('#head', AS.span(t, .15, .6));              //             headline, two clauses
+AS.fadeUp('#card', AS.span(t, .5, .5), 20);           // 0.5 to 1.0  the card and its gridlines
+AS.reveal(svg, AS.lin(t, .7, 2.3));                   // 0.7 to 3.0  bars, then chips
+AS.fadeUp('#key', AS.span(t, 3.0, .5), 8);            // 3.0 to 4.0  key, then method line
+AS.fadeUp('#method', AS.span(t, 3.4, .5), 8);
+AS.fadeUp('#take', AS.span(t, 4.0, .5));              // 4.0 to 5.0  takeaway, then hold
+</script></body></html>

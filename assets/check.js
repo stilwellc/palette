@@ -6,10 +6,14 @@
    - an icon or mark name that does not exist in icons.js
    - the signal colour covering more than 5% of a page (aim for about 1%)
    - sample names from the templates left in a piece made from one
+   - a script error on the page (a chart that never drew)
    Add class "bleed" to art that is meant to run off the edge. A chart floating in a half-empty
    card is not an error, so it is reported as a note after OK: look at it. */
+const __errs = [];
+window.addEventListener('error', e => __errs.push((e.message || 'script error') + (e.lineno ? ' (line ' + e.lineno + ')' : '')));
 window.addEventListener('load', () => setTimeout(() => {
   const out = [], notes = [];
+  if (__errs.length) out.push(`page script failed, so charts may be missing: ${__errs[0]}`);
   const cls = e => ((e.className && e.className.baseVal) ?? e.className ?? '').toString().trim().split(/\s+/)[0] || e.tagName.toLowerCase();
   const probe = document.createElement('i'); probe.style.color = 'var(--signal)'; document.body.appendChild(probe);
   const SIG = getComputedStyle(probe).color; probe.remove();

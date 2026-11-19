@@ -1,0 +1,138 @@
+<!doctype html>
+<!-- Studio invoice, US letter, one page, signal mode. One section.page inside body.doc.
+     Blocks, top to bottom:
+       1. rhead     lockup with a mark, the document type, the issue date
+       2. headline  h-hero in two clauses (the word Invoice, then the project in grey) with the
+                    invoice number as a code on the right
+       3. meta      billed to, issue date, due date, project, then a dotted drule. The tag beside the
+                    due date is the page's one signal mark
+       4. items     ruled table (tbl): description with a grey sub-line, quantity, rate, amount.
+                    Numbers are right-aligned tabular mono
+       5. settle    left: a short thank-you note, then payment details as a plate. Right: subtotal and tax rows, then the total
+                    due in an ink tile, the page's one ink block
+       6. fns       numbered terms
+       7. foot      the studio address, as a letterhead line
+     One page: about eight line items fit. For more, cut the note, do not shrink type.
+     Template-local style is page setup and layout glue only. Colours and faces come from the tokens.
+     Sample data: everything here is invented. Marlow Studio and Tern Coffee Roasters are not real
+     companies, and every name, address, date, bank detail and figure is fictional. The bank details
+     are placeholders made of zeros. The arithmetic adds up:
+       2 x 1,800 = 3,600     1 x 6,400 = 6,400     6 x 450 = 2,700
+       8 x 600 = 4,800       1 x 1,500 = 1,500     1 x 240 = 240
+       subtotal 3,600 + 6,400 + 2,700 + 4,800 + 1,500 + 240 = 19,240.00
+       sales tax 8% of 19,240.00 = 1,539.20
+       total due 19,240.00 + 1,539.20 = 20,779.20
+       issued November 19, 2026, due 14 days later on December 3, 2026
+     Replace all of it with your own figures. Replace this comment with a one-line source note. -->
+<html><head><meta charset="utf-8"><title>Invoice</title>
+<link rel="stylesheet" href="../assets/style.css">
+<style>@page{size:8.5in 11in;margin:0}
+/* headline row: the word on the left, the number on its baseline at the right */
+.ihead{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;margin-top:2px}
+.ihead .no{display:grid;gap:7px;justify-items:end;padding-bottom:9px}
+.ihead .code{font-size:17px}
+/* meta: four columns on one grid so the dates line up with the table below */
+.imeta{display:grid;grid-template-columns:1.45fr 1fr 1fr 1.3fr;gap:0 24px}
+.imeta>div span em{display:block;font-style:normal;font-weight:400;color:var(--ink-3)}
+.imeta .tagx{display:flex;width:max-content;margin-top:5px}
+/* line items: mono numbers on the right, a grey sub-line under each description */
+.items{margin-top:2px}
+.items th{font:600 10px/1.2 var(--f-sans);letter-spacing:.07em;text-transform:uppercase;padding-bottom:9px;border-bottom-color:var(--ink)}
+.items td{padding:6px 12px 6px 0;vertical-align:top}
+.items td:first-child{font-size:13px;letter-spacing:-.012em}
+.items td small{display:block;font-size:11px;font-weight:400;color:var(--ink-3);margin-top:2px;letter-spacing:0}
+.items .r{font:400 12px/1.5 var(--f-mono);padding-right:0;white-space:nowrap}
+.items th.r{font:600 10px/1.2 var(--f-sans)}
+.items td.r:last-child{color:var(--ink);font-weight:500}
+.items col.q{width:86px}.items col.rt{width:110px}.items col.a{width:124px}
+/* settle row: plate left, sums right. The right column is as wide as rate + amount + quantity */
+.settle{display:grid;grid-template-columns:1fr 320px;gap:36px;align-items:end;margin-top:4px}
+.sums2{display:grid}
+.sums2 .ln{display:flex;justify-content:space-between;align-items:baseline;padding:9px 0;border-bottom:1px solid var(--line);font-size:12px;color:var(--ink-2)}
+.sums2 .ln b{font:400 12px/1.5 var(--f-mono);color:var(--ink);font-variant-numeric:tabular-nums}
+.sums2 .tile{margin-top:14px}
+.sums2 .tile .th{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.sums2 .tile .th .micro{margin:0}
+.sums2 .tile b{font-size:42px;display:block}
+.pay{display:grid;gap:10px}
+.pay .plate{display:grid}
+.pay .plate .pc{grid-template-columns:auto auto;justify-content:space-between;gap:10px 20px}
+.page>.fns{margin-top:6px}
+/* thank-you note above the plate */
+.pay .ty{font-size:13.5px;line-height:1.45;color:var(--ink-2);letter-spacing:-.012em;margin-bottom:10px}
+.pay .ty b{color:var(--ink)}
+</style>
+<script src="../assets/charts.js"></script>
+<script src="../assets/icons.js"></script>
+<script src="../assets/check.js"></script>
+</head>
+<body class="doc">
+
+<section class="page">
+  <div class="rhead"><span class="lockup one" style="--m:16px"><i class="mk" data-m="notch"></i><span class="nm">Marlow Studio</span></span><span>Invoice</span><span>November 19, 2026</span></div>
+
+  <div class="ihead">
+    <h1 class="h-hero" style="font-size:50px">Invoice.<br><em>Tern brand identity.</em></h1>
+    <div class="no"><span class="micro">Invoice number</span><span class="code">INV–0142</span></div>
+  </div>
+
+  <div class="meta imeta">
+    <div><small>Billed to</small><span>Tern Coffee Roasters<em>48 Quay Street, Port Ashby</em></span></div>
+    <div><small>Issue date</small><span>November 19, 2026<em>Terms: net 14</em></span></div>
+    <div><small>Due date</small><span>December 3, 2026<span class="tagx sigc">Due in 14 days</span></span></div>
+    <div><small>Project</small><span>Brand identity and packaging<em>Purchase order TR–2218</em></span></div>
+  </div>
+  <div class="drule"></div>
+
+  <table class="tbl items">
+    <colgroup><col><col class="q"><col class="rt"><col class="a"></colgroup>
+    <thead><tr><th>Description</th><th class="r">Quantity</th><th class="r">Rate</th><th class="r">Amount</th></tr></thead>
+    <tbody>
+      <tr><td>Brand strategy workshop<small>Two days on site with the founding team, and a one-page brief</small></td><td class="r">2 days</td><td class="r">$1,800.00</td><td class="r">$3,600.00</td></tr>
+      <tr><td>Identity design<small>Mark, wordmark, colour and type, three rounds of revisions</small></td><td class="r">1</td><td class="r">$6,400.00</td><td class="r">$6,400.00</td></tr>
+      <tr><td>Packaging labels<small>Six coffees on one label system, print-ready files</small></td><td class="r">6</td><td class="r">$450.00</td><td class="r">$2,700.00</td></tr>
+      <tr><td>Website page designs<small>Eight templates for desktop and mobile, handed to your developer</small></td><td class="r">8</td><td class="r">$600.00</td><td class="r">$4,800.00</td></tr>
+      <tr><td>Brand guidelines<small>A 24-page guide as PDF, with the logo and colour files</small></td><td class="r">1</td><td class="r">$1,500.00</td><td class="r">$1,500.00</td></tr>
+      <tr><td>Print proofs and courier<small>Label proofs on two paper stocks, billed at cost</small></td><td class="r">1</td><td class="r">$240.00</td><td class="r">$240.00</td></tr>
+    </tbody>
+  </table>
+
+  <div class="settle">
+    <div class="pay">
+      <p class="ty"><b>Thank you, Ines.</b> Tern was a pleasure to build. The last files went out with this invoice.</p>
+      <span class="micro">Payment details</span>
+      <div class="plate">
+        <div class="ph"><b>Bank transfer</b><span class="code keep">INV–0142</span></div>
+        <div class="pc">
+          <span><b>account name</b>marlow studio llc</span>
+          <span><b>bank</b>sample bank</span>
+          <span><b>account</b>account ending 0000</span>
+          <span><b>routing</b>000 000 000</span>
+        </div>
+      </div>
+    </div>
+    <div class="sums2">
+      <div class="ln"><span>Subtotal</span><b>$19,240.00</b></div>
+      <div class="ln"><span>Sales tax, 8%</span><b>$1,539.20</b></div>
+      <div class="tile ink">
+        <div class="th"><span class="micro">Total due</span><i class="ic" data-i="calendar" style="--ic:15px;opacity:.6"></i></div>
+        <b>$20,779.20</b>
+        <p>In US dollars, by December 3, 2026.</p>
+      </div>
+    </div>
+  </div>
+
+  <ol class="fns">
+    <li>Quote INV–0142 as the payment reference. Bank transfer only.</li>
+    <li>Payment is due 14 days from the issue date. Balances unpaid after 30 days carry interest of 1.5% a month.</li>
+    <li>Rights to the final artwork pass to Tern Coffee Roasters when this invoice is paid in full.</li>
+  </ol>
+
+  <div class="foot"><span>Marlow Studio, 212 Carding Lane, Wexcombe. accounts@marlowstudio.example. Sample data: fictional.</span><span>1 of 1</span></div>
+</section>
+
+<script>
+// A different brand: uncomment and set three colours. Everything else is derived.
+// AS.theme({paper: '#eef1f4', ink: '#0e1c2f', signal: '#e4502a'});
+</script>
+</body></html>

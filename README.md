@@ -45,9 +45,12 @@ from a template, renders, runs a layout check and looks at the result before han
   content spills off a page, a chart hits its caption or colour goes over budget.
 - **No npm, no build step, works offline.** 29 SVG chart helpers and 110 icons in two dependency-free
   scripts, fonts embedded.
-- **PowerPoint and GIF too.** `scripts/pptx.py` writes a deck that opens in PowerPoint, Keynote and
-  Google Slides (slides are pictures, with the text in the notes). `scripts/animate.sh` turns an
-  animation page into a looping GIF; the one above is `templates/pitch.html`.
+- **Google Slides, PowerPoint and GIF too.** `scripts/pptx.py --editable` writes a deck whose text is
+  real, editable text (shapes and charts stay a picture underneath). `scripts/animate.sh` turns an
+  animation page into a looping GIF, and `AS.reveal` animates any chart.
+- **Your data, not typed in.** `scripts/data.py sales.xlsx` reads a CSV, JSON or Excel file, prints
+  the figures worth quoting and writes a data file the charts read from.
+- **Light or dark.** `AS.theme('dark')` flips the whole piece; one more line sets your brand colours.
 - **One style across every format.** Cream paper, big two-tone headlines, ink-grey charts, and one
   small signal colour per page.
 
@@ -73,7 +76,7 @@ yourself with `scripts/render.sh examples/poster.html out/`.
 
 ## Templates
 
-Thirteen starting points. The skill copies one, replaces the sample words and numbers, and renders.
+Twenty starting points. The skill copies one, replaces the sample words and numbers, and renders.
 
 <p align="center"><a href="templates/"><img src="docs/templates.png" width="840" alt="Templates: deck, chart catalogue, landing page, A4 report, social image, mobile screens and a three-page brand sheet"></a></p>
 
@@ -90,7 +93,14 @@ Thirteen starting points. The skill copies one, replaces the sample words and nu
 | social | [`social.html`](templates/social.html) | 1200×630, 1080², 1080×1920, 1600×900 | link previews, square, story, announcement, all in one file |
 | brand | [`brand.html`](templates/brand.html) | 1600×1000 per page | mark and lockup rules, colour, type, icons, labels |
 | brief | [`brief.html`](templates/brief.html) | US letter, one page | decision briefs, memos, proposals, updates |
+| invoice | [`invoice.html`](templates/invoice.html) | US letter | invoices, quotes, receipts |
+| certificate | [`certificate.html`](templates/certificate.html) | landscape letter | certificates and awards |
+| badge | [`badge.html`](templates/badge.html) | four badges per sheet | event badges and name tags |
+| thumbnail | [`thumbnail.html`](templates/thumbnail.html) | 1280×720 | video thumbnails |
+| email | [`email-header.html`](templates/email-header.html) | 1200×400, 1200×300, 600×200 | newsletter headers, banners, signatures |
+| poster | [`print-poster.html`](templates/print-poster.html) | A3, A4 | print posters and signs |
 | pitch | [`pitch.html`](templates/pitch.html) | 1200×675 animation | README and launch GIFs, exported with `scripts/animate.sh` |
+| chart reveal | [`chart-reveal.html`](templates/chart-reveal.html) | 1200×675 animation | an animated chart for a post or slide |
 | charts | [`charts.html`](templates/charts.html) | 1600×1000 | a catalogue with one working call per newer chart |
 
 <details>
@@ -110,6 +120,11 @@ chart and chart marks show tooltips.
 `assets/charts.js` exposes `AS`. Every helper draws plain SVG into an element, with no dependencies.
 [`reference/charts.md`](reference/charts.md) lists every option and which chart fits which job;
 [`templates/charts.html`](templates/charts.html) has working calls.
+
+<p align="center"><img src="docs/chart-reveal.gif" width="720" alt="A bar chart animating in: bars grow one by one, the last in the signal colour"></p>
+
+Any chart can animate for a GIF (`AS.reveal`, exported with `scripts/animate.sh`), and any chart can
+read from a data file made by `scripts/data.py`.
 
 <details>
 <summary>All 29 chart helpers</summary>
@@ -219,12 +234,14 @@ assets/charts.js      chart helpers (AS.*)
 assets/icons.js       icons and brand marks
 assets/check.js       layout check, result on <body data-check>
 assets/fonts/         Inter and Geist Mono (OFL), embedded so renders work offline
-templates/            thirteen starting points, fictional data
+templates/            twenty starting points, fictional data
 examples/             seven finished pieces made with the skill (the showcase above)
 reference/            style guide, brand layer, layouts, chart reference, UI patterns
 scripts/new.sh        start a piece from a template
 scripts/render.sh     HTML to PDF to PNG, plus the layout check
-scripts/pptx.py       HTML to PowerPoint (pictures, text in notes)
+scripts/pptx.py       HTML to PowerPoint and Google Slides (--editable for real text)
+scripts/data.py       CSV, JSON or Excel to a data file plus a summary
+scripts/snapshot.sh   visual regression against tests/snapshots
 scripts/animate.sh    animation page to looping GIF
 scripts/pdf2png.swift macOS rasteriser, compiled on first run
 docs/                 README screenshots

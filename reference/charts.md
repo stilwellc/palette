@@ -837,6 +837,48 @@ AS.compare('#chart', {W: 640, H: 200, cats: ['June', 'July', 'August', 'Septembe
   values: [72, 51, 22, 4], unit: ' h', color: 'signal'});
 ```
 
+## From a data file
+
+`scripts/data.py sales.csv` (also TSV, JSON, .xlsx) prints a summary and writes `sales.csv.data.js`,
+which defines `DATA = {source, columns:[{name, type, unit}], rows:[...], label}`. Load it and
+`assets/data.js` with script tags, after `charts.js`.
+
+| Call | Gives |
+|---|---|
+| `AS.col(DATA, 'revenue')` | that column as an array |
+| `AS.labels(DATA)` | the label column as short strings ("May", "Q3") |
+| `AS.rowsFor(DATA, {label, value})` | `[{label, value, display}]` for `hbars`, `bench`, `track`, `bullet` |
+| `AS.pairs(DATA, {label, a, b})` | `[{label, a, b}]` for `dumbbell` and `slope` |
+| `AS.sortBy(DATA, 'q3')`, `AS.pick(DATA, r => r.q3 > 0)` | sorted or filtered rows, usable in the calls above |
+| `AS.sum`, `AS.first`, `AS.last`, `AS.change(DATA, name)` | figures for a headline; `change` is `{abs, pct}` |
+| `AS.fmtFor(DATA, name)`, `AS.fmtN`, `AS.fmtPct` | formatters |
+
+```js
+AS.dumbbell('#c', {rows: AS.pairs(AS.sortBy(DATA, 'q3'), {label: 'region', a: 'q2', b: 'q3'}), fmt: AS.fmtN, names: ['Q2', 'Q3']});
+```
+
+Do not name a page variable `top`, `name`, `status` or `length`: they clash with the window's own and
+the script dies (the layout check reports a script error).
+
+## Animation
+
+`assets/motion.js` animates a chart that is already drawn, for `scripts/animate.sh`. An animation
+page reads the time from the hash and draws that instant: no CSS transitions, no timers.
+
+```js
+const t = AS.t();                                   // seconds, from #t=1.2
+const svg = AS.compare('#c', {...});                // draw the finished chart
+AS.reveal(svg, AS.lin(t, 0.7, 2.3));                // show it at that progress, 0 to 1
+AS.countUp(numEl, 96, AS.span(t, 0, 0.8), v => Math.round(v));
+AS.fadeUp(headline, AS.span(t, 0, 0.6));
+```
+
+`AS.reveal` grows bars from the baseline, draws lines left to right, sweeps a donut, lights cells in
+order and fades each label in after its mark. At progress 1 the chart is exactly as drawn. It is
+tested on `bars compare waterfall hbars track bullet funnel bench lines area spark dumbbell slope
+donut meter stepgrid waffle matrix scatter`. `gantt flow dots strip multiples` are untested. Start
+from `templates/chart-reveal.html`.
+
 ## Known limits
 
 Found in the source while writing this. Each names the function.

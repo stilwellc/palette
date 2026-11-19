@@ -1,6 +1,6 @@
 {
   "name": "palette",
-  "version": "3.1.0",
+  "version": "3.2.0",
   "description": "Design charts, slide decks, reports, dashboards, landing pages, mobile screens, social images and brand sheets in one editorial style. HTML to PDF and PNG, no build step.",
   "author": { "name": "stilwellc" },
   "repository": "https://github.com/stilwellc/palette",

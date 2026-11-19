@@ -1,0 +1,178 @@
+<!doctype html>
+<!-- Event badge sheet, landscape US letter (11 x 8.5 in), one page, signal mode. Four badges of
+     4 x 3 in, two across and two down, with 0.44 in gutters and crop marks. One section.page
+     inside body.doc. The page is on its side because four 4 in badges need 8 in of width plus
+     gutters, and an upright letter page leaves no room for crop marks.
+     Blocks:
+       1. rhead     sheet title, cutting instruction, sheet number (plain text, no lockup: the
+                    lockup belongs to the badges)
+       2. sheet     the 2 x 2 grid of badges. Six crop bands draw the short hairlines in the
+                    gutters and the outer margins, in line with every badge edge
+       3. badge     the same layout four times, so a mail merge is obvious:
+                      top     event lockup on the left, role tag on the right
+                      name    first name huge, then last name, then company in grey
+                      bottom  day pass (a ports strip, one cell per day, with a code) on the left,
+                              a dot grid labelled "pass code" on the right
+       4. foot
+     Merge fields are marked with comments on the first badge: role, first name, last name,
+     company, days, pass id. The dot grid is drawn from the pass id by AS.waffle. It is a
+     placeholder pattern, not a scannable code: swap in your own code image at the same size.
+     Role tags: ATTENDEE, STAFF and PRESS are outlined (tagx line). SPEAKER is tagx sigc and is the
+     page's one signal mark, so keep one speaker per sheet or make the others outlined too.
+     No ink block on this page. A long first name: lower its font size in steps of 6px.
+     Template-local style is page setup and layout glue only. Colours and faces come from the tokens.
+     Sample data: everything here is invented. Stillpoint 2027 is not a real event, and every
+     person, company, date, venue and pass id is fictional.
+     Replace all of it. Replace this comment with a one-line source note. -->
+<html><head><meta charset="utf-8"><title>Badge sheet</title>
+<link rel="stylesheet" href="../assets/style.css">
+<style>@page{size:11in 8.5in;margin:0}
+/* page setup: a letter page on its side */
+body.doc{width:11in}
+body.doc .page{width:11in;height:8.5in;padding:.38in .6in;gap:0}
+/* sheet: two 4in columns and two 3in rows with a gutter (--g), centred on the page. --t is the crop mark length */
+.sheet{--g:.44in;--t:.16in;position:relative;display:grid;grid-template-columns:4in 4in;grid-template-rows:3in 3in;gap:var(--g);margin:auto}
+/* crop marks: bands of short hairlines, one hairline per badge edge. v = vertical ticks, h = horizontal */
+/* the sheet centres itself, so the foot must not take a share of the free space */
+body.doc .page>.foot{margin-top:0}
+.crop{position:absolute;pointer-events:none;--c:var(--n3)}
+.crop.v{left:0;right:0;height:var(--t);
+  background:linear-gradient(var(--c),var(--c)) 0 0/1px 100% no-repeat,linear-gradient(var(--c),var(--c)) calc(4in - .5px) 0/1px 100% no-repeat,
+    linear-gradient(var(--c),var(--c)) calc(4in + var(--g) - .5px) 0/1px 100% no-repeat,linear-gradient(var(--c),var(--c)) 100% 0/1px 100% no-repeat}
+.crop.h{top:0;bottom:0;width:var(--t);
+  background:linear-gradient(var(--c),var(--c)) 0 0/100% 1px no-repeat,linear-gradient(var(--c),var(--c)) 0 calc(3in - .5px)/100% 1px no-repeat,
+    linear-gradient(var(--c),var(--c)) 0 calc(3in + var(--g) - .5px)/100% 1px no-repeat,linear-gradient(var(--c),var(--c)) 0 100%/100% 1px no-repeat}
+.crop.v.a{top:calc(-.08in - var(--t))}.crop.v.b{top:calc(3in + (var(--g) - var(--t))/2)}.crop.v.c{bottom:calc(-.08in - var(--t))}
+.crop.h.a{left:calc(-.08in - var(--t))}.crop.h.b{left:calc(4in + (var(--g) - var(--t))/2)}.crop.h.c{right:calc(-.08in - var(--t))}
+/* badge: three rows, name block centred between the top and bottom rows */
+.badge1{display:flex;flex-direction:column;padding:.24in .26in .22in;background:var(--paper-2);box-shadow:inset 0 0 0 .5px var(--line-2);min-width:0}
+.badge1 .bt,.badge1 .bb{display:flex;justify-content:space-between;align-items:center}
+.badge1 .bb{align-items:flex-end}
+.badge1 .nm1{margin:auto 0;padding-bottom:4px}
+.badge1 h2{font:600 60px/.95 var(--f-sans);letter-spacing:-.045em;white-space:nowrap}
+.badge1 h3{font:600 19px/1.2 var(--f-sans);letter-spacing:-.022em;margin-top:8px}
+.badge1 .co{font-size:13px;line-height:1.3;color:var(--ink-3);margin-top:2px}
+.badge1 .pass{display:grid;gap:8px}
+.badge1 .pass .row1{display:flex;align-items:center;gap:10px}
+.badge1 .pass small{font:400 10.5px/1 var(--f-mono);color:var(--ink-3)}
+.badge1 .qr{display:grid;justify-items:end;gap:6px}
+.badge1 .qr .dots{width:46px;height:46px}
+.badge1 .qr .micro{font-size:8.5px}
+</style>
+<script src="../assets/charts.js"></script>
+<script src="../assets/icons.js"></script>
+<script src="../assets/check.js"></script>
+</head>
+<body class="doc">
+
+<section class="page">
+  <div class="rhead"><span>Stillpoint 2027 badge sheet</span><span>Print at 100%. Cut on the marks.</span><span>Sheet 1 of 60</span></div>
+
+  <div class="sheet">
+    <i class="crop v a"></i><i class="crop v b"></i><i class="crop v c"></i>
+    <i class="crop h a"></i><i class="crop h b"></i><i class="crop h c"></i>
+
+    <!-- badge 1. Every badge below repeats these fields in the same order -->
+    <div class="badge1">
+      <div class="bt">
+        <span class="lockup" style="--m:24px"><i class="mk" data-m="split"></i><span class="nm">Stillpoint<small>2027</small></span></span>
+        <!-- merge field: role (ATTENDEE, SPEAKER, STAFF or PRESS) -->
+        <span class="tagx line">Attendee</span>
+      </div>
+      <div class="nm1">
+        <!-- merge field: first name -->
+        <h2>Amara</h2>
+        <!-- merge field: last name -->
+        <h3>Okonjo</h3>
+        <!-- merge field: company -->
+        <p class="co">Brightwater Labs</p>
+      </div>
+      <div class="bb">
+        <div class="pass">
+          <!-- merge field: days (one cell per day, class on = admitted) -->
+          <div class="row1"><span class="ports"><i class="on"></i><i class="on"></i><i class="on"></i></span><small>all 3 days</small></div>
+          <!-- merge field: pass id -->
+          <span class="code">SP–0418</span>
+        </div>
+        <!-- merge field: pass id again, drawn as dots -->
+        <div class="qr"><div class="dots" data-pass="SP-0418"></div><span class="micro">Pass code</span></div>
+      </div>
+    </div>
+
+    <!-- badge 2 -->
+    <div class="badge1">
+      <div class="bt">
+        <span class="lockup" style="--m:24px"><i class="mk" data-m="split"></i><span class="nm">Stillpoint<small>2027</small></span></span>
+        <span class="tagx sigc">Speaker</span>
+      </div>
+      <div class="nm1">
+        <h2>Mateo</h2>
+        <h3>Ferreira</h3>
+        <p class="co">Quiet Systems</p>
+      </div>
+      <div class="bb">
+        <div class="pass">
+          <div class="row1"><span class="ports"><i class="on"></i><i class="on"></i><i class="on"></i></span><small>all 3 days</small></div>
+          <span class="code">SP–0007</span>
+        </div>
+        <div class="qr"><div class="dots" data-pass="SP-0007"></div><span class="micro">Pass code</span></div>
+      </div>
+    </div>
+
+    <!-- badge 3 -->
+    <div class="badge1">
+      <div class="bt">
+        <span class="lockup" style="--m:24px"><i class="mk" data-m="split"></i><span class="nm">Stillpoint<small>2027</small></span></span>
+        <span class="tagx line">Staff</span>
+      </div>
+      <div class="nm1">
+        <h2>Linnea</h2>
+        <h3>Sandberg</h3>
+        <p class="co">Stillpoint crew</p>
+      </div>
+      <div class="bb">
+        <div class="pass">
+          <div class="row1"><span class="ports"><i class="on"></i><i class="on"></i><i class="on"></i></span><small>all 3 days</small></div>
+          <span class="code">SP–0902</span>
+        </div>
+        <div class="qr"><div class="dots" data-pass="SP-0902"></div><span class="micro">Pass code</span></div>
+      </div>
+    </div>
+
+    <!-- badge 4 -->
+    <div class="badge1">
+      <div class="bt">
+        <span class="lockup" style="--m:24px"><i class="mk" data-m="split"></i><span class="nm">Stillpoint<small>2027</small></span></span>
+        <span class="tagx line">Press</span>
+      </div>
+      <div class="nm1">
+        <h2>Kenji</h2>
+        <h3>Watanabe</h3>
+        <p class="co">The Harbour Dispatch</p>
+      </div>
+      <div class="bb">
+        <div class="pass">
+          <div class="row1"><span class="ports"><i></i><i class="on"></i><i></i></span><small>day 2 only</small></div>
+          <span class="code">SP–0611</span>
+        </div>
+        <div class="qr"><div class="dots" data-pass="SP-0611"></div><span class="micro">Pass code</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="foot"><span>Stillpoint 2027, June 10 to 12, Harbour Hall. Four badges of 4 x 3 in. Sample data: fictional.</span><span>US letter, landscape</span></div>
+</section>
+
+<script>
+// A different brand: uncomment and set three colours. Everything else is derived.
+// AS.theme({paper: '#eef1f4', ink: '#0e1c2f', signal: '#e4502a'});
+/* Pass code placeholder: a 9 x 9 dot grid whose runs of dark and pale dots come from the pass id.
+   It only looks like a code. It carries no data a scanner can read. */
+document.querySelectorAll('.dots[data-pass]').forEach(el => {
+  let h = 7; for (const ch of el.dataset.pass) h = (h * 31 + ch.charCodeAt(0)) % 233280;
+  const segs = []; let left = 81, dark = true;
+  while (left > 0) { h = (h * 9301 + 49297) % 233280; const v = Math.min(left, 1 + h % 3); segs.push({v, color: dark ? 'n1' : 'n5'}); left -= v; dark = !dark; }
+  AS.waffle(el, {total: 81, cols: 9, cell: 4, gap: 1.25, round: true, segs});
+});
+</script>
+</body></html>

@@ -21,6 +21,8 @@
 
   The nine pieces are PNGs under docs/pitch/, rendered at scale 2 from the repo's own files.
   A static page cannot render them on the fly, so regenerate them when a source changes:
+    (then convert each to JPEG at three quarters of the width to keep the repo small:
+     sips --resampleWidth <w*3/4> -s format jpeg -s formatOptions 82 x.png --out x.jpg)
     scripts/render.sh templates/deck.html            docs/pitch 2   ->  deck-06.png  (slide 6 of 12)
     scripts/render.sh examples/poster.html           docs/pitch 2   ->  poster.png
     scripts/render.sh examples/spec-sheet.html       docs/pitch 2   ->  spec-sheet.png
@@ -67,9 +69,9 @@ html,body{margin:0;width:1200px;height:675px;overflow:hidden;background:var(--pa
   <i class="orbx dawn" id="orb" data-seed="3" style="--o:400px"></i></div>
 <script>
 const D='../docs/pitch/';
-const shots=[['a board deck','deck-06.png','1600 x 900  PDF',1200,675],['an event poster','poster.png','1080 x 1350  PNG',810,1013],['a spec sheet','spec-sheet.png','1600 x 1000  PNG',1200,750],
- ['three app screens','mobile.png','390 x 844  PNG',1200,825],['a dinner menu','menu.png','A4  PDF',595,842],['a year in review','year-recap-01.png','1080 x 1080  PNG',810,810],
- ['an investor update','investor-update.png','Letter  PDF',612,792],['a landing page','landing-01.png','1440 wide  HTML',1080,810],['a keynote','talk-01.png','1600 x 900  PDF',1200,675]];
+const shots=[['a board deck','deck-06.jpg','1600 x 900  PDF',1200,675],['an event poster','poster.jpg','1080 x 1350  PNG',810,1013],['a spec sheet','spec-sheet.jpg','1600 x 1000  PNG',1200,750],
+ ['three app screens','mobile.jpg','390 x 844  PNG',1200,825],['a dinner menu','menu.jpg','A4  PDF',595,842],['a year in review','year-recap-01.jpg','1080 x 1080  PNG',810,810],
+ ['an investor update','investor-update.jpg','Letter  PDF',612,792],['a landing page','landing-01.jpg','1440 wide  HTML',1080,810],['a keynote','talk-01.jpg','1600 x 900  PDF',1200,675]];
 const SPEED=.75, t=(parseFloat(location.hash.replace(/^#(t=)?/,''))||0)*SPEED, T0=1.15, DUR=.4, T1=T0+shots.length*DUR;
 const ease=x=>1-Math.pow(1-Math.min(1,Math.max(0,x)),3), show=id=>document.getElementById(id).style.display='block';
 if(t<T0){show('s0');const txt='make me anything.';const n=Math.min(txt.length,Math.floor(t/.8*txt.length));
