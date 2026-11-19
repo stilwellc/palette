@@ -65,8 +65,9 @@ of art the style allows, an object and never a background.
 
 ## Marks and lockups
 
-A mark is two primitives on an 8-unit grid, in one ink. `AS.mark(name)` has ten starting points
-(`dot ring split orbit stem quarter stack steps grid notch`); draw your own the same way.
+A mark is two primitives on an 8-unit grid, in one ink. `AS.mark(name)` has eleven starting points
+(`dab dot ring split orbit stem quarter stack steps grid notch`; `dab`, an ink disc with one dab of
+signal, is palette's own logo); draw your own the same way.
 
 ```html
 <span class="lockup"><i class="mk" data-m="split"></i><span class="nm">halden<small>billing</small></span></span>
