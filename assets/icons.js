@@ -167,6 +167,7 @@
      {sig: true} puts the signal colour on the second primitive (use it once, on the cover or end card).
      These are starting points for a mark of your own, not a library of logos. */
   const M = {
+    dab: s => `<circle cx="4" cy="4" r="3.5"/><circle ${s || 'fill="var(--paper,#f5f0e6)"'} cx="5.25" cy="5.25" r="1.15"/>`,   // palette's own mark: an ink disc, one dab of signal
     dot: s => `<circle cx="4" cy="4" r="3.5"/>`,
     ring: s => `<path fill-rule="evenodd" d="M4 .5a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7zm0 2a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3z"/>`,
     split: s => `<path d="M3.6.5A3.5 3.5 0 0 0 3.6 7.5z"/><path ${s} d="M4.4.5a3.5 3.5 0 0 1 0 7z"/>`,

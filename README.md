@@ -1,16 +1,43 @@
-# palette
+<h1 align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="docs/logo-dark.png">
+    <img src="docs/logo-light.png" width="250" alt="palette">
+  </picture>
+</h1>
 
-![palette: one style, every format](docs/palette.gif)
+<p align="center"><b>A design skill for Claude Code.</b><br>
+Ask for a chart, a slide deck, a report, a dashboard, a landing page, app screens, a social image or a brand sheet.<br>
+Get it in one editorial style, as PDF, PNG or live HTML.</p>
 
-A Claude Code skill that designs charts, slide decks, reports, dashboards, product pages, mobile
-screens, social images and brand sheets in one consistent editorial style, and exports them as PDF
-and PNG.
+<p align="center">
+  <a href="#install">Install</a> &nbsp;|&nbsp;
+  <a href="#showcase">Showcase</a> &nbsp;|&nbsp;
+  <a href="#templates">Templates</a> &nbsp;|&nbsp;
+  <a href="#charts">Charts</a> &nbsp;|&nbsp;
+  <a href="#the-rules-briefly">The rules</a>
+</p>
 
-Cream paper, Inter, big two-tone headlines, charts in ink greys, and almost no colour: one small
-signal mark per page, or the four severity colours when the work is about risk. It started as a
-security team's report style and now covers general design work.
+<p align="center"><img src="docs/palette.gif" width="840" alt="palette making a board deck, an event poster, a spec sheet, app screens, a menu, an investor update and a landing page in one style"></p>
+
+```sh
+git clone https://github.com/stilwellc/palette ~/.claude/skills/palette
+```
+
+Then ask Claude Code: *"make a five-slide board deck from this CSV"*, *"a one-page brief as a PDF"*,
+*"an OG image for the launch post"*, *"chart last quarter's numbers"*.
+
+- **HTML in, PDF and PNG out.** Headless Chrome renders it; a layout check fails the build when
+  content spills off a page, a chart hits its caption or colour goes over budget.
+- **No npm, no build step, works offline.** 29 SVG chart helpers and 109 icons in two dependency-free
+  scripts, fonts embedded.
+- **One style across every format.** Cream paper, big two-tone headlines, ink-grey charts, and one
+  small signal colour per page (or severity colours for security work).
+- **Eleven templates and seven finished examples** to start from, all with fictional data.
 
 ## Showcase
+
+palette is an [Agent Skill](https://docs.claude.com/en/docs/claude-code/skills) for Claude Code: a folder of
+instructions, templates and scripts that Claude reads when you ask for something visual.
 
 Seven pieces made with the skill, each for a different invented brand with its own signal colour.
 The sources are in [`examples/`](examples/); every name and number in them is made up.
@@ -68,7 +95,7 @@ All data in the templates and screenshots is fictional.
 ## Install
 
 ```sh
-git clone https://github.com/<you>/palette ~/.claude/skills/palette
+git clone https://github.com/stilwellc/palette ~/.claude/skills/palette
 ```
 
 Then ask Claude Code for a chart of last quarter's numbers, a one-page brief, a board deck, a
