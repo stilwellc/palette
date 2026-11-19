@@ -255,6 +255,7 @@
 
 
   /* ===================== v2: dashboard and comparison charts ===================== */
+  const fmtN = v => Number(v).toLocaleString('en-US');   // 2680 -> 2,680
   const fmtK = v => Math.abs(v) >= 1e6 ? +(v / 1e6).toFixed(1) + 'M' : Math.abs(v) >= 1e3 ? +(v / 1e3).toFixed(1) + 'K' : '' + v;
 
   // Shared hover layer: any mark with data-tip='{"h":"Sep 2","rows":[["High","#722f37",12]]}' gets a tooltip.
@@ -683,7 +684,7 @@
     return t;
   }
 
-  g.AS = { SEV, N, bars, diverging, lines, hbars, dots, flow, heat, strip, annotate, area, compare, track, multiples, kpiSelect, mix, hover, fmtK, el: n, root,
+  g.AS = { SEV, N, bars, diverging, lines, hbars, dots, flow, heat, strip, annotate, area, compare, track, multiples, kpiSelect, mix, hover, fmtK, fmtN, el: n, root,
     donut, scatter, slope, waterfall, funnel, meter, matrix, spark, bullet, dumbbell, bench, stepgrid, waffle, gantt, theme, TONE,
     ...(g.AS || {}) };
 })(window);

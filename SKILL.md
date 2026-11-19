@@ -11,17 +11,18 @@ Read `reference/style-guide.md` before building anything. Then read what the job
 |---|---|
 | anything that is not a security or severity report | `reference/brand.md` (the 88 / 11 / 1 colour rule, shape, marks, icons, labels) |
 | deck, white paper, brief, social image, product page, mobile screen | `reference/layouts.md` |
-| any chart | `reference/charts.md` (which chart, every option, sizing). Do not read `charts.js` for this |
+| any chart | `reference/charts.md`: the pick table and sizing at the top, then only the section for the helper you use. Do not read `charts.js` |
 | dashboard, console, product page, mobile, any UI | `reference/ui-patterns.md` |
 
 **Two colour modes. Pick one per piece and never mix them.**
 * **Severity** (security findings, risk, SLAs): colour means Critical, High, Medium, Low and nothing
-  else. This is the original mode; `graphic`, `slides`, `doc`, `dashboard` templates show it.
+  else. This is the original mode; `slides`, `doc`, `dashboard` templates show it. `graphic` works
+  in either mode.
 * **Signal** (everything else): ink greys plus one signal colour, about 1% of the page, on the one
   mark that is live, new or the claim. `brief`, `deck`, `whitepaper`, `landing`, `mobile`, `social`,
   `brand`, `charts` templates show it.
 
-**Private layer.** If `local/NOTES.md` exists, read it first: it holds this install's private
+**Private layer.** Try to read `local/NOTES.md` first (not found is normal; carry on): it holds this install's private
 context (reference artefact, branded templates, data sources, team rules). `local/` is gitignored
 and never ships with the repo. `scripts/new.sh` prefers `local/templates/<kind>.html` over the
 public template when one exists.
@@ -34,7 +35,7 @@ assets/charts.js    AS.bars, diverging, lines, hbars, dots, flow, heat, strip, a
                     area, compare, track, multiples, mix, kpiSelect (+ hover tooltips),
                     bench, dumbbell, slope, scatter, waterfall, funnel, bullet, donut, waffle,
                     meter, stepgrid, matrix, spark, gantt, theme
-assets/icons.js     109 original line icons (<i class="ic" data-i="name">), AS.mark brand marks,
+assets/icons.js     110 original line icons (<i class="ic" data-i="name">), AS.mark brand marks,
                     and the painter for orbs (<i class="orbx dawn">)
 assets/check.js     layout check (overflow, chart over note, unknown icon, signal over budget)
 assets/fonts/       Inter, Geist Mono (embedded, works offline)
@@ -81,10 +82,13 @@ if it could reasonably be either a deck or a doc.
    `.method` line under a chart, or the footer. Figures you derive (a sum, a percent change) are
    fine when their inputs are on the page. No invented or "illustrative" values in a real
    deliverable; the templates' data is fictional and must be replaced.
-   * No team or brand name given? Use the document's title in the masthead. Never leave "Acme" or
-     "Halden": the layout check fails on them.
+   * No team or brand name given? Put the document's title in the masthead as plain text (not in a
+     `.lockup`, which lowercases it and implies a logo). No as-of date? Put the period in the pill.
+     A source figure that disagrees with its own inputs: print it with the inputs and flag it at
+     delivery.
+   * Never leave "Acme" or "Halden": the layout check fails on them.
    * Nothing in the data supports a recommendation? Then the closing bar is the one thing to watch,
-     not an ask, and it has no button.
+     not an ask. In a PDF or image the bar never has a button.
 2. **Write the words before the layout.** Headline in two clauses (fact, then grey consequence),
    one finding-sentence per figure title, a sub line saying what is plotted, a note saying what
    to take from it. Voice rules are at the end of the style guide.
@@ -94,6 +98,8 @@ if it could reasonably be either a deck or a doc.
    the content (`Repo_Archive_2026-11-12.html`). It rewrites asset links to absolute paths into
    this skill (the real path, if the skill folder is a symlink), so the copy renders from
    anywhere. Templates in the repo use `../assets/` and open in place.
+   * Read the copy before writing any words: its header comment is the layout spec. Then replace
+     that comment with a one-line note of your sources.
    * A template is several sample pages. Delete the pages, blocks and chart calls you do not use.
      A short deck is five slides: cover, hero stat with chart, one chart, a chart pair, close.
    * One request can need two files (a social card and a logo sheet). Make two.
@@ -107,7 +113,8 @@ if it could reasonably be either a deck or a doc.
    `icons.js` only (`<i class="ic" data-i="...">`, add its script tag); never paste SVG from
    another icon set, and never draw a real company's logo.
    * `AS.theme({...})` goes on the first line of the page's bottom `<script>`, before any chart.
-5. **Render:** `${CLAUDE_SKILL_DIR}/scripts/render.sh <file.html> [outdir] [scale]`
+5. **Render:** `${CLAUDE_SKILL_DIR}/scripts/render.sh <file.html> [outdir] [scale]` (outdir
+   defaults to the HTML file's folder)
    (`${CLAUDE_SKILL_DIR}` is the folder this SKILL.md is in. If you see it written out literally,
    use that folder's path: usually `~/.claude/skills/palette`, or the plugin's install folder.)
    * It prints `check: data-check="OK"` or a list of problems, writes `<name>.pdf`, and writes

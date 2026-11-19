@@ -1,6 +1,7 @@
 <!doctype html>
 <!-- One standalone chart graphic (social card, Slack image, slide insert). Set the canvas size in
-     BOTH body style (--w/--h) and @page. Sample data: fictional. -->
+     BOTH body style (--w/--h) and @page. Works in either colour mode. The source and method go in the
+     .key row's trailing em. No cover glows here: the chart is the page. Sample data: fictional. -->
 <html><head><meta charset="utf-8"><title>Graphic</title>
 <link rel="stylesheet" href="../assets/style.css">
 <style>@page{size:1600px 1000px;margin:0}</style>
@@ -8,7 +9,6 @@
 <script src="../assets/check.js"></script>
 </head>
 <body class="graphic" style="--w:1600px;--h:1000px">
-<div class="orb o1"></div><div class="orb o2"></div>
 <div class="canvas">
   <div class="mast"><span class="mark"><i></i>Acme Application Security</span><span class="pill">Data as of Sep 30, 2026</span></div>
   <h1 class="h-hero rel" style="font-size:92px;margin-top:18px">265 opened. 79 fixed.<br><em>Fixes come in sweeps.</em></h1>

@@ -110,6 +110,11 @@ or `heat` needs a container of the right width.
 Helpers also set a few sizes inline: `track` number 26px (`numSize`), `bench` figure 30px for the
 hero row and 20px for the rest, `gantt` bar label 12.5px, `donut` label 0.22 x `size`.
 
+**Row helpers and small images.** A helper sized by `rowH` ignores `H`. Pick `rowH` so that
+rows x rowH plus its constant comes to the height you want: for the 1600x1000 graphic drawn at 0.7
+that is about 336, so four dumbbell rows are `rowH: 72`. `fmt: AS.fmtN` prints 2680 as 2,680.
+Sort the rows yourself, largest first unless the order means something.
+
 ## Colours
 
 Anywhere an option says "colour" it takes one of:

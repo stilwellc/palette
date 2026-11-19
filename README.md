@@ -43,7 +43,7 @@ from a template, renders, runs a layout check and looks at the result before han
 
 - **HTML in, PDF and PNG out.** Headless Chrome renders it. A layout check fails the build when
   content spills off a page, a chart hits its caption or colour goes over budget.
-- **No npm, no build step, works offline.** 29 SVG chart helpers and 109 icons in two dependency-free
+- **No npm, no build step, works offline.** 29 SVG chart helpers and 110 icons in two dependency-free
   scripts, fonts embedded.
 - **PowerPoint and GIF too.** `scripts/pptx.py` writes a deck that opens in PowerPoint, Keynote and
   Google Slides (slides are pictures, with the text in the notes). `scripts/animate.sh` turns an
@@ -149,7 +149,7 @@ chart and chart marks show tooltips.
 
 </details>
 
-`assets/icons.js` holds 109 line icons drawn for this skill on one 24-unit grid (one stroke, round
+`assets/icons.js` holds 110 line icons drawn for this skill on one 24-unit grid (one stroke, round
 caps, one idea each), ten two-shape brand marks to start a logo from, and the painter for orbs:
 soft gradient spheres in six palettes, the one piece of art the style allows.
 

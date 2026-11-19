@@ -112,7 +112,7 @@
       <p class="cap">24 grid, live area 3 to 21. Stroke 1.5, round caps and joins. Lines, arcs and rounded rectangles only.</p></div>
     <div class="bx"><span class="micro">The set</span><h3 id="icount"></h3><div class="icons" id="icons" style="margin-top:18px"></div>
       <p class="cap" style="margin-top:auto">Sizes 16, 20 and 24. The stroke thickens as the icon shrinks. In a disc the glyph is half the disc:
-        <span class="row" style="display:inline-flex;margin-left:10px;gap:8px;vertical-align:middle"><span class="idisc" style="--d:32px"><i class="ic" data-i="bell"></i></span><span class="idisc ink" style="--d:32px"><i class="ic" data-i="bolt"></i></span><span class="idisc ring" style="--d:32px"><i class="ic" data-i="key"></i></span><span class="idisc sq" style="--d:32px"><i class="ic" data-i="wave"></i></span></span></p></div>
+        <span class="row" style="display:inline-flex;margin-left:10px;gap:8px;vertical-align:middle"><span class="idisc" style="--d:32px"><i class="ic" data-i="bell"></i></span><span class="idisc ink" style="--d:32px"><i class="ic" data-i="bolt"></i></span><span class="idisc ring" style="--d:32px"><i class="ic" data-i="key"></i></span><span class="idisc sq" style="--d:32px"><i class="ic" data-i="waveform"></i></span></span></p></div>
     <div class="bx" style="grid-row:span 2"><span class="micro">Labels</span><h3>Small type that says exactly what a thing is.</h3>
       <div style="display:grid;gap:18px;margin-top:18px">
         <div class="row"><span class="tagx">Live</span><span class="tagx line">Beta</span><span class="tagx sigc">Hold</span><span class="spill">Draft</span><span class="code">HD–04<sup>2.5</sup></span></div>
@@ -131,6 +131,8 @@
 </section>
 
 <script>
+// A different brand: uncomment and set three colours. Everything else is derived.
+// AS.theme({paper: '#eef1f4', ink: '#0e1c2f', signal: '#e4502a'});
 document.getElementById('marks').innerHTML = AS.marks.map(m => '<i class="mk" data-m="' + m + '" style="--m:20px"></i>').join('');
 const names = Object.keys(AS.icons);
 document.getElementById('icount').textContent = names.length + ' icons, drawn on one grid.';

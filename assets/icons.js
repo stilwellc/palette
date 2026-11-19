@@ -88,6 +88,7 @@
     clock: '<circle cx="12" cy="12" r="8.5"/><path d="M12 7v5l3.5 2"/>',
     pin: '<path d="M12 21s6.5-6 6.5-11a6.5 6.5 0 0 0-13 0c0 5 6.5 11 6.5 11z"/><circle cx="12" cy="10" r="2.3"/>',
     globe: '<circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17M12 3.5c2.5 2.6 3.8 5.4 3.8 8.5s-1.3 5.9-3.8 8.5c-2.5-2.6-3.8-5.4-3.8-8.5s1.3-5.9 3.8-8.5z"/>',
+    swell: '<path d="M3 9c2.5-2.6 5-2.6 7.5 0s5 2.6 7.5 0 2-1.5 3-2M3 15.500c2.5-2.6 5-2.6 7.5 0s5 2.6 7.5 0 2-1.5 3-2"/>',
     sun: '<circle cx="12" cy="12" r="3.5"/><path d="M12 3v2.5M12 18.5V21M3 12h2.5M18.5 12H21M5.6 5.6l1.8 1.8M16.6 16.6l1.8 1.8M5.6 18.4l1.8-1.8M16.6 7.4l1.8-1.8"/>',
     moon: '<path d="M20 14.5A8 8 0 1 1 9.5 4 6.5 6.5 0 0 0 20 14.5z"/>',
 
@@ -211,8 +212,12 @@
     el.textContent = ''; el.appendChild(cv); el.dataset.done = '1';
   }
   P.wave = P.waveform;   // old name, kept so existing pages still hydrate
+  // Register a mark of your own once, then use it like the built-in ones: AS.addMark('tide',
+  // '<path d="M.5 4a3.5 3.5 0 0 1 7 0z"/><circle {sig} cx="4" cy="6" r="1.2"/>') in a script in <head>
+  // or first in the bottom script, then <i class="mk" data-m="tide"></i>. {sig} marks the second primitive.
+  function addMark(name, body) { M[name] = s => body.replace('{sig}', s); if (g.AS && g.AS.marks) g.AS.marks.push(name); }
   const AS = g.AS = g.AS || {};
-  AS.marks = Object.keys(M); AS.mark = mark; AS.orb = orb;
+  AS.marks = Object.keys(M); AS.mark = mark; AS.addMark = addMark; AS.orb = orb;
   AS.icons = P; AS.icon = icon; AS.iconInto = iconInto; AS.hydrateIcons = hydrate;
   if (typeof document !== 'undefined') {
     if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', () => hydrate());

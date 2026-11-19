@@ -84,7 +84,17 @@ A mark is two primitives on an 8-unit grid, in one ink. `AS.mark(name)` has elev
 | `grid` | four dots in a square |
 | `notch` | rounded square with one corner cut out and a dot in it |
 
-Draw your own the same way and drop it in place of the hydrated one:
+Draw your own the same way. Register it once, first in the bottom script, and use it by name
+everywhere (`{sig}` marks the second primitive):
+
+```js
+AS.addMark('tide', '<path d="M.5 4a3.5 3.5 0 0 1 7 0z"/><circle {sig} cx="4" cy="6.3" r="1.2"/>');
+```
+```html
+<i class="mk" data-m="tide"></i>
+```
+
+Or inline, where it fills `--m` like a built-in mark:
 
 ```html
 <i class="mk"><svg viewBox="0 0 8 8" fill="currentColor"><path d="M.5 5a3.5 3.5 0 0 1 7 0z"/><circle cx="4" cy="6.6" r="1" fill="var(--signal)"/></svg></i>
@@ -102,7 +112,8 @@ The second primitive takes `fill="var(--signal)"` only on a cover or end card; e
 - Clear space is half the mark on every side (`.clearbox` shows it). Minimum 16px on screen, 8mm in print.
 - Once per page, in a corner (the `.mast`). Once more, larger, on the last page.
 - One ink. Never tinted with the signal, never on a gradient or photo, never rotated, never a pattern.
-  `<i class="mk sig">` puts the signal on the second primitive: cover or end card only.
+  `<i class="mk sig">` puts the signal on the second primitive: the cover or end card of a deck or
+  report only. A social card is not a cover for this: its mark stays one ink.
 - **Other people's logos** go in `.logos`: a grid, not a marquee, every logo forced to one ink at 42%
   and one height (`--lh`, 28px). `<img>` files are flattened with a filter; `.ph` is a text
   placeholder. A partnership is `.cobrand`: your lockup, a thin `×`, theirs, on stone.
@@ -110,7 +121,7 @@ The second primitive takes `fill="var(--signal)"` only on a cover or end card; e
 
 ## Icons
 
-`assets/icons.js`: 109 icons drawn for this skill on one grid. `<i class="ic" data-i="shield-check"></i>`
+`assets/icons.js`: 110 icons drawn for this skill on one grid. `<i class="ic" data-i="shield-check"></i>`
 is hydrated on load and sized by `--ic` or the font size; `AS.icon(name, {size})` returns the SVG string.
 `check.js` fails the render on an unknown name.
 
@@ -122,8 +133,9 @@ is hydrated on load and sized by `--ic` or the font size; `AS.icon(name, {size})
   `.ink`, `.ring`, `.paper`, `.sq` (continuous-corner tile). One style of disc per page.
 - Icons are ink. `.ic.sig` colours only the icon's dot, for a live state.
 - Need one that is missing? Draw it to the construction rules at the top of `icons.js` and add it there.
-- Names say what the picture is, not what you might want it for: `waveform` is an audio waveform, not
-  the sea; `bolt` is lightning; `dial` is a knob.
+- Names say what the picture is, not what you might want it for: `waveform` (and its old alias
+  `wave`) is an audio waveform, `swell` is water, `bolt` is lightning, `dial` is a knob.
+- Every name: `home` `search` `menu` `more` `close` `plus` `minus` `check` `chevron-right` `chevron-left` `chevron-down` `chevron-up` `arrow-right` `arrow-left` `arrow-up` `arrow-down` `arrow-up-right` `external` `filter` `sort` `sliders` `settings` `refresh` `download` `upload` `share` `send` `link` `copy` `edit` `trash` `power` `command` `grid` `list` `columns` `sidebar` `table` `layers` `user` `users` `lock` `unlock` `key` `shield` `shield-check` `eye` `eye-off` `bell` `inbox` `info` `alert` `help` `check-circle` `x-circle` `flag` `bookmark` `star` `heart` `tag` `target` `sparkle` `bolt` `calendar` `clock` `pin` `globe` `swell` `sun` `moon` `mail` `chat` `play` `pause` `stop` `record` `mic` `volume` `waveform` `headphones` `image` `file` `doc` `folder` `code` `terminal` `database` `server` `cloud` `cpu` `box` `branch` `pr` `bug` `ticket` `chart-bar` `chart-line` `chart-pie` `trend-up` `trend-down` `card` `cart` `dollar` `phone` `laptop` `dial` `toggle` `signal` `wifi` `battery`
 
 ## Labels
 

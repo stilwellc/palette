@@ -82,7 +82,9 @@ the canvases you do not need.
 | `wide` announcement | 1600x900 | 16px |
 
 Draw charts with a small `W` (about half the rendered width on story and square) so chart text scales
-up with the image. One claim per image. Lockup once. Close a square or wide card with a `.takeaway`.
+up with the image. Social cards keep the cover glows even with a chart. If the chart takes
+`color:'signal'`, the tag must not also be `.sigc`: one signal mark per canvas. With no domain or
+study to cite, the foot holds the tagline left and the date right. One claim per image. Lockup once. Close a square or wide card with a `.takeaway`.
 
 ## Product page (`templates/landing.html`, 1440 wide)
 
